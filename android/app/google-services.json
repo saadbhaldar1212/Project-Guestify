@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "781078264432",
+    "project_id": "guestify-69f0c",
+    "storage_bucket": "guestify-69f0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781078264432:android:69dcd8d564b9ef925b52b5",
+        "android_client_info": {
+          "package_name": "com.example.guestify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781078264432-6ml0cbo0evclf83ehv8vtj04k65saegl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlONK-2KVWPMJ9dIl35dwLQHHUQsPs8m0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781078264432-6ml0cbo0evclf83ehv8vtj04k65saegl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

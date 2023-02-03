@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: const Color.fromRGBO(19, 159, 219, 10),
         ).copyWith(dividerColor: Colors.transparent),
-        home: WelcomeSplash());
+        home: AdminLogin());
   }
 }
 

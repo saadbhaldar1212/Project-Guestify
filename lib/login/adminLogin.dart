@@ -25,7 +25,10 @@ class _AdminLoginState extends State<AdminLogin> {
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
     decoration: InputDecoration(
+<<<<<<< Updated upstream
       helperText: 'e.g: - abc@<>.com',
+=======
+>>>>>>> Stashed changes
       labelText: 'Username',
       hintText: 'Enter email address',
       border: OutlineInputBorder(

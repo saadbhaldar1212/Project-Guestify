@@ -3,7 +3,7 @@
    <application
         android:label="guestify"
         android:name="${applicationName}"
-        android:icon="@drawable/launch_image">
+        android:icon="@drawable/splashinfo1">
         <activity
             android:name=".MainActivity"
             android:exported="true"

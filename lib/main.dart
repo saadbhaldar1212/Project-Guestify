@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:guestify/login/adminLogin.dart';
@@ -10,6 +9,10 @@ import 'package:guestify/pages/welcome.dart';
 
 /*TODO: 
 
+Link for flutter_native_splah - https://pub.dev/packages/flutter_native_splash
+- Use this link's instructions for Splash Screen's logo and Installed App logo
+- For now, let splashinfo1.png be the the real one
+
 Link for Drawer - https://youtu.be/ufer4QTFTO8
 
 ***IMP*** 
@@ -17,20 +20,7 @@ Learn different types of Font in app
 
 1. Current Layout management - Column and Row
 2. App Adaptiveness - Welcome2() - maybe because of MaterialPageRoute
-3. For 
-
-UserLogin(): 
-  - EmployeeLogin()
-  - AdminLogin()
-
-  Both of them will have signin/up optionss
-  
-  #UI IDEA
-  - Both pages will have BottomNavigtionBar or AppBarNavigation 
-  option to navigate to both sub-signin/up pages
-
-
-4. UserLogin() - Layout, Design, Animation
+3. UserLogin() - Layout, Design, Animation
 
 */
 void main() async {

@@ -10,10 +10,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //TODO: Remove back button from appBar
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: (() {
+            //add drawer
+          }),
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black87,
         title: TextButton(

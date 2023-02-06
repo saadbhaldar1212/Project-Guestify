@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guestify/main.dart';
-
-import '../pages/welcome2.dart';
+import 'package:guestify/pages/home.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -26,6 +25,8 @@ class _AdminLoginState extends State<AdminLogin> {
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
     decoration: InputDecoration(
+      helperText: 'e.g: - abc@<>.com',
+      labelText: 'Username',
       hintText: 'Enter email address',
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -36,6 +37,7 @@ class _AdminLoginState extends State<AdminLogin> {
   final passwordField = TextFormField(
     obscureText: true,
     decoration: InputDecoration(
+      labelText: 'Password',
       hintText: 'Enter password',
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -125,9 +127,7 @@ class _AdminLoginState extends State<AdminLogin> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const MyHomePage(
-                                        title: 'Home',
-                                      ),
+                                      builder: (context) => const Home(),
                                     ));
                               }),
                               child: const Text(

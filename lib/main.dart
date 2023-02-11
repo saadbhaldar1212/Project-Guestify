@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/pages/eventInfo.dart';
 import 'package:guestify/pages/home.dart';
 // import 'package:guestify/login/adminLogin.dart';
 import 'package:guestify/pages/welcome.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Urbanist',
           primaryColor: const Color.fromRGBO(19, 159, 219, 10),
         ).copyWith(dividerColor: Colors.transparent, useMaterial3: true),
-        home: Home());
+        home: EventInfo());
   }
 }
 

@@ -30,8 +30,6 @@ class _EventInfoState extends State<EventInfo> {
     },
   );
 
-  final eventDatePicker = TextFormField();
-
   final eventDescription = TextFormField(
     // controller: eventDescriptionController,
     cursorHeight: 20,
@@ -48,6 +46,8 @@ class _EventInfoState extends State<EventInfo> {
       return null;
     },
   );
+
+  final _date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,26 +66,43 @@ class _EventInfoState extends State<EventInfo> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          Form(
-            key: _eventFormField,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 28.0, right: 28.0, bottom: 12.0),
-                  child: eventName,
-                ),
-                // add date picker here
-                Padding(
-                  padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                  child: eventDescription,
-                ),
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _eventFormField,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                child: Column(children: [
+                  eventName,
+                  Row(
+                    children: [
+                      Text('No date selected'),
+                      IconButton(
+                        onPressed: (() async {
+                          DateTime? datePicked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now());
+
+                          if (datePicked != null) {
+                            setState(() {
+                              _date.text =
+                                  'Date selected is:- ${datePicked.day}/${datePicked.month}/${datePicked.year}';
+                            });
+                          }
+                        }),
+                        icon: const Icon(Icons.calendar_month_outlined),
+                      ),
+                    ],
+                  ),
+                  eventDescription,
+                ]),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

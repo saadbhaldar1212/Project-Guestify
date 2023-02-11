@@ -37,8 +37,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
+          fontFamily: 'Urbanist',
           primaryColor: const Color.fromRGBO(19, 159, 219, 10),
-        ).copyWith(dividerColor: Colors.transparent),
+        ).copyWith(dividerColor: Colors.transparent, useMaterial3: true),
         home: Home());
   }
 }

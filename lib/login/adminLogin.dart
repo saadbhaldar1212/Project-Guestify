@@ -57,7 +57,6 @@ class _AdminLoginState extends State<AdminLogin> {
                 'Welcome',
                 style: TextStyle(
                   fontSize: 40,
-                  fontFamily: 'Urbanist',
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -130,7 +129,6 @@ class _AdminLoginState extends State<AdminLogin> {
                         child: const Text(
                           'Login',
                           style: TextStyle(
-                            fontFamily: 'Urbanist',
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
                             color: Color.fromARGB(255, 17, 150, 207),
@@ -149,7 +147,6 @@ class _AdminLoginState extends State<AdminLogin> {
               child: const Text(
                 'Forgot Password?',
                 style: TextStyle(
-                  fontFamily: 'Urbanist',
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: Color.fromARGB(255, 17, 150, 207),

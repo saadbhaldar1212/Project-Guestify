@@ -16,53 +16,88 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: (() {
-            //add drawer
-          }),
+      drawer: Drawer(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            title: const Text(
+              'Guestify',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            foregroundColor: Colors.white,
+            backgroundColor: const Color.fromARGB(255, 17, 150, 207),
+            toolbarHeight: 100,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdminLogin(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.logout),
+              ),
+            ],
+          ),
+          body: ListView(children: const [
+            ListTile(
+              title: Text(
+                'Hello',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              leading: Icon(Icons.safety_check_sharp),
+            ),
+            ListTile(
+              title: Text(
+                'Hello',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              leading: Icon(Icons.safety_check_sharp),
+            ),
+          ]),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
+      ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: const Color.fromARGB(255, 17, 150, 207),
+        foregroundColor: Colors.white,
         title: TextButton(
           onPressed: (() {}),
           child: const Text(
-            'Home',
+            'Event Info',
             style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+              color: Colors.white,
+              fontSize: 24,
             ),
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pop(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AdminLogin(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.logout),
+            onPressed: () {},
+            icon: const Icon(Icons.live_help_outlined),
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Hero(
-              tag: 'logoTag',
-              child: Image.asset(
-                'assets/images/launch_image.png',
-              ),
-            ),
-          ],
-        ),
-      ),
+      // body: ListView(
+      //   children: [
+      //     const Text('No events'),
+      //   ],
+      // ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 17, 150, 207),
         onPressed: (() {
           showModalBottomSheet(
             context: context,

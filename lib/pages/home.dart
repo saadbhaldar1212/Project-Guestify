@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guestify/pages/eventInfo.dart';
 
 import '../login/adminLogin.dart';
 
@@ -60,6 +61,15 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => EventInfo(),
+          );
+        }),
+        child: const Icon(Icons.add),
       ),
     );
   }

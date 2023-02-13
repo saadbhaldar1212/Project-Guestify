@@ -11,8 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //TODO: Remove back button from appBar
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,6 +98,8 @@ class _HomeState extends State<Home> {
         backgroundColor: const Color.fromARGB(255, 17, 150, 207),
         onPressed: (() {
           showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
             context: context,
             builder: (context) => EventInfo(),
           );

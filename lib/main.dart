@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/eventInfo.dart';
 import 'package:guestify/pages/home.dart';
 // import 'package:guestify/login/adminLogin.dart';
-import 'package:guestify/pages/welcome.dart';
+import 'package:guestify/utils/utility.dart';
 // import 'package:guestify/pages/welcome2.dart';
 // import 'pages/explore.dart';
 // import 'pages/home.dart';
@@ -25,88 +24,42 @@ Learn different types of Font in app
 3. UserLogin() - Layout, Design, Animation
 
 */
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Urbanist',
-          primaryColor: const Color.fromRGBO(19, 159, 219, 10),
-        ).copyWith(
-          dividerColor: Colors.transparent,
-          useMaterial3: true,
-        ),
-        home: Home());
+      theme: ThemeData(
+        fontFamily: 'Urbanist',
+        primaryColor: const Color.fromRGBO(19, 159, 219, 10),
+      ).copyWith(
+        dividerColor: Colors.transparent,
+        useMaterial3: true,
+      ),
+      home: FutureBuilder(
+        future: _fbApp,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went Wrong');
+            // Utils().toastMessage(snapshot.error.toString());
+          } else if (snapshot.hasData) {
+            return const Home();
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => MyHomePageState();
-// }
-
-// class MyHomePageState extends State<MyHomePage> {
-//   int _selectedIndex = 0;
-
-//   void onPressed(int val) {
-//     setState(() {
-//       _selectedIndex = val;
-//     });
-//   }
-
-//   List<Widget> listWidget = <Widget>[
-//     Home(),
-//     Explore(),
-//     Setting(),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: listWidget.elementAt(_selectedIndex),
-//       bottomNavigationBar: BottomNavigationBar(
-//         items: const [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home_outlined,
-//                 color: Color.fromARGB(255, 25, 106, 255)),
-//             label: 'Home',
-//             activeIcon:
-//                 Icon(Icons.home, color: Color.fromARGB(255, 25, 106, 255)),
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.explore_outlined,
-//                 color: Color.fromARGB(255, 25, 106, 255)),
-//             label: 'Explore',
-//             activeIcon:
-//                 Icon(Icons.explore, color: Color.fromARGB(255, 25, 106, 255)),
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.settings_outlined,
-//                 color: Color.fromARGB(255, 25, 106, 255)),
-//             label: 'Setting',
-//             activeIcon:
-//                 Icon(Icons.settings, color: Color.fromARGB(255, 25, 106, 255)),
-//           ),
-//         ],
-//         type: BottomNavigationBarType.fixed,
-//         showSelectedLabels: false,
-//         showUnselectedLabels: false,
-//         currentIndex: _selectedIndex,
-//         onTap: onPressed,
-//         elevation: 0,
-//       ),
-//     );
-//   }
-// }

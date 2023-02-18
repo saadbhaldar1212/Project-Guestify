@@ -98,10 +98,16 @@ class _HomeState extends State<Home> {
         backgroundColor: const Color.fromARGB(255, 17, 150, 207),
         onPressed: (() {
           showModalBottomSheet(
+            isScrollControlled: true,
             isDismissible: false,
             enableDrag: false,
             context: context,
-            builder: (context) => EventInfo(),
+            builder: (context) {
+              return const FractionallySizedBox(
+                heightFactor: 0.9,
+                child: EventInfo(),
+              );
+            },
           );
         }),
         child: const Icon(Icons.add),

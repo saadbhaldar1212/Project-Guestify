@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/home.dart';
+import 'package:intl/intl.dart';
 
 class EventInfo extends StatefulWidget {
   const EventInfo({super.key});
@@ -18,8 +18,8 @@ class _EventInfoState extends State<EventInfo> {
   final eventHostController = TextEditingController();
   final eventVenueController = TextEditingController();
   final eventTopicController = TextEditingController();
-
-  var textInput = const Text('No date Selected');
+  final eventDateController = TextEditingController();
+  final eventTimeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +150,79 @@ class _EventInfoState extends State<EventInfo> {
                       return null;
                     },
                   ),
+                  Row(
+                    children: [
+                      TextFormField(
+                        controller: eventDateController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.datetime,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Date',
+                          constraints: BoxConstraints(
+                            maxWidth: 200,
+                          ),
+                          suffixIcon: Icon(Icons.calendar_month_outlined),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Date';
+                          }
+                          return null;
+                        },
+                        onTap: () async {
+                          DateTime? datePicked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now());
+
+                          if (datePicked != null) {
+                            setState(() {
+                              eventDateController.text =
+                                  DateFormat().add_yMMMMd().format(datePicked);
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextFormField(
+                        controller: eventTimeController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.datetime,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Time',
+                          constraints: BoxConstraints(
+                            maxWidth: 200,
+                          ),
+                          suffixIcon: Icon(Icons.access_time_sharp),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Time';
+                          }
+                          return null;
+                        },
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                            initialEntryMode: TimePickerEntryMode.dial,
+                          );
+                          if (pickedTime != null) {
+                            eventTimeController.text =
+                                TimeOfDay.now().format(context);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                   TextFormField(
                     controller: eventDescriptionController,
                     cursorHeight: 20,
@@ -167,45 +240,6 @@ class _EventInfoState extends State<EventInfo> {
                     //   }
                     //   return null;
                     // },
-                  ),
-                  Row(
-                    children: [
-                      TextFormField(
-                        controller: eventDescriptionController,
-                        cursorHeight: 20,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.datetime,
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Event Date',
-                          constraints: BoxConstraints(
-                            maxWidth: 100,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter Date';
-                          }
-                          return null;
-                        },
-                      ),
-                      IconButton(
-                        onPressed: (() async {
-                          DateTime? datePicked = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now());
-
-                          if (datePicked != null) {
-                            setState(() {
-                              //display date into the textFormField using IconButton.calendar
-                            });
-                          }
-                        }),
-                        icon: const Icon(Icons.calendar_month_outlined),
-                      ),
-                    ],
                   ),
                 ]),
               ),

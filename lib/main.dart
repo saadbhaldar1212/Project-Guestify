@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/pages/home.dart';
+import 'package:guestify/seats/seats.dart';
 // import 'package:guestify/login/adminLogin.dart';
 import 'package:guestify/utils/utility.dart';
 // import 'package:guestify/pages/welcome2.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
             return const Text('Something went Wrong');
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
-            return const Home();
+            return const Seats();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

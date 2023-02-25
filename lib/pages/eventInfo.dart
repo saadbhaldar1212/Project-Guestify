@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,8 +10,9 @@ class EventInfo extends StatefulWidget {
 }
 
 class _EventInfoState extends State<EventInfo> {
-  final _eventFormField = GlobalKey<FormState>();
+  final database = FirebaseDatabase.instance.ref();
 
+  final _eventFormField = GlobalKey<FormState>();
   final eventNameController = TextEditingController();
   final eventDescriptionController = TextEditingController();
   final eventChiefGuestController = TextEditingController();
@@ -23,6 +25,7 @@ class _EventInfoState extends State<EventInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final eventRef = database.child('events/');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

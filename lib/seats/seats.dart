@@ -49,25 +49,30 @@ class _SeatsState extends State<Seats> {
               ),
             ),
             Center(
-              child: Material(
-                shape: const CircleBorder(
-                  side: BorderSide(
-                    color: Color.fromARGB(255, 17, 150, 207),
+                child: Wrap(
+              direction: Axis.vertical,
+              children: List.generate(
+                5,
+                (index) => Material(
+                  shape: const CircleBorder(
+                    side: BorderSide(
+                      color: Color.fromARGB(255, 17, 150, 207),
+                    ),
+                  ),
+                  color: Colors.transparent,
+                  child: MaterialButton(
+                    onPressed: (() {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => EventInfo(),
+                      );
+                    }),
+                    height: 20,
+                    minWidth: 20,
                   ),
                 ),
-                color: Colors.transparent,
-                child: MaterialButton(
-                  onPressed: (() {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => EventInfo(),
-                    );
-                  }),
-                  height: 200,
-                  minWidth: 200,
-                ),
               ),
-            ),
+            )),
           ],
         ),
       ),

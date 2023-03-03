@@ -150,10 +150,42 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 15.0),
+            padding: const EdgeInsets.only(
+                top: 45.0, left: 15.0, right: 15.0, bottom: 15.0),
             child: Row(
               children: const [
                 Text('Event Venue: - '),
+              ],
+            ),
+          ),
+          const Divider(
+            indent: 100,
+            endIndent: 100,
+            color: Color.fromARGB(255, 17, 150, 207),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'Description',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 12.0, left: 40.0, right: 40.0, bottom: 15.0),
+            child: Row(
+              children: const [
+                SizedBox(
+                  width: 280,
+                  child: Text('Detailed text'),
+                ),
               ],
             ),
           ),

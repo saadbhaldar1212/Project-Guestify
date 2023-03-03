@@ -89,11 +89,76 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      // body: ListView(
-      //   children: [
-      //     const Text('No events'),
-      //   ],
-      // ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'Event name',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                'Event Topic',
+                style: TextStyle(fontSize: 15),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 48.0, left: 15.0),
+            child: Row(
+              children: const [
+                Text('Event Host name: - '),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 15.0),
+            child: Row(
+              children: const [
+                Text('Event Chief Guest: - '),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 15.0),
+            child: Row(
+              children: const [
+                Text('Event Special Guest: - '),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                Text('Event Date: - '),
+                Text('Event Time: -'),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 15.0),
+            child: Row(
+              children: const [
+                Text('Event Venue: - '),
+              ],
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 17, 150, 207),
         onPressed: (() {

@@ -122,6 +122,7 @@ class _AdminLoginState extends State<AdminLogin> {
                                 ),
                               );
                             }).onError((error, stackTrace) {
+                              print(error.toString());
                               Utils().toastMessage(error.toString());
                             });
                           }

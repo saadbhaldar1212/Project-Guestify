@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
             return const Text('Something went Wrong');
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
-            return const WelcomeSplash();
+            // return const WelcomeSplash();
+            return const Home();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

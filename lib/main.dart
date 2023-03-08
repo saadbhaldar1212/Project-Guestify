@@ -5,6 +5,8 @@ import 'package:guestify/pages/home.dart';
 import 'package:guestify/seats/seats.dart';
 // import 'package:guestify/login/adminLogin.dart';
 import 'package:guestify/utils/utility.dart';
+
+import 'pages/welcome.dart';
 // import 'package:guestify/pages/welcome2.dart';
 // import 'pages/explore.dart';
 // import 'pages/home.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
             return const Text('Something went Wrong');
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
-            return const Home();
+            return const WelcomeSplash();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

@@ -1,12 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/eventInfo.dart';
 import 'package:guestify/pages/home.dart';
-import 'package:guestify/seats/seats.dart';
 // import 'package:guestify/login/adminLogin.dart';
-import 'package:guestify/utils/utility.dart';
 
-import 'pages/welcome.dart';
 // import 'package:guestify/pages/welcome2.dart';
 // import 'pages/explore.dart';
 // import 'pages/home.dart';

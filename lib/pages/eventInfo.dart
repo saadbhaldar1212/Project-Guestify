@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/seats/seats.dart';
+import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
 
 class EventInfo extends StatefulWidget {
@@ -28,229 +30,266 @@ class _EventInfoState extends State<EventInfo> {
     final eventRef = database.child('events/');
     const primaryKey = "eventInfo";
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 70,
-        backgroundColor: const Color.fromARGB(255, 17, 150, 207),
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: (() {
-              Navigator.pop(context);
-            }),
-            icon: const Icon(Icons.close),
-          ),
-        ],
-        elevation: 0,
-        title: const Text(
-          'Event data',
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Form(
+      body: Form(
           key: _eventFormField,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                child: Column(children: [
-                  TextFormField(
-                    controller: eventNameController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Name',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Name';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: eventTopicController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Topic',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Event Topic';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: eventChiefGuestController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Chief Guest',
-                    ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
-                  ),
-                  TextFormField(
-                    controller: eventSpecialGuestController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Special Guest',
-                    ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
-                  ),
-                  TextFormField(
-                    controller: eventHostController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Host',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Host name';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: eventVenueController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Venue',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Venue';
-                      }
-                      return null;
-                    },
-                  ),
-                  Row(
-                    children: [
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 18.0, right: 18, top: 28, bottom: 28),
+            child: Card(
+              elevation: 10,
+              color: const Color.fromARGB(200, 17, 150, 207),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: TextFormField(
+                          cursorColor: Colors.white,
+                          style: const TextStyle(color: Colors.white),
+                          controller: eventNameController,
+                          cursorHeight: 20,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          autofocus: false,
+                          decoration: const InputDecoration(
+                            labelText: 'Event Name',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter Name';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
                       TextFormField(
-                        controller: eventDateController,
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        controller: eventTopicController,
                         cursorHeight: 20,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.datetime,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
                         autofocus: false,
                         decoration: const InputDecoration(
-                          labelText: 'Event Date',
-                          constraints: BoxConstraints(
-                            maxWidth: 200,
+                          labelText: 'Event Topic',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
                           ),
-                          suffixIcon: Icon(Icons.calendar_month_outlined),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Enter Date';
+                            return 'Enter Event Topic';
                           }
                           return null;
                         },
-                        onTap: () async {
-                          DateTime? datePicked = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now());
+                      ),
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        controller: eventChiefGuestController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Chief Guest',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        // validator: (value) {
+                        //   if (value!.isEmpty) {
+                        //     return 'Enter email';
+                        //   }
+                        //   return null;
+                        // },
+                      ),
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        controller: eventSpecialGuestController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Special Guest',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        // validator: (value) {
+                        //   if (value!.isEmpty) {
+                        //     return 'Enter email';
+                        //   }
+                        //   return null;
+                        // },
+                      ),
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        controller: eventHostController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Host',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Host name';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        controller: eventVenueController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.multiline,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Event Venue',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Venue';
+                          }
+                          return null;
+                        },
+                      ),
+                      Row(
+                        children: [
+                          TextFormField(
+                            cursorColor: Colors.white,
+                            style: const TextStyle(color: Colors.white),
+                            controller: eventDateController,
+                            cursorHeight: 20,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.datetime,
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              labelText: 'Event Date',
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints(
+                                maxWidth: 200,
+                              ),
+                              suffixIcon: Icon(Icons.calendar_month_outlined,
+                                  color: Colors.white),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter Date';
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime? datePicked = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1900),
+                                  lastDate: DateTime.now());
 
-                          if (datePicked != null) {
-                            setState(() {
-                              eventDateController.text =
-                                  DateFormat().add_yMMMMd().format(datePicked);
-                            });
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      TextFormField(
-                        controller: eventTimeController,
-                        cursorHeight: 20,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.datetime,
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Event Time',
-                          constraints: BoxConstraints(
-                            maxWidth: 200,
+                              if (datePicked != null) {
+                                setState(() {
+                                  eventDateController.text = DateFormat()
+                                      .add_yMMMMd()
+                                      .format(datePicked);
+                                });
+                              }
+                            },
                           ),
-                          suffixIcon: Icon(Icons.access_time_sharp),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter Time';
-                          }
-                          return null;
-                        },
-                        onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                            initialEntryMode: TimePickerEntryMode.dial,
-                          );
-                          if (pickedTime != null) {
-                            eventTimeController.text =
-                                TimeOfDay.now().format(context);
-                          }
-                        },
+                        ],
                       ),
-                    ],
+                      Row(
+                        children: [
+                          TextFormField(
+                            cursorColor: Colors.white,
+                            style: const TextStyle(color: Colors.white),
+                            controller: eventTimeController,
+                            cursorHeight: 20,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.datetime,
+                            autofocus: false,
+                            decoration: const InputDecoration(
+                              labelText: 'Event Time',
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              constraints: BoxConstraints(
+                                maxWidth: 200,
+                              ),
+                              suffixIcon: Icon(Icons.access_time_sharp,
+                                  color: Colors.white),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter Time';
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                                initialEntryMode: TimePickerEntryMode.dial,
+                              );
+                              if (pickedTime != null) {
+                                eventTimeController.text =
+                                    TimeOfDay.now().format(context);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 18.0),
+                        child: TextFormField(
+                          cursorColor: Colors.white,
+                          style: const TextStyle(color: Colors.white),
+                          controller: eventDescriptionController,
+                          cursorHeight: 20,
+                          textInputAction: TextInputAction.newline,
+                          keyboardType: TextInputType.multiline,
+                          minLines: 3,
+                          maxLines: 5,
+                          autofocus: false,
+                          decoration: const InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            labelText: 'Event Description',
+                          ),
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Enter email';
+                          //   }
+                          //   return null;
+                          // },
+                        ),
+                      ),
+                    ]),
                   ),
-                  TextFormField(
-                    controller: eventDescriptionController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.newline,
-                    keyboardType: TextInputType.multiline,
-                    minLines: 3,
-                    maxLines: 5,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Description',
-                    ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
-                  ),
-                ]),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          )),
       persistentFooterButtons: [
         ElevatedButton(
           //color which matches theme
@@ -268,7 +307,66 @@ class _EventInfoState extends State<EventInfo> {
                 "Event Time": eventTimeController.text,
                 "Event Description": eventDescriptionController.text,
               });
-              Navigator.pop(context);
+
+              showDialog(
+                context: context,
+                builder: (context) => SimpleDialog(
+                  elevation: 5,
+                  alignment: Alignment.center,
+                  title: const Text(
+                    'Are you sure?',
+                    style: TextStyle(fontSize: 18, color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                  contentPadding: const EdgeInsets.all(20),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.green.shade400,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Utils()
+                                    .toastMessage('Event Created Successfully');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Seats(),
+                                  ),
+                                );
+                              }),
+                              child: const Text(
+                                'Yes & Continue',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.red,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Navigator.pop(context);
+                              }),
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
             }
           }),
           child: const Text('Save data'),

@@ -25,7 +25,7 @@ class _SeatsState extends State<Seats> {
         title: const Text(
           'Seats booking',
           style: TextStyle(
-            fontSize: 26,
+            fontSize: 24,
           ),
         ),
       ),
@@ -60,6 +60,7 @@ class _SeatsState extends State<Seats> {
             showModalBottomSheet(
                 isDismissible: false,
                 isScrollControlled: false,
+                enableDrag: false,
                 context: context,
                 builder: (context) {
                   return Scaffold(
@@ -80,60 +81,69 @@ class _SeatsState extends State<Seats> {
                       children: [
                         Form(
                           key: _formKey,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                    hintText: 'Enter the number of tables',
-                                    fillColor: Colors.amber),
-                                controller: textFormField,
-                                keyboardType: TextInputType.number,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, left: 15, right: 15),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      labelText: 'No. of Tables',
+                                    ),
+                                    controller: textFormField,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ],
                               ),
-                              ElevatedButton(
-                                onPressed: (() {
-                                  setState(() {
-                                    String inputData = textFormField.text;
-                                    print(inputData.runtimeType);
-                                    int numData = int.parse(inputData);
-                                    print(numData.runtimeType);
-                                    // Center(
-                                    //   child: Wrap(
-                                    //     direction: Axis.vertical,
-                                    //     children: List.generate(
-                                    //       numData,
-                                    //       (index) => Material(
-                                    //         shape: const CircleBorder(
-                                    //           side: BorderSide(
-                                    //             color: Color.fromARGB(255, 17, 150, 207),
-                                    //           ),
-                                    //         ),
-                                    //         color: Colors.transparent,
-                                    //         child: MaterialButton(
-                                    //           onPressed: (() {
-                                    //             showModalBottomSheet(
-                                    //               context: context,
-                                    //               builder: (context) => EventInfo(),
-                                    //             );
-                                    //           }),
-                                    //           height: 20,
-                                    //           minWidth: 20,
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // );
-                                    Center(
-                                      child: Text('$numData'),
-                                    );
-                                  });
-                                }),
-                                child: const Text('Submit'),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
                     ),
+                    persistentFooterButtons: [
+                      ElevatedButton(
+                        onPressed: (() {
+                          setState(() {
+                            String inputData = textFormField.text;
+                            print(inputData.runtimeType);
+                            int numData = int.parse(inputData);
+                            print(numData.runtimeType);
+                            // Center(
+                            //   child: Wrap(
+                            //     direction: Axis.vertical,
+                            //     children: List.generate(
+                            //       numData,
+                            //       (index) => Material(
+                            //         shape: const CircleBorder(
+                            //           side: BorderSide(
+                            //             color: Color.fromARGB(255, 17, 150, 207),
+                            //           ),
+                            //         ),
+                            //         color: Colors.transparent,
+                            //         child: MaterialButton(
+                            //           onPressed: (() {
+                            //             showModalBottomSheet(
+                            //               context: context,
+                            //               builder: (context) => EventInfo(),
+                            //             );
+                            //           }),
+                            //           height: 20,
+                            //           minWidth: 20,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // );
+                            Center(
+                              child: Text('$numData'),
+                            );
+                          });
+                        }),
+                        child: const Text('Submit'),
+                      ),
+                    ],
+                    persistentFooterAlignment: AlignmentDirectional.center,
                   );
                 });
           }),

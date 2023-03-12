@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromRGBO(19, 159, 219, 10),
       ).copyWith(
         dividerColor: Colors.transparent,
-        // useMaterial3: true,
+        useMaterial3: true,
       ),
       home: FutureBuilder(
         future: _fbApp,
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             // return const WelcomeSplash();
-            return const Seats();
+            return const Home();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

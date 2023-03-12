@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/pages/home.dart';
+import 'package:guestify/seats/seats.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             // return const WelcomeSplash();
-            return const Home();
+            return const Seats();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

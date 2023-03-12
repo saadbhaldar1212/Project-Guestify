@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/home.dart';
+import 'package:guestify/dashboard/dashboard_content.dart';
+import 'package:guestify/events/eventinfo.dart';
 import 'package:guestify/seats/seats.dart';
 
 Future<void> main() async {
@@ -23,6 +24,11 @@ class MyApp extends StatelessWidget {
       ).copyWith(
         dividerColor: Colors.transparent,
         useMaterial3: true,
+        textTheme: const TextTheme(
+          bodySmall: TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ),
       home: FutureBuilder(
         future: _fbApp,
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             // return const WelcomeSplash();
-            return const Home();
+            return const EventInfo();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

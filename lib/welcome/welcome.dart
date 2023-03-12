@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/welcome2.dart';
-// import 'package:practice_widget/main.dart';
-// import 'package:practice_widget/spalshpages/page1.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-// import '../spalshpages/page2.dart';
+import './welcome2.dart';
 
 class WelcomeSplash extends StatefulWidget {
   const WelcomeSplash({super.key});

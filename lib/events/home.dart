@@ -1,12 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/models/eventinfo_model.dart';
-import 'package:guestify/pages/eventInfo.dart';
-import 'package:guestify/seats/seats.dart';
-import 'package:intl/intl.dart';
 
-import '../login/adminLogin.dart';
+import 'eventinfo.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

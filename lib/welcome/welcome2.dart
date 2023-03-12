@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/login/adminLogin.dart';
+import 'package:guestify/login/admin_login.dart';
 
 class Welcome2 extends StatefulWidget {
   const Welcome2({super.key});

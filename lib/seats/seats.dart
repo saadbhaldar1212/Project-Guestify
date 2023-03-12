@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/eventInfo.dart';
 
 class Seats extends StatefulWidget {
   const Seats({super.key});
@@ -29,125 +28,76 @@ class _SeatsState extends State<Seats> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Material(
-            //   shape: const CircleBorder(
-            //     side: BorderSide(
-            //       color: Color.fromARGB(255, 17, 150, 207),
-            //     ),
-            //   ),
-            //   color: Colors.transparent,
-            //   child: MaterialButton(
-            //     onPressed: (() {
-            //       showModalBottomSheet(
-            //         context: context,
-            //         builder: (context) => EventInfo(),
-            //       );
-            //     }),
-            //     height: 65,
-            //     minWidth: 65,
-            //   ),
-            // ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 17, 150, 207),
-          onPressed: (() {
-            showModalBottomSheet(
-                isDismissible: false,
-                isScrollControlled: false,
-                enableDrag: false,
-                context: context,
-                builder: (context) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      automaticallyImplyLeading: false,
-                      centerTitle: true,
-                      actions: [
-                        IconButton(
-                          onPressed: (() {
-                            Navigator.pop(context);
-                          }),
-                          icon: const Icon(Icons.close),
-                        ),
-                      ],
-                    ),
-                    body: Column(
-                      children: [
-                        Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, left: 15, right: 15),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      labelText: 'No. of Tables',
-                                    ),
-                                    controller: textFormField,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ],
-                              ),
+      body: Form(
+        key: _formKey,
+        child: SizedBox(
+          child: Card(
+            elevation: 10,
+            color: const Color.fromARGB(200, 17, 150, 207),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: TextFormField(
+                          cursorColor: Colors.white,
+                          style: const TextStyle(color: Colors.white),
+                          // controller: eventNameController,
+                          cursorHeight: 20,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          autofocus: false,
+                          decoration: const InputDecoration(
+                            labelText: 'Number of Tables',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
                             ),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter number of Tables';
+                            }
+                            return null;
+                          },
                         ),
-                      ],
-                    ),
-                    persistentFooterButtons: [
-                      ElevatedButton(
-                        onPressed: (() {
-                          setState(() {
-                            String inputData = textFormField.text;
-                            print(inputData.runtimeType);
-                            int numData = int.parse(inputData);
-                            print(numData.runtimeType);
-                            // Center(
-                            //   child: Wrap(
-                            //     direction: Axis.vertical,
-                            //     children: List.generate(
-                            //       numData,
-                            //       (index) => Material(
-                            //         shape: const CircleBorder(
-                            //           side: BorderSide(
-                            //             color: Color.fromARGB(255, 17, 150, 207),
-                            //           ),
-                            //         ),
-                            //         color: Colors.transparent,
-                            //         child: MaterialButton(
-                            //           onPressed: (() {
-                            //             showModalBottomSheet(
-                            //               context: context,
-                            //               builder: (context) => EventInfo(),
-                            //             );
-                            //           }),
-                            //           height: 20,
-                            //           minWidth: 20,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
-                            Center(
-                              child: Text('$numData'),
-                            );
-                          });
-                        }),
-                        child: const Text('Submit'),
+                      ),
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        style: const TextStyle(color: Colors.white),
+                        // controller: eventNameController,
+                        cursorHeight: 20,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Number of Chairs around Tables',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter number of Tables';
+                          }
+                          return null;
+                        },
                       ),
                     ],
-                    persistentFooterAlignment: AlignmentDirectional.center,
-                  );
-                });
-          }),
-          child: const Icon(Icons.add)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ElevatedButton(
+        onPressed: (() {}),
+        child: const Text('Save Data'),
+      ),
     );
   }
 }

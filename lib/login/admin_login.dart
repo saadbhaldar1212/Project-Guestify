@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/pages/home.dart';
-import 'package:guestify/utils/utility.dart';
+
+import '../events/home.dart';
+import '../utils/utility.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});

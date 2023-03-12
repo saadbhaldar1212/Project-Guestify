@@ -10,7 +10,7 @@ class EventInfo extends StatefulWidget {
 }
 
 class _EventInfoState extends State<EventInfo> {
-  // final database = FirebaseDatabase.instance.ref();
+  final database = FirebaseDatabase.instance.ref();
 
   final _eventFormField = GlobalKey<FormState>();
   final eventNameController = TextEditingController();
@@ -25,7 +25,7 @@ class _EventInfoState extends State<EventInfo> {
 
   @override
   Widget build(BuildContext context) {
-    // final eventRef = database.child('events/');
+    final eventRef = database.child('events/');
     const primaryKey = "eventInfo";
     return Scaffold(
       appBar: AppBar(
@@ -257,17 +257,17 @@ class _EventInfoState extends State<EventInfo> {
           onPressed: (() {
             if (_eventFormField.currentState!.validate()) {
               //add data to db
-              // eventRef.child(primaryKey).set({
-              //   "Event Name": eventNameController.text,
-              //   "Event Topic": eventTopicController.text,
-              //   "Event Chief Guest": eventChiefGuestController.text,
-              //   "Event Special Guest": eventSpecialGuestController.text,
-              //   "Event Host": eventHostController.text,
-              //   "Event Venue": eventVenueController.text,
-              //   "Event Date": eventDateController.text,
-              //   "Event Time": eventTimeController.text,
-              //   "Event Description": eventDescriptionController.text,
-              // });
+              eventRef.child(primaryKey).set({
+                "Event Name": eventNameController.text,
+                "Event Topic": eventTopicController.text,
+                "Event Chief Guest": eventChiefGuestController.text,
+                "Event Special Guest": eventSpecialGuestController.text,
+                "Event Host": eventHostController.text,
+                "Event Venue": eventVenueController.text,
+                "Event Date": eventDateController.text,
+                "Event Time": eventTimeController.text,
+                "Event Description": eventDescriptionController.text,
+              });
               Navigator.pop(context);
             }
           }),

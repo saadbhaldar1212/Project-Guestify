@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/events/eventInfo.dart';
 import 'package:guestify/events/home.dart';
 
 class EventDashboard extends StatefulWidget {
@@ -12,7 +11,20 @@ class EventDashboard extends StatefulWidget {
 }
 
 class _EventDashboardState extends State<EventDashboard> {
-  //
+  /*
+  
+  For eventDashboard -
+
+  At first glance, Data is viewed
+  At bottom will have delete this event option - with dialogbox
+  At Appbar we will have edit button
+
+  EditButton should have initial values inside it
+  After submitting the details the First glance view should be changed with updated data as all things will be connected with database
+
+  UI for nach editbutton is dependent on eventinfo or home page so both should be done well
+  
+  */
   final eventNameController = TextEditingController();
   final eventDescriptionController = TextEditingController();
   final eventChiefGuestController = TextEditingController();

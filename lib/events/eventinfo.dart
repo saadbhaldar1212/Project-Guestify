@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/dashboard/dashboard_content.dart';
 import 'package:guestify/seats/seats.dart';
 import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
@@ -296,17 +295,17 @@ class _EventInfoState extends State<EventInfo> {
         onPressed: (() {
           if (_eventFormField.currentState!.validate()) {
             //add data to db
-            // eventRef.child(primaryKey).set({
-            //   "Event Name": eventNameController.text,
-            //   "Event Topic": eventTopicController.text,
-            //   "Event Chief Guest": eventChiefGuestController.text,
-            //   "Event Special Guest": eventSpecialGuestController.text,
-            //   "Event Host": eventHostController.text,
-            //   "Event Venue": eventVenueController.text,
-            //   "Event Date": eventDateController.text,
-            //   "Event Time": eventTimeController.text,
-            //   "Event Description": eventDescriptionController.text,
-            // });
+            eventRef.child(primaryKey).set({
+              "Event Name": eventNameController.text,
+              "Event Topic": eventTopicController.text,
+              "Event Chief Guest": eventChiefGuestController.text,
+              "Event Special Guest": eventSpecialGuestController.text,
+              "Event Host": eventHostController.text,
+              "Event Venue": eventVenueController.text,
+              "Event Date": eventDateController.text,
+              "Event Time": eventTimeController.text,
+              "Event Description": eventDescriptionController.text,
+            });
 
             showDialog(
               context: context,
@@ -334,21 +333,22 @@ class _EventInfoState extends State<EventInfo> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DashboardContent(
-                                    eventName: eventNameController.text,
-                                    eventTitle: eventTopicController.text,
-                                    eventChiefGuest:
-                                        eventChiefGuestController.text,
-                                    eventSpecialGuest:
-                                        eventSpecialGuestController.text,
-                                    eventHost: eventHostController.text,
-                                    eventVenue: eventVenueController.text,
-                                    eventDate: eventDateController.text,
-                                    eventTime: eventTimeController.text,
-                                    eventDescription:
-                                        eventDescriptionController.text,
-                                  ),
-                                ),
+                                    builder: (context) => const Seats()
+                                    // DashboardContent(
+                                    //   eventName: eventNameController.text,
+                                    //   eventTitle: eventTopicController.text,
+                                    //   eventChiefGuest:
+                                    //       eventChiefGuestController.text,
+                                    //   eventSpecialGuest:
+                                    //       eventSpecialGuestController.text,
+                                    //   eventHost: eventHostController.text,
+                                    //   eventVenue: eventVenueController.text,
+                                    //   eventDate: eventDateController.text,
+                                    //   eventTime: eventTimeController.text,
+                                    //   eventDescription:
+                                    //       eventDescriptionController.text,
+                                    // ),
+                                    ),
                               );
                             }),
                             child: const Text(

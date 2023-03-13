@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/dashboard/dashboard_content.dart';
-import 'package:guestify/events/eventinfo.dart';
-import 'package:guestify/seats/seats.dart';
+import 'package:guestify/dashboard/dashboard.dart';
+
+import './events/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             // return const WelcomeSplash();
-            return const EventInfo();
+            return const Dashboard();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

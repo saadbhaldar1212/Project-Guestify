@@ -16,32 +16,32 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final eventInfo = database.child("events/");
-    const _primaryKey = "eventInfo";
+    // final eventInfo = database.child("events/");
+    // const _primaryKey = "eventInfo";
 
-    final _formKey = GlobalKey<FormState>();
-    final _eName = TextEditingController();
-    final _eTopic = TextEditingController();
-    final _eChiefGuest = TextEditingController();
-    final _eSpecialGuest = TextEditingController();
-    final _eHost = TextEditingController();
-    final _eVenue = TextEditingController();
-    final _eDate = TextEditingController();
-    final _eTime = TextEditingController();
-    final _eDesc = TextEditingController();
+    // final _formKey = GlobalKey<FormState>();
+    // final _eName = TextEditingController();
+    // final _eTopic = TextEditingController();
+    // final _eChiefGuest = TextEditingController();
+    // final _eSpecialGuest = TextEditingController();
+    // final _eHost = TextEditingController();
+    // final _eVenue = TextEditingController();
+    // final _eDate = TextEditingController();
+    // final _eTime = TextEditingController();
+    // final _eDesc = TextEditingController();
 
-    List<EventInfoModel> eventInfoModel = [
-      EventInfoModel(
-          eventName: _eName.text,
-          eventTitle: _eTopic.text,
-          eventChiefGuest: _eChiefGuest.text,
-          eventSpecialGuest: _eSpecialGuest.text,
-          eventHost: _eHost.text,
-          eventVenue: _eVenue.text,
-          eventDate: _eDate.text,
-          eventTime: _eTime.text,
-          eventDescription: _eDesc.text),
-    ];
+    // List<EventInfoModel> eventInfoModel = [
+    //   EventInfoModel(
+    //       eventName: _eName.text,
+    //       eventTitle: _eTopic.text,
+    //       eventChiefGuest: _eChiefGuest.text,
+    //       eventSpecialGuest: _eSpecialGuest.text,
+    //       eventHost: _eHost.text,
+    //       eventVenue: _eVenue.text,
+    //       eventDate: _eDate.text,
+    //       eventTime: _eTime.text,
+    //       eventDescription: _eDesc.text),
+    // ];
 
     return Scaffold(
       appBar: AppBar(

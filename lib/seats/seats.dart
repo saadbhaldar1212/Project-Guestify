@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/dashboard.dart';
+import 'package:guestify/utils/utility.dart';
 
 class Seats extends StatefulWidget {
   const Seats({super.key});
@@ -95,7 +97,15 @@ class _SeatsState extends State<Seats> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
-        onPressed: (() {}),
+        onPressed: (() {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Dashboard(),
+            ),
+          );
+          Utils().toastMessage('Seats Data inserted successfully');
+        }),
         child: const Text('Save Data'),
       ),
     );

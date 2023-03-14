@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/employee_dashboard.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 
 import './events/home.dart';
@@ -38,7 +39,9 @@ class MyApp extends StatelessWidget {
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             // return const WelcomeSplash();
-            return const Dashboard();
+            return const Dashboard(
+              title: 'test',
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),

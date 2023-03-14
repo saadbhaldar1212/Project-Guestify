@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/events/home.dart';
 
@@ -25,6 +27,9 @@ class _EventDashboardState extends State<EventDashboard> {
   UI for nach editbutton is dependent on eventinfo or home page so both should be done well
   
   */
+
+  final db = FirebaseDatabase.instance.ref();
+
   final eventNameController = TextEditingController();
   final eventDescriptionController = TextEditingController();
   final eventChiefGuestController = TextEditingController();
@@ -37,6 +42,9 @@ class _EventDashboardState extends State<EventDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final ref = db.child('events/');
+    const pk = 'eventInfo';
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -67,21 +75,12 @@ class _EventDashboardState extends State<EventDashboard> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: (() {}),
-              child: const Text(
-                'View Data',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      // body: FirebaseAnimatedList(
+      //   query: ref,
+      //   itemBuilder: (context, snapshot, animation, index) {
+      //     // return null;
+      //   },
+      // ),
     );
   }
 }

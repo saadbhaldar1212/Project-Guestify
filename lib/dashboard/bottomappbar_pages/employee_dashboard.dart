@@ -1,6 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/utils/simple_dialog.dart';
+import 'package:guestify/utils/utility.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key, required this.title});
@@ -22,7 +26,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
   @override
   Widget build(BuildContext context) {
     final empRef = database.child('employee/');
-    //individual primary key storing of all emp which will be easy for fetching
 
     return Scaffold(
       appBar: AppBar(
@@ -136,10 +139,15 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                       //this value fetching will be done when CONTINUE WITH EMPLOYEE is clicked
 
                                       //for each primary key code is different I guess
-                                      // empRef.child('emp').set({
-                                      //   "Employee Name": empName.text,
-                                      //   "Employee Password": empPass.text
-                                      // });
+                                      empRef.push().set({
+                                        "Employee Name": empName.text,
+                                        "Employee Password": empPass.text
+                                      }).then((value) {
+                                        Utils().toastMessage(
+                                            'Data inserted successfully');
+                                        empName.clear();
+                                        empPass.clear();
+                                      });
                                     }
                                   }),
                                   child: const Text(
@@ -157,23 +165,56 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                 ),
               ),
             ),
-            //un-const it later
-            Card(
-              margin: EdgeInsets.only(
-                left: 30,
-                right: 30,
-              ),
-              color: const Color.fromARGB(255, 17, 150, 207),
-              child: SizedBox(
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'Hello',
-                    style: TextStyle(color: Colors.black),
+            FirebaseAnimatedList(
+              shrinkWrap: true,
+              query: empRef,
+              itemBuilder: (context, snapshot, animation, index) {
+                return Card(
+                  margin: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
                   ),
-                ),
-              ),
-            ),
+                  color: const Color.fromARGB(255, 17, 150, 207),
+                  child: SizedBox(
+                    height: 400,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 15),
+                      child: SingleChildScrollView(
+                        child: ListTile(
+                          leading: const CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.white,
+                            child: Icon(Icons.person,
+                                color: Colors.black, size: 40),
+                          ),
+                          title: Text(
+                              snapshot.child('Employee Name').value.toString()),
+                          subtitle: Text(snapshot
+                              .child('Employee Password')
+                              .value
+                              .toString()),
+                          trailing: IconButton(
+                            onPressed: (() {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const SDialog(
+                                    titleText: 'Employee Deleted Successfully'),
+                              );
+                            }),
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 35,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),

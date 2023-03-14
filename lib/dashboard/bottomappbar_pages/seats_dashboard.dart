@@ -27,7 +27,7 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Seats'),
       ),
     );

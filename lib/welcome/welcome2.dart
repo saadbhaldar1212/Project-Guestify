@@ -157,7 +157,8 @@ class _Welcome2State extends State<Welcome2> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Welcome2(),
+                                          builder: (context) =>
+                                              const Welcome2(),
                                         ));
                                   }),
                                   child: const Text(
@@ -204,7 +205,8 @@ class _Welcome2State extends State<Welcome2> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Welcome2(),
+                                          builder: (context) =>
+                                              const Welcome2(),
                                         ));
                                   }),
                                   child: const Text(
@@ -251,7 +253,8 @@ class _Welcome2State extends State<Welcome2> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => AdminLogin(),
+                                          builder: (context) =>
+                                              const AdminLogin(),
                                         ));
                                   }),
                                   child: const Text(

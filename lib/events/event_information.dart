@@ -250,6 +250,7 @@ class _EventInfoState extends State<EventInfo> {
                             );
                             if (pickedTime != null) {
                               eventTimeController.text =
+                                  // ignore: use_build_context_synchronously
                                   TimeOfDay.now().format(context);
                             }
                           },

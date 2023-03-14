@@ -34,7 +34,7 @@ class _WidgetTestState extends State<WidgetTest> {
                 borderRadius: BorderRadius.circular(15.0),
                 border: Border.all(
                   width: 1.0,
-                  color: Color.fromARGB(255, 17, 150, 207),
+                  color: const Color.fromARGB(255, 17, 150, 207),
                 ),
                 boxShadow: const [
                   BoxShadow(
@@ -45,7 +45,7 @@ class _WidgetTestState extends State<WidgetTest> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Container(
-                  color: Color.fromARGB(0, 17, 150, 207),
+                  color: const Color.fromARGB(0, 17, 150, 207),
                   child: MaterialButton(
                     onPressed: (() {}),
                     child: const Text(

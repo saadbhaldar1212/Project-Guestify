@@ -1,5 +1,6 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/events/home.dart';
 
@@ -17,14 +18,10 @@ class _EventDashboardState extends State<EventDashboard> {
   
   For eventDashboard -
 
-  At first glance, Data is viewed
-  At bottom will have delete this event option - with dialogbox
-  At Appbar we will have edit button
+  Text widgets with edit button individual which will lead to open DialogBox of that individual
+  field ------> .update() to be used
 
-  EditButton should have initial values inside it
-  After submitting the details the First glance view should be changed with updated data as all things will be connected with database
-
-  UI for nach editbutton is dependent on eventinfo or home page so both should be done well
+  setState will be used to render the latest value into View
   
   */
 

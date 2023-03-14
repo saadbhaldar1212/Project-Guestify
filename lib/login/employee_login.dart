@@ -1,14 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import '../events/home.dart';
 import '../utils/utility.dart';
 
-class AdminLogin extends StatefulWidget {
-  const AdminLogin({super.key});
+class EmployeeLogin extends StatefulWidget {
+  const EmployeeLogin({super.key});
 
   @override
-  State<AdminLogin> createState() => _AdminLoginState();
+  State<EmployeeLogin> createState() => _EmployeeLoginState();
 }
 
 class TransformHelper {
@@ -22,15 +21,16 @@ class TransformHelper {
   }
 }
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
-
 final emailController = TextEditingController();
 final passwordController = TextEditingController();
 final _formField = GlobalKey<FormState>();
 
-class _AdminLoginState extends State<AdminLogin> {
+final db = FirebaseDatabase.instance.ref();
+
+class _EmployeeLoginState extends State<EmployeeLogin> {
   @override
   Widget build(BuildContext context) {
+    final empLoginRef = db.child('employee');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -108,23 +108,22 @@ class _AdminLoginState extends State<AdminLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            _auth
-                                .signInWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password:
-                                        passwordController.text.toString())
-                                .then((value) {
-                              Utils()
-                                  .toastMessage(value.user!.email.toString());
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Home(),
-                                ),
-                              );
-                            }).onError((error, stackTrace) {
-                              Utils().toastMessage(error.toString());
-                            });
+                            empLoginRef
+                                .equalTo(emailController.text)
+                                .equalTo(passwordController.text);
+                            //     .then((value) {
+                            //   Utils()
+                            //       .toastMessage(value.user!.email.toString());
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => const Home(),
+                            //     ),
+                            //   );
+                            // }).onError((error, stackTrace) {
+                            //   print(error.toString());
+                            //   Utils().toastMessage(error.toString());
+                            // });
                           }
                         }),
                         child: const Text(

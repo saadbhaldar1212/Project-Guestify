@@ -105,7 +105,7 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Welcome2(),
+                              builder: (context) => const Welcome2(),
                             ));
                       }),
                       child: const Text(

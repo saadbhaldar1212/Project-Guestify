@@ -57,6 +57,7 @@ class _AdminLoginState extends State<AdminLogin> {
               child: Text(
                 'Welcome',
                 style: TextStyle(
+                  color: Colors.black,
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
                 ),

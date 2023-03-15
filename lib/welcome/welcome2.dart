@@ -105,13 +105,18 @@ class _Welcome2State extends State<Welcome2> {
                       style: TextStyle(
                           fontFamily: 'Urbanist',
                           fontWeight: FontWeight.w600,
-                          fontSize: 30),
+                          fontSize: 30,
+                          color: Colors.black),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
                       child: Text(
                         'made easy',
-                        style: TextStyle(fontFamily: 'Urbanist', fontSize: 20),
+                        style: TextStyle(
+                          fontFamily: 'Urbanist',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],

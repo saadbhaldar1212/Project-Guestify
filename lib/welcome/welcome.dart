@@ -64,6 +64,7 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
                     style: TextStyle(
                       fontSize: 38,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ],

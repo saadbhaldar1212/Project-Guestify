@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/events/home.dart';
 import 'package:guestify/seats/seats.dart';
@@ -39,7 +40,9 @@ class MyApp extends StatelessWidget {
             return const Text('Something went Wrong');
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
-            return const Welcome2();
+            return const SeatsDashboard(
+              title: 'test',
+            );
             // return const Dashboard();
           } else {
             return const Center(

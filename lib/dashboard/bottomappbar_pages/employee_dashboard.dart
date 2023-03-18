@@ -163,22 +163,22 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                 ),
               ),
             ),
-            FirebaseAnimatedList(
-              shrinkWrap: true,
-              query: empRef,
-              itemBuilder: (context, snapshot, animation, index) {
-                return Card(
-                  margin: const EdgeInsets.only(
-                    left: 30,
-                    right: 30,
-                  ),
-                  color: const Color.fromARGB(255, 17, 150, 207),
-                  child: SizedBox(
-                    height: 400,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 15),
-                      child: SingleChildScrollView(
+            Card(
+              margin: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+              ),
+              color: const Color.fromARGB(255, 17, 150, 207),
+              child: SizedBox(
+                height: 250,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 15),
+                  child: FirebaseAnimatedList(
+                    shrinkWrap: true,
+                    query: empRef,
+                    itemBuilder: (context, snapshot, animation, index) {
+                      return SingleChildScrollView(
                         child: ListTile(
                           leading: const CircleAvatar(
                             radius: 30,
@@ -207,12 +207,12 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            )
+                ),
+              ),
+            ),
           ],
         ),
       ),

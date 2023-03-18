@@ -27,7 +27,8 @@ class CircleList extends StatefulWidget {
   final AnimationSetting? animationSetting;
   final DragAngleRange? dragAngleRange;
 
-  CircleList({
+  const CircleList({
+    super.key,
     this.innerRadius,
     this.outerRadius,
     this.childrenPadding = 10,
@@ -50,6 +51,7 @@ class CircleList extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CircleListState createState() => _CircleListState();
 }
 
@@ -65,7 +67,8 @@ class _CircleListState extends State<CircleList>
     if (widget.showInitialAnimation) {
       _controller = AnimationController(
           vsync: this,
-          duration: widget.animationSetting?.duration ?? Duration(seconds: 1));
+          duration:
+              widget.animationSetting?.duration ?? const Duration(seconds: 1));
       _animationRotate = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
           parent: _controller!,
           curve: widget.animationSetting?.curve ?? Curves.easeOutBack));
@@ -109,7 +112,7 @@ class _CircleListState extends State<CircleList>
       backgroundCircleAngle = dragModel.angleDiff + widget.initialAngle;
     }
 
-    return Container(
+    return SizedBox(
       width: outerRadius * 2,
       height: outerRadius * 2,
       child: Stack(
@@ -160,7 +163,7 @@ class _CircleListState extends State<CircleList>
           Positioned(
             left: origin.dx,
             top: -origin.dy,
-            child: Container(
+            child: SizedBox(
               width: outerRadius * 2,
               height: outerRadius * 2,
               child: RadialDragGestureDetector(
@@ -238,7 +241,7 @@ class _CircleListState extends State<CircleList>
                     shape: BoxShape.circle,
                     color: widget.innerCircleColor ?? Colors.transparent,
                   ),
-                  child: widget.centerWidget ?? SizedBox(),
+                  child: widget.centerWidget ?? const SizedBox(),
                 ),
               ))
         ],

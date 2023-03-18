@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/seats/circle_list/circle_list.dart';
 import 'package:guestify/seats/circular_widget/example_page.dart';
 
 class SeatsDashboard extends StatefulWidget {
@@ -12,10 +11,23 @@ class SeatsDashboard extends StatefulWidget {
 }
 
 class _SeatsDashboardState extends State<SeatsDashboard> {
+  void incrementCounter() {
+    setState(() {
+      length += 1;
+    });
+  }
+
+  void decrementCounter() {
+    setState(() {
+      length -= 1;
+    });
+  }
+
+  int length = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -30,7 +42,47 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: ExamplePage(),
+      body: ListView.separated(
+          itemBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.all(28.0),
+                child: ExamplePage(),
+              ),
+          separatorBuilder: (context, index) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: Text(
+                    '----------- Table no. ${index + 2} -----------',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          itemCount: length),
+      persistentFooterButtons: [
+        Text(
+          'No. of tables: $length',
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        IconButton(
+          onPressed: (() => incrementCounter()),
+          icon: const Icon(Icons.add),
+        ),
+        IconButton(
+          onPressed: length == 1 ? null : decrementCounter,
+          icon: const Icon(Icons.remove),
+        ),
+      ],
+      persistentFooterAlignment: AlignmentDirectional.center,
     );
   }
 }

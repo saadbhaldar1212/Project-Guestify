@@ -1,11 +1,12 @@
 import 'circular_widget_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+// ignore: library_prefixes
 import 'dart:math' as Math;
 
 const double _radiansPerDegree = Math.pi / 180;
 
-typedef double ItemAngleCalculator(int index);
+typedef ItemAngleCalculator = double Function(int index);
 
 class CircularLayoutDelegate extends MultiChildLayoutDelegate {
   final List<LayoutId> idItems;

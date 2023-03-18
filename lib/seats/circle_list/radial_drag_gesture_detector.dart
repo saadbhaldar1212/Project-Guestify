@@ -16,7 +16,8 @@ class RadialDragGestureDetector extends StatefulWidget {
   final Widget? child;
   final bool stopRotate;
 
-  RadialDragGestureDetector({
+  const RadialDragGestureDetector({
+    super.key,
     this.onRadialDragStart,
     this.onRadialDragUpdate,
     this.onRadialDragEnd,
@@ -25,6 +26,7 @@ class RadialDragGestureDetector extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _RadialDragGestureDetectorState createState() =>
       _RadialDragGestureDetectorState();
 }
@@ -105,7 +107,7 @@ class PolarCoord {
 
   @override
   toString() {
-    return 'Polar Coord: ${radius.toStringAsFixed(2)}' +
+    return 'Polar Coord: ${radius.toStringAsFixed(2)}'
         ' at ${(angle / (2 * pi) * 360).toStringAsFixed(2)}°';
   }
 }

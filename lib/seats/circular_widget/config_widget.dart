@@ -24,7 +24,12 @@ class ConfigWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: ListTile(
-            title: Text('$itemsLength'),
+            title: Text(
+              '${itemsLength - 1}',
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

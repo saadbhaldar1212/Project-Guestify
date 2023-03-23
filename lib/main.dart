@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
+import 'package:guestify/login/employee_login.dart';
+import 'package:guestify/welcome/welcome2.dart';
 
 import 'dashboard/dashboard.dart';
 
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
             // return const SeatsDashboard(
             //   title: 'test',
             // );
-            return const Dashboard();
+            return const EmployeeLogin();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

@@ -45,7 +45,9 @@ class ConfigWidget extends StatelessWidget {
                     Icons.remove,
                     color: Colors.red,
                   ),
-                  onPressed: () => itemsLengthSetter(itemsLength - 1),
+                  onPressed: itemsLength == 0
+                      ? null
+                      : () => itemsLengthSetter(itemsLength - 1),
                 ),
               ],
             ),

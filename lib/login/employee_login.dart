@@ -31,6 +31,8 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   @override
   Widget build(BuildContext context) {
     final empLoginRef = db.child('employee');
+    final empKey = empLoginRef.key.toString;
+    final fetchDataByKey = FirebaseDatabase.instance.ref('employee/$empKey/');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -59,6 +61,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -108,22 +111,23 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            empLoginRef
+                            fetchDataByKey
+                                .orderByValue()
                                 .equalTo(emailController.text)
-                                .equalTo(passwordController.text);
-                            //     .then((value) {
-                            //   Utils()
-                            //       .toastMessage(value.user!.email.toString());
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => const Home(),
-                            //     ),
-                            //   );
-                            // }).onError((error, stackTrace) {
-                            //   print(error.toString());
-                            //   Utils().toastMessage(error.toString());
-                            // });
+                                .equalTo(passwordController.text)
+                                .then((value) {
+                              Utils()
+                                  .toastMessage(value.user!.email.toString());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Home(),
+                                ),
+                              );
+                            }).onError((error, stackTrace) {
+                              print(error.toString());
+                              Utils().toastMessage(error.toString());
+                            });
                           }
                         }),
                         child: const Text(
@@ -167,11 +171,26 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   }
 
   final emailField = TextFormField(
+    style: const TextStyle(
+      color: Colors.black,
+    ),
     controller: emailController,
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
     decoration: InputDecoration(
+      errorStyle: const TextStyle(
+        fontSize: 13,
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromARGB(255, 17, 150, 207),
+          width: 1.6,
+        ),
+      ),
       helperText: 'e.g: - abc@<>.com',
+      helperStyle: const TextStyle(
+        fontSize: 10,
+      ),
       labelText: 'Username',
       hintText: 'Enter email address',
       border: OutlineInputBorder(
@@ -187,10 +206,22 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   );
 
   final passwordField = TextFormField(
+    style: const TextStyle(
+      color: Colors.black,
+    ),
     controller: passwordController,
     keyboardType: TextInputType.visiblePassword,
     obscureText: true,
     decoration: InputDecoration(
+      errorStyle: const TextStyle(
+        fontSize: 13,
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromARGB(255, 17, 150, 207),
+          width: 1.6,
+        ),
+      ),
       labelText: 'Password',
       hintText: 'Enter password',
       border: OutlineInputBorder(

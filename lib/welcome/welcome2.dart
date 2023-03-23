@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guestify/login/admin_login.dart';
+import 'package:guestify/login/employee_login.dart';
 
 class Welcome2 extends StatefulWidget {
   const Welcome2({super.key});
@@ -211,7 +212,7 @@ class _Welcome2State extends State<Welcome2> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const Welcome2(),
+                                              const EmployeeLogin(),
                                         ));
                                   }),
                                   child: const Text(

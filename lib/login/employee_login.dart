@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/home/employee_home.dart';
 
 import '../utils/utility.dart';
 
@@ -26,13 +28,11 @@ final passwordController = TextEditingController();
 final _formField = GlobalKey<FormState>();
 
 final db = FirebaseDatabase.instance.ref();
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _EmployeeLoginState extends State<EmployeeLogin> {
   @override
   Widget build(BuildContext context) {
-    final empLoginRef = db.child('employee');
-    final empKey = empLoginRef.key.toString;
-    final fetchDataByKey = FirebaseDatabase.instance.ref('employee/$empKey/');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -111,21 +111,19 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            fetchDataByKey
-                                .orderByValue()
-                                .equalTo(emailController.text)
-                                .equalTo(passwordController.text)
+                            _auth
+                                .signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text)
                                 .then((value) {
-                              Utils()
-                                  .toastMessage(value.user!.email.toString());
+                              Utils().toastMessage('Logged in successfully');
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Home(),
+                                  builder: (context) => const EmployeeHome(),
                                 ),
                               );
                             }).onError((error, stackTrace) {
-                              print(error.toString());
                               Utils().toastMessage(error.toString());
                             });
                           }
@@ -200,6 +198,8 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
     validator: (value) {
       if (value!.isEmpty) {
         return 'Enter email';
+      } else if (!value.contains('@')) {
+        return 'Enter valid email address';
       }
       return null;
     },
@@ -231,6 +231,8 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
     validator: (value) {
       if (value!.isEmpty) {
         return 'Enter password';
+      } else if (value.length < 6) {
+        return 'Minimum length of password should be 6';
       }
       return null;
     },

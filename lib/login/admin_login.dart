@@ -183,6 +183,8 @@ class _AdminLoginState extends State<AdminLogin> {
     validator: (value) {
       if (value!.isEmpty) {
         return 'Enter email';
+      } else if (!value.contains('@')) {
+        return 'Enter valid email address';
       }
       return null;
     },
@@ -202,6 +204,8 @@ class _AdminLoginState extends State<AdminLogin> {
     validator: (value) {
       if (value!.isEmpty) {
         return 'Enter password';
+      } else if (value.length < 6) {
+        return 'Minimum length of password should be 6';
       }
       return null;
     },

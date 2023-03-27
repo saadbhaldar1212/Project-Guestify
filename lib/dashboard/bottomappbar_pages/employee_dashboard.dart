@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
   final empPass = TextEditingController();
 
   final database = FirebaseDatabase.instance.ref();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final FocusNode unitCodeCtrlFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +76,13 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 child: TextFormField(
+                                  focusNode: unitCodeCtrlFocusNode,
                                   cursorColor: Colors.white,
                                   style: const TextStyle(color: Colors.white),
                                   controller: empName,
                                   cursorHeight: 20,
                                   textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.multiline,
+                                  keyboardType: TextInputType.emailAddress,
                                   autofocus: false,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(20),
@@ -92,6 +97,8 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Enter Employee Name';
+                                    } else if (!value.contains('@')) {
+                                      return 'Enter valid email address';
                                     }
                                     return null;
                                   },
@@ -123,6 +130,8 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Employee Password';
+                                    } else if (value.length < 6) {
+                                      return 'Minimum length of password should be 6';
                                     }
                                     return null;
                                   },
@@ -133,18 +142,21 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 child: ElevatedButton(
                                   onPressed: (() {
                                     if (_formKey.currentState!.validate()) {
-                                      //add those two fields into Firebase Authorisations or Realtime Database so that we can be able to fetch all the employee onto other cards
-                                      //this value fetching will be done when CONTINUE WITH EMPLOYEE is clicked
-
-                                      //for each primary key code is different I guess
-                                      empRef.push().set({
-                                        "Employee Name": empName.text,
-                                        "Employee Password": empPass.text
-                                      }).then((value) {
+                                      _auth
+                                          .createUserWithEmailAndPassword(
+                                              email: empName.text,
+                                              password: empPass.text)
+                                          .then((value) {
+                                        empRef.push().set({
+                                          "Employee Name": empName.text,
+                                          "Employee Password": empPass.text
+                                        });
                                         Utils().toastMessage(
                                             'Data inserted successfully');
                                         empName.clear();
                                         empPass.clear();
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
                                       });
                                     }
                                   }),
@@ -194,11 +206,17 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                               .toString()),
                           trailing: IconButton(
                             onPressed: (() {
-                              showDialog(
-                                context: context,
-                                builder: (context) => const SDialog(
-                                    titleText: 'Employee Deleted Successfully'),
-                              );
+                              database
+                                  .child(FirebaseAuth.instance.currentUser!.uid)
+                                  .remove()
+                                  .then((value) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const SDialog(
+                                      titleText:
+                                          'Employee Deleted Successfully'),
+                                );
+                              });
                             }),
                             icon: const Icon(
                               Icons.delete,

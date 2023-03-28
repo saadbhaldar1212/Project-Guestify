@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/simple_dialog.dart';
 import 'package:guestify/utils/utility.dart';
+
+import '../../utils/simple_dialog/for_employee_dashboard.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key, required this.title});
@@ -22,6 +23,37 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
 
   final database = FirebaseDatabase.instance.ref();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future empSignIn() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    await _auth.createUserWithEmailAndPassword(
+      email: empName.text.trim(),
+      password: empPass.text.trim(),
+    );
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+  circularProgressionForEmployeeData() {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    empName.dispose();
+    empPass.dispose();
+  }
 
   final FocusNode unitCodeCtrlFocusNode = FocusNode();
 
@@ -43,6 +75,17 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
             fontSize: 24,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: (() {
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      const SimpleDialogForEmployeeDashboard());
+            }),
+            icon: const Icon(Icons.info_outline),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -85,6 +128,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                   keyboardType: TextInputType.emailAddress,
                                   autofocus: false,
                                   decoration: const InputDecoration(
+                                    errorStyle: TextStyle(
+                                      fontSize: 13,
+                                    ),
                                     contentPadding: EdgeInsets.all(20),
                                     prefixIcon: Icon(
                                       Icons.person,
@@ -99,6 +145,10 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                       return 'Enter Employee Name';
                                     } else if (!value.contains('@')) {
                                       return 'Enter valid email address';
+                                    } else if (!value.startsWith('employee.')) {
+                                      return 'Create account using given instructions';
+                                    } else if (!value.endsWith('.com')) {
+                                      return 'Username should end with ".com"';
                                     }
                                     return null;
                                   },
@@ -117,6 +167,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                   keyboardType: TextInputType.visiblePassword,
                                   autofocus: false,
                                   decoration: const InputDecoration(
+                                    errorStyle: TextStyle(
+                                      fontSize: 13,
+                                    ),
                                     prefixIcon: Icon(
                                       Icons.lock,
                                       color: Colors.white,
@@ -132,6 +185,10 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                       return 'Employee Password';
                                     } else if (value.length < 6) {
                                       return 'Minimum length of password should be 6';
+                                    } else if (!value.contains(
+                                      RegExp(r'[A-Z]'),
+                                    )) {
+                                      return 'Password should contain atleast one Capital letter';
                                     }
                                     return null;
                                   },
@@ -142,17 +199,19 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 child: ElevatedButton(
                                   onPressed: (() {
                                     if (_formKey.currentState!.validate()) {
-                                      _auth
-                                          .createUserWithEmailAndPassword(
-                                              email: empName.text,
-                                              password: empPass.text)
-                                          .then((value) {
+                                      empSignIn().then((value) {
                                         empRef.push().set({
                                           "Employee Name": empName.text,
                                           "Employee Password": empPass.text
                                         });
                                         Utils().toastMessage(
                                             'Data inserted successfully');
+                                        empName.clear();
+                                        empPass.clear();
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                      }).onError((error, stackTrace) {
+                                        Utils().toastMessage(error.toString());
                                         empName.clear();
                                         empPass.clear();
                                         FocusScope.of(context)
@@ -175,61 +234,70 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                 ),
               ),
             ),
-            Card(
-              margin: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-              ),
-              color: const Color.fromARGB(255, 17, 150, 207),
-              child: SizedBox(
-                height: 250,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 15),
-                  child: FirebaseAnimatedList(
-                    shrinkWrap: true,
-                    query: empRef,
-                    itemBuilder: (context, snapshot, animation, index) {
-                      return SingleChildScrollView(
-                        child: ListTile(
-                          leading: const CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.person,
-                                color: Colors.black, size: 40),
-                          ),
-                          title: Text(
-                              snapshot.child('Employee Name').value.toString()),
-                          subtitle: Text(snapshot
-                              .child('Employee Password')
-                              .value
-                              .toString()),
-                          trailing: IconButton(
-                            onPressed: (() {
-                              database
-                                  .child(FirebaseAuth.instance.currentUser!.uid)
-                                  .remove()
-                                  .then((value) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => const SDialog(
-                                      titleText:
-                                          'Employee Deleted Successfully'),
-                                );
-                              });
-                            }),
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 35,
+            Stack(
+              children: [
+                Card(
+                  margin: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                  ),
+                  color: const Color.fromARGB(255, 17, 150, 207),
+                  child: SizedBox(
+                    height: 350,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
+                        bottom: 15,
+                        right: 15,
+                        top: 75,
+                      ),
+                      child: FirebaseAnimatedList(
+                        shrinkWrap: true,
+                        query: empRef,
+                        itemBuilder: (context, snapshot, animation, index) {
+                          return SingleChildScrollView(
+                            child: ListTile(
+                              leading: const CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
+                                child: Icon(Icons.person,
+                                    color: Colors.black, size: 40),
+                              ),
+                              title: Text(
+                                snapshot
+                                    .child('Employee Name')
+                                    .value
+                                    .toString(),
+                              ),
+                              subtitle: Text(
+                                snapshot
+                                    .child('Employee Password')
+                                    .value
+                                    .toString(),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.all(18.0),
+                      child: Text(
+                        'Employee Data',
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
           ],
         ),

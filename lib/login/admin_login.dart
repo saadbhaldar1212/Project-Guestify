@@ -29,6 +29,30 @@ final passwordController = TextEditingController();
 final _formField = GlobalKey<FormState>();
 
 class _AdminLoginState extends State<AdminLogin> {
+  Future adminSignInToHome() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    await _auth.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,12 +133,7 @@ class _AdminLoginState extends State<AdminLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            _auth
-                                .signInWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password:
-                                        passwordController.text.toString())
-                                .then((value) {
+                            adminSignInToHome().then((value) {
                               Utils()
                                   .toastMessage(value.user!.email.toString());
                               Navigator.push(

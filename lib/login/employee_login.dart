@@ -31,6 +31,30 @@ final db = FirebaseDatabase.instance.ref();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _EmployeeLoginState extends State<EmployeeLogin> {
+  Future empSignInToHome() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    await _auth.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,11 +135,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            _auth
-                                .signInWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text)
-                                .then((value) {
+                            empSignInToHome().then((value) {
                               Utils().toastMessage('Logged in successfully');
                               Navigator.push(
                                 context,
@@ -200,6 +220,10 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
         return 'Enter email';
       } else if (!value.contains('@')) {
         return 'Enter valid email address';
+      } else if (!value.startsWith('employee.')) {
+        return 'Create account using given instructions';
+      } else if (!value.endsWith('.com')) {
+        return 'Username should end with .com';
       }
       return null;
     },

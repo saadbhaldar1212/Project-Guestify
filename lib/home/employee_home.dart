@@ -13,3 +13,25 @@ class _EmployeeHomeState extends State<EmployeeHome> {
     return Container();
   }
 }
+
+// For every employeee Drawer - delete this account
+// IconButton(
+//                             onPressed: (() {
+//                               database
+//                                   .child(FirebaseAuth.instance.currentUser!.uid)
+//                                   .remove()
+//                                   .then((value) {
+//                                 showDialog(
+//                                   context: context,
+//                                   builder: (context) => const SDialog(
+//                                       titleText:
+//                                           'Employee Deleted Successfully'),
+//                                 );
+//                               });
+//                             }),
+//                             icon: const Icon(
+//                               Icons.delete,
+//                               color: Colors.red,
+//                               size: 35,
+//                             ),
+//                           ),

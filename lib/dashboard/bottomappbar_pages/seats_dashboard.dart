@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/seats/circular_widget/example_page.dart';
+
+import '../../seats/circular_widget/seats_ui.dart';
 
 class SeatsDashboard extends StatefulWidget {
   const SeatsDashboard({super.key, required this.title});
@@ -24,6 +25,7 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
   }
 
   int length = 1;
+  int val = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +44,10 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: ListView.separated(
-          itemBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.all(28.0),
-                child: ExamplePage(),
-              ),
-          separatorBuilder: (context, index) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: Text(
-                    '----------- Table no. ${index + 2} -----------',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ],
-            );
+      body: ListView.builder(
+          itemBuilder: (context, index) {
+            val = index;
+            return SeatsUI(tableLength: val);
           },
           itemCount: length),
       persistentFooterButtons: [

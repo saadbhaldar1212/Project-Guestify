@@ -74,12 +74,6 @@ class _EventDashboardState extends State<EventDashboard> {
           ),
         ],
       ),
-      // body: FirebaseAnimatedList(
-      //   query: ref,
-      //   itemBuilder: (context, snapshot, animation, index) {
-      //     // return null;
-      //   },
-      // ),
     );
   }
 }

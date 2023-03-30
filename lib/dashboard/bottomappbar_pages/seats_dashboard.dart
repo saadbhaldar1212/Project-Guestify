@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guestify/utils/signout_button/signout_button.dart';
 
 import '../../seats/seats_ui.dart';
 
@@ -31,6 +32,7 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const SignOutButton(),
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 17, 150, 207),

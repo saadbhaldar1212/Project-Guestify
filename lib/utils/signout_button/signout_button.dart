@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/utils/utility.dart';
+import 'package:guestify/welcome/welcome.dart';
 
 class SignOutButton extends StatefulWidget {
   const SignOutButton({super.key});
@@ -15,6 +16,12 @@ class _SignOutButtonState extends State<SignOutButton> {
   signOut() async {
     await _auth.signOut().then((value) {
       Utils().toastMessage('Signed out successfully');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WelcomeSplash(),
+        ),
+      );
     }).onError((error, stackTrace) {
       Utils().toastMessage(error.toString());
     });

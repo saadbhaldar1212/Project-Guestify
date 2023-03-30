@@ -87,7 +87,7 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
             icon: const Icon(Icons.info_outline),
           )
         ],
-        leading: SignOutButton(),
+        leading: const SignOutButton(),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/events/home.dart';
+import 'package:guestify/utils/signout_button/signout_button.dart';
 
 class EventDashboard extends StatefulWidget {
   const EventDashboard({super.key, required this.title});
@@ -56,6 +57,7 @@ class _EventDashboardState extends State<EventDashboard> {
             fontSize: 24,
           ),
         ),
+        leading: const SignOutButton(),
         actions: [
           IconButton(
             onPressed: (() {

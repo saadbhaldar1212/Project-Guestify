@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/home/employee_home.dart';
 
+import '../utils/loginform_for_admin_employee/email_field.dart';
+import '../utils/loginform_for_admin_employee/password_field.dart';
 import '../utils/utility.dart';
 
 class EmployeeLogin extends StatefulWidget {
@@ -181,77 +183,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
     );
   }
 
-  final emailField = TextFormField(
-    style: const TextStyle(
-      color: Colors.black,
-    ),
-    controller: emailController,
-    keyboardType: TextInputType.emailAddress,
-    autofocus: false,
-    decoration: InputDecoration(
-      errorStyle: const TextStyle(
-        fontSize: 13,
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color.fromARGB(255, 17, 150, 207),
-          width: 1.6,
-        ),
-      ),
-      helperText: 'e.g: - abc@<>.com',
-      helperStyle: const TextStyle(
-        fontSize: 10,
-      ),
-      labelText: 'Username',
-      hintText: 'Enter email address',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-    ),
-    validator: (value) {
-      if (value!.isEmpty) {
-        return 'Enter email';
-      } else if (!value.contains('@')) {
-        return 'Enter valid email address';
-      } else if (!value.startsWith('employee.')) {
-        return 'Create account using given instructions';
-      } else if (!value.endsWith('.com')) {
-        return 'Username should end with .com';
-      }
-      return null;
-    },
-  );
+  final emailField = EmailField(emailController: emailController);
 
-  final passwordField = TextFormField(
-    style: const TextStyle(
-      color: Colors.black,
-    ),
-    controller: passwordController,
-    keyboardType: TextInputType.visiblePassword,
-    obscureText: true,
-    decoration: InputDecoration(
-      errorStyle: const TextStyle(
-        fontSize: 13,
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color.fromARGB(255, 17, 150, 207),
-          width: 1.6,
-        ),
-      ),
-      labelText: 'Password',
-      hintText: 'Enter password',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-    ),
-    validator: (value) {
-      if (value!.isEmpty) {
-        return 'Enter password';
-      } else if (value.length < 6) {
-        return 'Minimum length of password should be 6';
-      }
-      return null;
-    },
-  );
+  final passwordField = PasswordField(passwordController: passwordController);
 }

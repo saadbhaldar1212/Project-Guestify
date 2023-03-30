@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../seats/circular_widget/seats_ui.dart';
+import '../../seats/seats_ui.dart';
 
 class SeatsDashboard extends StatefulWidget {
   const SeatsDashboard({super.key, required this.title});

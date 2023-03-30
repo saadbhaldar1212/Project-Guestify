@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:guestify/utils/utility.dart';
 
 import '../../utils/simple_dialog/for_employee_dashboard.dart';
+import '../../utils/signout_button/signout_button.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key, required this.title});
@@ -86,6 +87,7 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
             icon: const Icon(Icons.info_outline),
           )
         ],
+        leading: SignOutButton(),
       ),
       body: SingleChildScrollView(
         child: Column(

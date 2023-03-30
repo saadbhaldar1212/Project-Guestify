@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/utils/simple_dialog/for_adminlogin_info.dart';
 
 import '../events/home.dart';
 import '../utils/utility.dart';
@@ -47,20 +48,13 @@ class _AdminLoginState extends State<AdminLogin> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromRGBO(19, 159, 219, 10),
         title: const Hero(
           tag: 'logoTag',
           child: CircleAvatar(
@@ -69,8 +63,19 @@ class _AdminLoginState extends State<AdminLogin> {
             backgroundColor: Colors.transparent,
           ),
         ),
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         toolbarHeight: 200,
+        actions: [
+          IconButton(
+            onPressed: (() {
+              showDialog(
+                context: context,
+                builder: (context) => const SimpleDialogForAdminLoginInfo(),
+              );
+            }),
+            icon: const Icon(Icons.info),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -79,7 +84,7 @@ class _AdminLoginState extends State<AdminLogin> {
             const Padding(
               padding: EdgeInsets.only(bottom: 43, top: 30),
               child: Text(
-                'Welcome',
+                'Welcome, Admin',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 40,
@@ -192,7 +197,19 @@ class _AdminLoginState extends State<AdminLogin> {
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
     decoration: InputDecoration(
+      errorStyle: const TextStyle(
+        fontSize: 13,
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromARGB(255, 17, 150, 207),
+          width: 1.6,
+        ),
+      ),
       helperText: 'e.g: - abc@<>.com',
+      helperStyle: const TextStyle(
+        fontSize: 10,
+      ),
       labelText: 'Username',
       hintText: 'Enter email address',
       border: OutlineInputBorder(
@@ -204,6 +221,10 @@ class _AdminLoginState extends State<AdminLogin> {
         return 'Enter email';
       } else if (!value.contains('@')) {
         return 'Enter valid email address';
+      } else if (!value.startsWith('admin.')) {
+        return 'Create account using given instructions';
+      } else if (!value.endsWith('.com')) {
+        return 'Username should end with .com';
       }
       return null;
     },
@@ -214,6 +235,15 @@ class _AdminLoginState extends State<AdminLogin> {
     keyboardType: TextInputType.visiblePassword,
     obscureText: true,
     decoration: InputDecoration(
+      errorStyle: const TextStyle(
+        fontSize: 13,
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromARGB(255, 17, 150, 207),
+          width: 1.6,
+        ),
+      ),
       labelText: 'Password',
       hintText: 'Enter password',
       border: OutlineInputBorder(

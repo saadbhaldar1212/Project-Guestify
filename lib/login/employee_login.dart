@@ -49,20 +49,13 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromRGBO(19, 159, 219, 10),
         title: const Hero(
           tag: 'logoTag',
           child: CircleAvatar(
@@ -71,7 +64,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
             backgroundColor: Colors.transparent,
           ),
         ),
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         toolbarHeight: 200,
       ),
       body: SingleChildScrollView(
@@ -162,19 +155,19 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: (() {
-                Utils().toastMessage('Pressed');
-              }),
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: Color.fromARGB(255, 17, 150, 207),
-                ),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: (() {
+            //     Utils().toastMessage('Pressed');
+            //   }),
+            //   child: const Text(
+            //     'Forgot Password?',
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.w600,
+            //       fontSize: 14,
+            //       color: Color.fromARGB(255, 17, 150, 207),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

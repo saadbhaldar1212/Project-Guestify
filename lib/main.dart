@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromRGBO(19, 159, 219, 10),
       ).copyWith(
         dividerColor: Colors.transparent,
-        useMaterial3: true,
+        // useMaterial3: true,
         textTheme: const TextTheme(
           bodySmall: TextStyle(
             fontSize: 20,

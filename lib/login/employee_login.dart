@@ -3,8 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/home/employee_home.dart';
 
-import '../utils/loginform_for_admin_employee/email_field.dart';
-import '../utils/loginform_for_admin_employee/password_field.dart';
+import '../utils/employee_login_form/email_field.dart';
+import '../utils/employee_login_form/password_field.dart';
 import '../utils/utility.dart';
 
 class EmployeeLogin extends StatefulWidget {

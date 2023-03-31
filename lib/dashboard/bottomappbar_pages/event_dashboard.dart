@@ -2,7 +2,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/events/home.dart';
+import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 
 class EventDashboard extends StatefulWidget {
@@ -57,23 +57,11 @@ class _EventDashboardState extends State<EventDashboard> {
             fontSize: 24,
           ),
         ),
-        leading: const SignOutButton(),
-        actions: [
-          IconButton(
-            onPressed: (() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Home(),
-                ),
-              );
-            }),
-            icon: const Icon(
-              Icons.edit,
-            ),
-          ),
+        actions: const [
+          SignOutButton(),
         ],
       ),
+      // body: const EditEventInfo(),
     );
   }
 }

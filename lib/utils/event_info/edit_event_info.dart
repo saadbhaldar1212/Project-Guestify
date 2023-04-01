@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/seats/seats.dart';
+import 'package:guestify/utils/simple_dialog/for_edit_event_info.dart';
 import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
 
@@ -32,19 +34,45 @@ class _EditEventInfoState extends State<EditEventInfo> {
     final eventRef = database.child('events/');
     const primaryKey = "event_info";
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        toolbarHeight: 50,
+        actions: [
+          IconButton(
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
+            icon: const Icon(
+              Icons.close,
+            ),
+          ),
+        ],
+        centerTitle: true,
+        title: const Text(
+          'Edit Event Info',
+        ),
+      ),
       body: Form(
         key: _eventFormField,
-        child: ListView(
-          children: [
-            Padding(
+        child: FirebaseAnimatedList(
+          query: eventRef,
+          shrinkWrap: true,
+          itemBuilder: (context, snapshot, animation, index) {
+            return Padding(
               padding: const EdgeInsets.only(left: 18.0, right: 18.0),
               child: Column(children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
                   child: ListTile(
                     title: TextFormField(
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      initialValue:
+                          snapshot.child('Event Name').value.toString(),
                       enabled: _isEnabled,
-                      controller: eventNameController,
+                      // controller: eventNameController,
                       cursorHeight: 20,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.text,
@@ -60,7 +88,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                       },
                     ),
                     trailing: IconButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              ForEditEventInfo(title: 'Event Name'),
+                        );
+                      }),
                       icon: const Icon(
                         Icons.edit,
                       ),
@@ -69,7 +103,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventTopicController,
+                    // controller: eventTopicController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue:
+                        snapshot.child('Event Topic').value.toString(),
                     cursorHeight: 20,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.multiline,
@@ -85,7 +125,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     },
                   ),
                   trailing: IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ForEditEventInfo(
+                            // output: eventTopicController.text,
+                            // eventController: eventTopicController,
+                            title: 'Event Topic'),
+                      );
+                    }),
                     icon: const Icon(
                       Icons.edit,
                     ),
@@ -93,7 +141,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventChiefGuestController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue:
+                        snapshot.child('Event Chief Guest').value.toString(),
+                    // controller: eventChiefGuestController,
                     cursorHeight: 20,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.multiline,
@@ -109,7 +163,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     // },
                   ),
                   trailing: IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ForEditEventInfo(
+                            // output: eventChiefGuestController.text,
+                            // eventController: eventChiefGuestController,
+                            title: 'Event Chief Guest'),
+                      );
+                    }),
                     icon: const Icon(
                       Icons.edit,
                     ),
@@ -117,7 +179,14 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventSpecialGuestController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue:
+                        snapshot.child('Event Special Guest').value.toString(),
+                    // controller: eventSpecialGuestController,
+
                     cursorHeight: 20,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.multiline,
@@ -133,7 +202,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     // },
                   ),
                   trailing: IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ForEditEventInfo(
+                            // output: eventSpecialGuestController.text,
+                            // eventController: eventSpecialGuestController,
+                            title: 'Event Special Guest'),
+                      );
+                    }),
                     icon: const Icon(
                       Icons.edit,
                     ),
@@ -141,7 +218,12 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventHostController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue: snapshot.child('Event Host').value.toString(),
+                    // controller: eventHostController,
                     cursorHeight: 20,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.multiline,
@@ -157,7 +239,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     },
                   ),
                   trailing: IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ForEditEventInfo(
+                            // output: eventHostController.text,
+                            // eventController: eventHostController,
+                            title: 'Event Host'),
+                      );
+                    }),
                     icon: const Icon(
                       Icons.edit,
                     ),
@@ -165,7 +255,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventVenueController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue:
+                        snapshot.child('Event Venue').value.toString(),
+                    // controller: eventVenueController,
                     cursorHeight: 20,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.multiline,
@@ -181,7 +277,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     },
                   ),
                   trailing: IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ForEditEventInfo(
+                            // output: eventVenueController.text,
+                            // eventController: eventVenueController,
+                            title: 'Event Venue'),
+                      );
+                    }),
                     icon: const Icon(
                       Icons.edit,
                     ),
@@ -189,7 +293,12 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventDateController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue: snapshot.child('Event Date').value.toString(),
+                    // controller: eventDateController,
                     cursorHeight: 20,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.datetime,
@@ -214,7 +323,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1900),
-                          lastDate: DateTime.now());
+                          lastDate: DateTime(2030));
 
                       if (datePicked != null) {
                         setState(() {
@@ -227,7 +336,12 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 ),
                 ListTile(
                   title: TextFormField(
-                    controller: eventTimeController,
+                    enabled: _isEnabled,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    initialValue: snapshot.child('Event Time').value.toString(),
+                    // controller: eventTimeController,
                     cursorHeight: 20,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.datetime,
@@ -265,7 +379,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   padding: const EdgeInsets.only(bottom: 18.0),
                   child: ListTile(
                     title: TextFormField(
-                      controller: eventDescriptionController,
+                      enabled: _isEnabled,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      initialValue:
+                          snapshot.child('Event Description').value.toString(),
+                      // controller: eventDescriptionController,
                       cursorHeight: 20,
                       textInputAction: TextInputAction.newline,
                       keyboardType: TextInputType.multiline,
@@ -283,7 +403,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
                       // },
                     ),
                     trailing: IconButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        showDialog(
+                          context: context,
+                          builder: (context) => EditEventDescription(
+                              // output: eventDescriptionController.text,
+                              // eventController: eventDescriptionController,
+                              title: 'Event Description'),
+                        );
+                      }),
                       icon: const Icon(
                         Icons.edit,
                       ),
@@ -291,8 +419,8 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
               ]),
-            ),
-          ],
+            );
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

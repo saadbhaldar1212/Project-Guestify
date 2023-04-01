@@ -110,7 +110,7 @@ class _EventDashboardState extends State<EventDashboard> {
               shrinkWrap: true,
               itemBuilder: (context, snapshot, animation, index) {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       '1) ${snapshot.child("Event Name").value.toString()}',

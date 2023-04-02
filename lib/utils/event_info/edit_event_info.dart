@@ -92,7 +92,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         showDialog(
                           context: context,
                           builder: (context) =>
-                              ForEditEventInfo(title: 'Event Name'),
+                              const ForEditEventInfo(title: 'Event Name'),
                         );
                       }),
                       icon: const Icon(
@@ -128,7 +128,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
+                        builder: (context) => const ForEditEventInfo(
                             // output: eventTopicController.text,
                             // eventController: eventTopicController,
                             title: 'Event Topic'),
@@ -166,7 +166,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
+                        builder: (context) => const ForEditEventInfo(
                             // output: eventChiefGuestController.text,
                             // eventController: eventChiefGuestController,
                             title: 'Event Chief Guest'),
@@ -205,7 +205,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
+                        builder: (context) => const ForEditEventInfo(
                             // output: eventSpecialGuestController.text,
                             // eventController: eventSpecialGuestController,
                             title: 'Event Special Guest'),
@@ -242,7 +242,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
+                        builder: (context) => const ForEditEventInfo(
                             // output: eventHostController.text,
                             // eventController: eventHostController,
                             title: 'Event Host'),
@@ -280,7 +280,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
+                        builder: (context) => const ForEditEventInfo(
                             // output: eventVenueController.text,
                             // eventController: eventVenueController,
                             title: 'Event Venue'),
@@ -406,7 +406,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                       onPressed: (() {
                         showDialog(
                           context: context,
-                          builder: (context) => EditEventDescription(
+                          builder: (context) => const EditEventDescription(
                               // output: eventDescriptionController.text,
                               // eventController: eventDescriptionController,
                               title: 'Event Description'),

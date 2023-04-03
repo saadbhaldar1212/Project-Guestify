@@ -42,13 +42,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
     Navigator.of(context).pop();
   }
 
-  circularProgressionForEmployeeData() {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-  }
-
   @override
   void dispose() {
     super.dispose();

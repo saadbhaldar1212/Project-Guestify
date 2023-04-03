@@ -15,16 +15,25 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
   final eventController = TextEditingController();
   final _fKey = GlobalKey<FormState>();
 
-  final db = FirebaseDatabase.instance.ref();
-  final eventRef = db.child('events/eventInfo/');
+  final db = FirebaseDatabase.instance.ref().child('events/eventInfo/');
 
   Future updateDB() async {
-    await eventRef
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    await db
         .update({
           widget.title: eventController.text,
         })
         .then((value) => Navigator.pop(context))
         .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
   }
 
   @override
@@ -138,10 +147,7 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
-                  onPressed: (() {
-                    // update the database according to the child
-                    // database.ref.child('events/eventInfo/Event Description').set('Event Description' : eventController.text)
-                  }),
+                  onPressed: (() {}),
                   child: const Text(
                     'Save',
                   ),

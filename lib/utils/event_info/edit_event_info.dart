@@ -14,8 +14,6 @@ class EditEventInfo extends StatefulWidget {
 }
 
 class _EditEventInfoState extends State<EditEventInfo> {
-  final bool _isEnabled = false;
-
   final database = FirebaseDatabase.instance.ref();
 
   final _eventFormField = GlobalKey<FormState>();
@@ -65,27 +63,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
                   child: ListTile(
-                    title: TextFormField(
+                    title: const Text(
+                      'Event Name',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                      ),
+                    ),
+                    subtitle: Text(
+                      snapshot.child('Event Name').value.toString(),
                       style: const TextStyle(
                         color: Colors.black,
+                        fontSize: 18,
                       ),
-                      initialValue:
-                          snapshot.child('Event Name').value.toString(),
-                      enabled: _isEnabled,
-                      // controller: eventNameController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Name',
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Name';
-                        }
-                        return null;
-                      },
                     ),
                     trailing: IconButton(
                       onPressed: (() {
@@ -102,27 +92,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    // controller: eventTopicController,
-                    enabled: _isEnabled,
+                  subtitle: Text(
+                    snapshot.child('Event Topic').value.toString(),
                     style: const TextStyle(
                       color: Colors.black,
+                      fontSize: 18,
                     ),
-                    initialValue:
-                        snapshot.child('Event Topic').value.toString(),
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Topic',
+                  ),
+                  title: const Text(
+                    'Event Topic',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Event Topic';
-                      }
-                      return null;
-                    },
                   ),
                   trailing: IconButton(
                     onPressed: (() {
@@ -140,27 +122,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
+                  title: const Text(
+                    'Event Chief Guest',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  subtitle: Text(
+                    snapshot.child('Event Chief Guest').value.toString(),
                     style: const TextStyle(
                       color: Colors.black,
+                      fontSize: 18,
                     ),
-                    initialValue:
-                        snapshot.child('Event Chief Guest').value.toString(),
-                    // controller: eventChiefGuestController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Chief Guest',
-                    ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
                   ),
                   trailing: IconButton(
                     onPressed: (() {
@@ -178,28 +152,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
+                  title: const Text(
+                    'Event Special Guest',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  subtitle: Text(
+                    snapshot.child('Event Special Guest').value.toString(),
                     style: const TextStyle(
                       color: Colors.black,
+                      fontSize: 18,
                     ),
-                    initialValue:
-                        snapshot.child('Event Special Guest').value.toString(),
-                    // controller: eventSpecialGuestController,
-
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Special Guest',
-                    ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
                   ),
                   trailing: IconButton(
                     onPressed: (() {
@@ -217,26 +182,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
+                  title: const Text(
+                    'Event Host',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  subtitle: Text(
+                    snapshot.child('Event Host').value.toString(),
                     style: const TextStyle(
                       color: Colors.black,
+                      fontSize: 18,
                     ),
-                    initialValue: snapshot.child('Event Host').value.toString(),
-                    // controller: eventHostController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Host',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Host name';
-                      }
-                      return null;
-                    },
                   ),
                   trailing: IconButton(
                     onPressed: (() {
@@ -254,27 +212,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
+                  title: const Text(
+                    'Event Venue',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                    ),
+                  ),
+                  subtitle: Text(
+                    snapshot.child('Event Venue').value.toString(),
                     style: const TextStyle(
                       color: Colors.black,
+                      fontSize: 18,
                     ),
-                    initialValue:
-                        snapshot.child('Event Venue').value.toString(),
-                    // controller: eventVenueController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.multiline,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Venue',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Venue';
-                      }
-                      return null;
-                    },
                   ),
                   trailing: IconButton(
                     onPressed: (() {
@@ -292,32 +242,14 @@ class _EditEventInfoState extends State<EditEventInfo> {
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
-                    style: const TextStyle(
+                  title: const Text(
+                    'Event Date',
+                    style: TextStyle(
                       color: Colors.black,
+                      fontSize: 13,
                     ),
-                    initialValue: snapshot.child('Event Date').value.toString(),
-                    // controller: eventDateController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.datetime,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Date',
-                      constraints: BoxConstraints(
-                        maxWidth: 200,
-                      ),
-                      suffixIcon: Icon(
-                        Icons.calendar_month_outlined,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Date';
-                      }
-                      return null;
-                    },
+                  ),
+                  subtitle: InkWell(
                     onTap: () async {
                       DateTime? datePicked = await showDatePicker(
                           context: context,
@@ -332,35 +264,27 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         });
                       }
                     },
+                    child: Text(
+                      snapshot.child('Event Date').value.toString(),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  trailing: const Icon(
+                    Icons.calendar_month_outlined,
                   ),
                 ),
                 ListTile(
-                  title: TextFormField(
-                    enabled: _isEnabled,
-                    style: const TextStyle(
+                  title: const Text(
+                    'Event Time',
+                    style: TextStyle(
                       color: Colors.black,
+                      fontSize: 13,
                     ),
-                    initialValue: snapshot.child('Event Time').value.toString(),
-                    // controller: eventTimeController,
-                    cursorHeight: 20,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.datetime,
-                    autofocus: false,
-                    decoration: const InputDecoration(
-                      labelText: 'Event Time',
-                      constraints: BoxConstraints(
-                        maxWidth: 200,
-                      ),
-                      suffixIcon: Icon(
-                        Icons.access_time_sharp,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter Time';
-                      }
-                      return null;
-                    },
+                  ),
+                  subtitle: InkWell(
                     onTap: () async {
                       TimeOfDay? pickedTime = await showTimePicker(
                         context: context,
@@ -373,34 +297,34 @@ class _EditEventInfoState extends State<EditEventInfo> {
                             TimeOfDay.now().format(context);
                       }
                     },
+                    child: Text(
+                      snapshot.child('Event Time').value.toString(),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  trailing: const Icon(
+                    Icons.access_time,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 18.0),
                   child: ListTile(
-                    title: TextFormField(
-                      enabled: _isEnabled,
+                    title: const Text(
+                      'Event Description',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                      ),
+                    ),
+                    subtitle: Text(
+                      snapshot.child('Event Description').value.toString(),
                       style: const TextStyle(
                         color: Colors.black,
+                        fontSize: 18,
                       ),
-                      initialValue:
-                          snapshot.child('Event Description').value.toString(),
-                      // controller: eventDescriptionController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.newline,
-                      keyboardType: TextInputType.multiline,
-                      minLines: 3,
-                      maxLines: 5,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Description',
-                      ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return 'Enter email';
-                      //   }
-                      //   return null;
-                      // },
                     ),
                     trailing: IconButton(
                       onPressed: (() {

@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/utils/utility.dart';
 
 class ForEditEventInfo extends StatefulWidget {
   const ForEditEventInfo({super.key, required this.title});
@@ -12,6 +14,18 @@ class ForEditEventInfo extends StatefulWidget {
 class _ForEditEventInfoState extends State<ForEditEventInfo> {
   final eventController = TextEditingController();
   final _fKey = GlobalKey<FormState>();
+
+  final db = FirebaseDatabase.instance.ref();
+  final eventRef = db.child('events/eventInfo/');
+
+  Future updateDB() async {
+    await eventRef
+        .update({
+          widget.title: eventController.text,
+        })
+        .then((value) => Navigator.pop(context))
+        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +66,7 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
                   onPressed: (() {
-                    // update the database according to the child
-                    // database.ref.child('events/eventInfo/$title').update(title : eventController.text)
-                    //then - Navigator.pop(context);
+                    if (_fKey.currentState!.validate()) {}
                   }),
                   child: const Text(
                     'Save',

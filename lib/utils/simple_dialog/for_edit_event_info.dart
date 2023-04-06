@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/utility.dart';
+import '/utils/utility.dart';
 
 class ForEditEventInfo extends StatefulWidget {
   const ForEditEventInfo({super.key, required this.title});
@@ -15,29 +15,32 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
   final eventController = TextEditingController();
   final _fKey = GlobalKey<FormState>();
 
-  final db = FirebaseDatabase.instance.ref().child('events/eventInfo/');
-
-  Future updateDB() async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    await db
-        .update({
-          widget.title: eventController.text,
-        })
-        .then((value) => Navigator.pop(context))
-        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
-
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
-  }
+  final db = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
+    final eventRef = db.child('events/event_info/');
+
+    Future updateDB() async {
+      showDialog(
+        context: context,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      await eventRef
+          .update({
+            widget.title: eventController.text,
+          })
+          .then((value) => Navigator.pop(context))
+          .onError(
+              (error, stackTrace) => Utils().toastMessage(error.toString()));
+
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    }
+
     return SimpleDialog(
       title: Text(
         widget.title,
@@ -75,7 +78,9 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
                   onPressed: (() {
-                    if (_fKey.currentState!.validate()) {}
+                    if (_fKey.currentState!.validate()) {
+                      updateDB();
+                    }
                   }),
                   child: const Text(
                     'Save',
@@ -106,6 +111,27 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
   final TextEditingController eventController = TextEditingController();
   final _fKey = GlobalKey<FormState>();
 
+  final eventDesc = FirebaseDatabase.instance.ref().child('events/event_info/');
+
+  Future updateDB() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    await eventDesc
+        .update({
+          'Event Description': eventController.text,
+        })
+        .then((value) => Navigator.pop(context))
+        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -128,11 +154,10 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
                   style: const TextStyle(
                     color: Colors.black,
                   ),
-                  // initialValue: ,
                   minLines: 3,
                   maxLines: 5,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.newline,
                   keyboardType: TextInputType.multiline,
                   autofocus: false,
                   validator: (value) {
@@ -147,7 +172,11 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
-                  onPressed: (() {}),
+                  onPressed: (() {
+                    if (_fKey.currentState!.validate()) {
+                      updateDB();
+                    }
+                  }),
                   child: const Text(
                     'Save',
                   ),

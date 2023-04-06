@@ -42,9 +42,6 @@ class MyApp extends StatelessWidget {
             return const Text('Something went Wrong');
             // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
-            // return const SeatsDashboard(
-            //   title: 'test',
-            // );
             return const Dashboard();
           } else {
             return const Center(

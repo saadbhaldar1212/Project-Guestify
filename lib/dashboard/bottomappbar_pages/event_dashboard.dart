@@ -16,17 +16,6 @@ class EventDashboard extends StatefulWidget {
 }
 
 class _EventDashboardState extends State<EventDashboard> {
-  /*
-  
-  For eventDashboard -
-
-  Text widgets with edit button individual which will lead to open DialogBox of that individual
-  field ------> .update() to be used
-
-  setState will be used to render the latest value into View
-  
-  */
-
   final db = FirebaseDatabase.instance.ref();
 
   final eventNameController = TextEditingController();
@@ -42,7 +31,7 @@ class _EventDashboardState extends State<EventDashboard> {
   @override
   Widget build(BuildContext context) {
     final eventRef = db.child('events/');
-    const pk = 'eventInfo';
+    const pk = 'event_info';
 
     return Scaffold(
       appBar: AppBar(
@@ -144,9 +133,20 @@ class _EventDashboardState extends State<EventDashboard> {
                           ),
                         ),
                         IconButton(
-                          onPressed: (() {}),
+                          onPressed: (() async {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                            await eventRef.child(pk).remove();
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
+                          }),
                           icon: const Icon(
                             Icons.delete,
+                            color: Colors.red,
                           ),
                         ),
                       ],
@@ -158,7 +158,6 @@ class _EventDashboardState extends State<EventDashboard> {
           ),
         ],
       ),
-      // body: const EditEventInfo(),
     );
   }
 }

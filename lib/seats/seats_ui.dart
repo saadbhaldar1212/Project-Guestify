@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
 import 'package:flutter/material.dart';
@@ -121,6 +124,8 @@ class _SingleCircleState extends State<SingleCircle> {
 
   final _fKey = GlobalKey<FormState>();
 
+  final db = FirebaseDatabase.instance.ref();
+
   Color _color = const Color.fromARGB(255, 17, 150, 207);
 
   @override
@@ -135,7 +140,12 @@ class _SingleCircleState extends State<SingleCircle> {
 
   @override
   Widget build(BuildContext context) {
-    // return Placeholder();
+    final seatRef = db.child('seats/');
+    final tableRef = db.child('tables/');
+    final chairRef = db.child('chairs/');
+    final awardRef = db.child('awards/');
+    // want to add the guest type also
+
     return Ink(
       child: InkWell(
           child: Container(
@@ -174,14 +184,14 @@ class _SingleCircleState extends State<SingleCircle> {
                 ),
                 floatingActionButton: ElevatedButton(
                   onPressed: (() {
-                    // if (_fKey.currentState!.validate()) {
-                    setState(() {
-                      _color = _color == Colors.red
-                          ? const Color.fromARGB(255, 17, 150, 207)
-                          : Colors.red;
-                    });
-                    Navigator.pop(context);
-                    // }
+                    if (_fKey.currentState!.validate()) {
+                      setState(() {
+                        _color = _color == Colors.red
+                            ? const Color.fromARGB(255, 17, 150, 207)
+                            : Colors.red;
+                      });
+                      Navigator.pop(context);
+                    }
                   }),
                   child: const Text(
                     'Save Data',

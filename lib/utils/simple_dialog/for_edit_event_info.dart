@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import '/utils/utility.dart';
 
@@ -16,23 +15,11 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
   final eventController = TextEditingController();
   final _fKey = GlobalKey<FormState>();
 
-  final db = FirebaseDatabase.instance.ref().child('events/event_info/');
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAnimatedList(
-      itemBuilder: (context, snapshot, animation, index) {
-        var output = eventController.text =
-            snapshot.child(widget.title).value.toString();
-        return output;
-      },
-      query: db,
-    );
-  }
+  final db = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
+    final eventRef = db.child('events/event_info/');
     Future updateDB() async {
       showDialog(
         context: context,

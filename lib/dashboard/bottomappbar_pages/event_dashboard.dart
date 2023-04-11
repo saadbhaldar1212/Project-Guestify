@@ -159,12 +159,11 @@ class _EventDashboardState extends State<EventDashboard> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.large(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: (() {
           showModalBottomSheet(
-            context: context,
-            builder: (context) => const EventInfo(),
-          );
+              context: context, builder: (context) => const EventInfo());
         }),
         child: const Icon(
           Icons.add,

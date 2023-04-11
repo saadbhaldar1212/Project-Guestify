@@ -32,7 +32,7 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const SignOutButton(),
+        actions: const [SignOutButton()],
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 17, 150, 207),
@@ -46,12 +46,30 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: ListView.builder(
-          itemBuilder: (context, index) {
-            val = index;
-            return SeatsUI(tableLength: val);
-          },
-          itemCount: length),
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 60,
+              children: List.generate(
+                length,
+                (index) => SeatsUI(
+                  tableLength: index,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      // ListView.builder(
+      //     itemBuilder: (context, index) {
+      //       val = index;
+      //       return SeatsUI(tableLength: val);
+      //     },
+      //     itemCount: length),
       persistentFooterButtons: [
         Text(
           'No. of tables: $length',
@@ -73,62 +91,3 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
     );
   }
 }
-
-//Circle List
-/*
-
-Wrap(
-              children: List.generate(
-                5,
-                (index) => CircleList(
-                  // isChildrenVertical: false,
-                  origin: Offset.fromDirection(1),
-                  innerCircleColor: Colors.black,
-                  innerRadius: 50,
-                  outerRadius: 150,
-                  centerWidget: IconButton(
-                    onPressed: (() {}),
-                    icon: const Icon(
-                      Icons.table_bar_rounded,
-                      color: Colors.amber,
-                    ),
-                  ),
-                  // outerCircleColor: Colors.blue,
-                  // innerCircleColor: Colors.amber,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.ac_unit_sharp),
-                      onPressed: (() {}),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.abc_rounded),
-                      onPressed: (() {}),
-                    ),
-                  ],
-
-                  // animationSetting: AnimationSetting(curve: Curves.bounceInOut),
-                ),
-              ),
-            ),
-
-*/

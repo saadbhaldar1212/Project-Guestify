@@ -43,6 +43,7 @@ dependencies:
   firebase_storage: ^11.0.10
   intl: ^0.17.0
   firebase_database: ^10.0.13
+  email_validator: ^2.1.17
 
 flutter_native_splash:
   color: "#1196CF"

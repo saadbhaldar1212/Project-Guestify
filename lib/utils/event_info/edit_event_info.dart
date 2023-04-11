@@ -61,8 +61,9 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onTap: (() {
                       showDialog(
                         context: context,
-                        builder: (context) =>
-                            const ForEditEventInfo(title: 'Event Name'),
+                        builder: (context) => const ForEditEventInfo(
+                          title: 'Event Name',
+                        ),
                       );
                     }),
                     child: ListTile(

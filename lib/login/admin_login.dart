@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_adminlogin_info.dart';
 
 import '../events/home.dart';
@@ -30,23 +31,6 @@ final passwordController = TextEditingController();
 final _formField = GlobalKey<FormState>();
 
 class _AdminLoginState extends State<AdminLogin> {
-  Future adminSignInToHome() async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    await _auth.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
-
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,13 +122,18 @@ class _AdminLoginState extends State<AdminLogin> {
                       child: MaterialButton(
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
-                            adminSignInToHome().then((value) {
+                            _auth
+                                .signInWithEmailAndPassword(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            )
+                                .then((value) {
                               Utils()
                                   .toastMessage(value.user!.email.toString());
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Home(),
+                                  builder: (context) => const Dashboard(),
                                 ),
                               );
                             }).onError((error, stackTrace) {
@@ -193,6 +182,7 @@ class _AdminLoginState extends State<AdminLogin> {
   }
 
   final emailField = TextFormField(
+    style: const TextStyle(color: Colors.black),
     controller: emailController,
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
@@ -231,6 +221,7 @@ class _AdminLoginState extends State<AdminLogin> {
   );
 
   final passwordField = TextFormField(
+    style: const TextStyle(color: Colors.black),
     controller: passwordController,
     keyboardType: TextInputType.visiblePassword,
     obscureText: true,
@@ -255,6 +246,8 @@ class _AdminLoginState extends State<AdminLogin> {
         return 'Enter password';
       } else if (value.length < 6) {
         return 'Minimum length of password should be 6';
+      } else if (!value.contains(RegExp(r'[A-Z]'))) {
+        return 'Password must contain atleast 1 capital letter';
       }
       return null;
     },

@@ -114,6 +114,8 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   focusNode: unitCodeCtrlFocusNode,
                                   cursorColor: Colors.white,
                                   style: const TextStyle(color: Colors.white),
@@ -153,6 +155,8 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   cursorColor: Colors.white,
                                   style: const TextStyle(color: Colors.white),
                                   controller: empPass,

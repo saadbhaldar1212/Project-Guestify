@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/seats/seats.dart';
 import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
@@ -28,286 +29,310 @@ class _EventInfoState extends State<EventInfo> {
   @override
   Widget build(BuildContext context) {
     final eventRef = database.child('events/');
-    const primaryKey = "eventInfo";
+    const primaryKey = "event_info";
     return Scaffold(
-      body: Form(
-        key: _eventFormField,
-        child: SizedBox(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
+        title: const Text('Add Event'),
+        actions: [
+          IconButton(
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
+            icon: const Icon(
+              Icons.close,
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _eventFormField,
           child: Card(
-            elevation: 10,
-            color: const Color.fromARGB(200, 17, 150, 207),
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: TextFormField(
-                        cursorColor: Colors.white,
-                        style: const TextStyle(color: Colors.white),
-                        controller: eventNameController,
-                        cursorHeight: 20,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Event Name',
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter Name';
-                          }
-                          return null;
-                        },
-                      ),
+            elevation: 40,
+            margin: const EdgeInsets.all(40),
+            child: Container(
+              padding: const EdgeInsets.all(35),
+              child: Column(children: [
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventNameController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Name',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
                     ),
-                    TextFormField(
-                      cursorColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
-                      controller: eventTopicController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Topic',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Event Topic';
-                        }
-                        return null;
-                      },
+                    errorStyle: TextStyle(
+                      fontSize: 13,
                     ),
-                    TextFormField(
-                      cursorColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
-                      controller: eventChiefGuestController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Chief Guest',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return 'Enter email';
-                      //   }
-                      //   return null;
-                      // },
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
-                      controller: eventSpecialGuestController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Special Guest',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return 'Enter email';
-                      //   }
-                      //   return null;
-                      // },
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
-                      controller: eventHostController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Host',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Host name';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.white,
-                      style: const TextStyle(color: Colors.white),
-                      controller: eventVenueController,
-                      cursorHeight: 20,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      autofocus: false,
-                      decoration: const InputDecoration(
-                        labelText: 'Event Venue',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Venue';
-                        }
-                        return null;
-                      },
-                    ),
-                    Row(
-                      children: [
-                        TextFormField(
-                          cursorColor: Colors.white,
-                          style: const TextStyle(color: Colors.white),
-                          controller: eventDateController,
-                          cursorHeight: 20,
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.datetime,
-                          autofocus: false,
-                          decoration: const InputDecoration(
-                            labelText: 'Event Date',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            constraints: BoxConstraints(
-                              maxWidth: 200,
-                            ),
-                            suffixIcon: Icon(Icons.calendar_month_outlined,
-                                color: Colors.white),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter Date';
-                            }
-                            return null;
-                          },
-                          onTap: () async {
-                            DateTime? datePicked = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now());
-
-                            if (datePicked != null) {
-                              setState(() {
-                                eventDateController.text = DateFormat()
-                                    .add_yMMMMd()
-                                    .format(datePicked);
-                              });
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        TextFormField(
-                          cursorColor: Colors.white,
-                          style: const TextStyle(color: Colors.white),
-                          controller: eventTimeController,
-                          cursorHeight: 20,
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.datetime,
-                          autofocus: false,
-                          decoration: const InputDecoration(
-                            labelText: 'Event Time',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            constraints: BoxConstraints(
-                              maxWidth: 200,
-                            ),
-                            suffixIcon: Icon(Icons.access_time_sharp,
-                                color: Colors.white),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter Time';
-                            }
-                            return null;
-                          },
-                          onTap: () async {
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                              initialEntryMode: TimePickerEntryMode.dial,
-                            );
-                            if (pickedTime != null) {
-                              eventTimeController.text =
-                                  // ignore: use_build_context_synchronously
-                                  TimeOfDay.now().format(context);
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 18.0),
-                      child: TextFormField(
-                        cursorColor: Colors.white,
-                        style: const TextStyle(color: Colors.white),
-                        controller: eventDescriptionController,
-                        cursorHeight: 20,
-                        textInputAction: TextInputAction.newline,
-                        keyboardType: TextInputType.multiline,
-                        minLines: 3,
-                        maxLines: 5,
-                        autofocus: false,
-                        decoration: const InputDecoration(
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          ),
-                          labelText: 'Event Description',
-                        ),
-                        // validator: (value) {
-                        //   if (value!.isEmpty) {
-                        //     return 'Enter email';
-                        //   }
-                        //   return null;
-                        // },
-                      ),
-                    ),
-                  ]),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter Name';
+                    }
+                    return null;
+                  },
                 ),
-              ],
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventTopicController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Topic',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter Event Topic';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventChiefGuestController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Chief Guest',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  // validator: (value) {
+                  //   if (value!.isEmpty) {
+                  //     return 'Enter email';
+                  //   }
+                  //   return null;
+                  // },
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventSpecialGuestController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Special Guest',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  // validator: (value) {
+                  //   if (value!.isEmpty) {
+                  //     return 'Enter email';
+                  //   }
+                  //   return null;
+                  // },
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventHostController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Host',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter Host name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.black),
+                  controller: eventVenueController,
+                  cursorHeight: 20,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Event Venue',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter Venue';
+                    }
+                    return null;
+                  },
+                ),
+                Row(
+                  children: [
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(color: Colors.black),
+                      controller: eventDateController,
+                      cursorHeight: 20,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.datetime,
+                      autofocus: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Event Date',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        errorStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        constraints: BoxConstraints(
+                          maxWidth: 200,
+                        ),
+                        suffixIcon: Icon(Icons.calendar_month_outlined,
+                            color: Colors.black),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter Date';
+                        }
+                        return null;
+                      },
+                      onTap: () async {
+                        // ignore: use_build_context_synchronously
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        DateTime? datePicked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(3000));
+
+                        if (datePicked != null) {
+                          setState(() {
+                            eventDateController.text =
+                                DateFormat().add_yMMMMd().format(datePicked);
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(color: Colors.black),
+                      controller: eventTimeController,
+                      cursorHeight: 20,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.datetime,
+                      autofocus: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Event Time',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        errorStyle: TextStyle(
+                          fontSize: 13,
+                        ),
+                        constraints: BoxConstraints(
+                          maxWidth: 200,
+                        ),
+                        suffixIcon:
+                            Icon(Icons.access_time_sharp, color: Colors.black),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter Time';
+                        }
+                        return null;
+                      },
+                      onTap: () async {
+                        // ignore: use_build_context_synchronously
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                          initialEntryMode: TimePickerEntryMode.dialOnly,
+                        );
+                        if (pickedTime != null) {
+                          setState(() {
+                            eventTimeController.text =
+                                '${pickedTime.hour}:${pickedTime.minute}';
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 18.0),
+                  child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(color: Colors.black),
+                    controller: eventDescriptionController,
+                    cursorHeight: 20,
+                    textInputAction: TextInputAction.newline,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 3,
+                    maxLines: 5,
+                    autofocus: false,
+                    decoration: const InputDecoration(
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      labelText: 'Event Description',
+                      errorStyle: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    // validator: (value) {
+                    //   if (value!.isEmpty) {
+                    //     return 'Enter email';
+                    //   }
+                    //   return null;
+                    // },
+                  ),
+                ),
+              ]),
             ),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
-        //color which matches theme
         onPressed: (() {
           if (_eventFormField.currentState!.validate()) {
-            //add data to db
-            eventRef.child(primaryKey).set({
-              "Event Name": eventNameController.text,
-              "Event Topic": eventTopicController.text,
-              "Event Chief Guest": eventChiefGuestController.text,
-              "Event Special Guest": eventSpecialGuestController.text,
-              "Event Host": eventHostController.text,
-              "Event Venue": eventVenueController.text,
-              "Event Date": eventDateController.text,
-              "Event Time": eventTimeController.text,
-              "Event Description": eventDescriptionController.text,
-            });
-
             showDialog(
               context: context,
               builder: (context) => SimpleDialog(
@@ -329,28 +354,30 @@ class _EventInfoState extends State<EventInfo> {
                           color: Colors.green.shade400,
                           child: MaterialButton(
                             onPressed: (() {
-                              Utils()
-                                  .toastMessage('Event Created Successfully');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Seats()
-                                    // DashboardContent(
-                                    //   eventName: eventNameController.text,
-                                    //   eventTitle: eventTopicController.text,
-                                    //   eventChiefGuest:
-                                    //       eventChiefGuestController.text,
-                                    //   eventSpecialGuest:
-                                    //       eventSpecialGuestController.text,
-                                    //   eventHost: eventHostController.text,
-                                    //   eventVenue: eventVenueController.text,
-                                    //   eventDate: eventDateController.text,
-                                    //   eventTime: eventTimeController.text,
-                                    //   eventDescription:
-                                    //       eventDescriptionController.text,
-                                    // ),
-                                    ),
-                              );
+                              eventRef.child(primaryKey).set({
+                                "Event Name": eventNameController.text,
+                                "Event Topic": eventTopicController.text,
+                                "Event Chief Guest":
+                                    eventChiefGuestController.text,
+                                "Event Special Guest":
+                                    eventSpecialGuestController.text,
+                                "Event Host": eventHostController.text,
+                                "Event Venue": eventVenueController.text,
+                                "Event Date": eventDateController.text,
+                                "Event Time": eventTimeController.text,
+                                "Event Description":
+                                    eventDescriptionController.text,
+                              }).then((value) {
+                                Utils()
+                                    .toastMessage('Event Created Successfully');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Dashboard(),
+                                    ));
+                              }).onError((error, stackTrace) {
+                                Utils().toastMessage(error.toString());
+                              });
                             }),
                             child: const Text(
                               'Yes & Continue',

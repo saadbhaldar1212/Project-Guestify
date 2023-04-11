@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/events/event_information.dart';
 import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 
@@ -157,6 +158,17 @@ class _EventDashboardState extends State<EventDashboard> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.large(
+        onPressed: (() {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => const EventInfo(),
+          );
+        }),
+        child: const Icon(
+          Icons.add,
+        ),
       ),
     );
   }

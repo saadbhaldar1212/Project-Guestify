@@ -27,6 +27,8 @@ class _SeatsUIState extends State<SeatsUI> {
     drawOrder: CircularLayoutDrawOrder.itemsOnTop,
   );
 
+  Color selectedColor = Colors.amber;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,11 +98,12 @@ class _SeatsUIState extends State<SeatsUI> {
 }
 
 // ignore: must_be_immutable
-class SingleCircle extends StatelessWidget {
+class SingleCircle extends StatefulWidget {
   final String? txt;
   final Color? color;
   final int? length;
   int tableLength;
+
   SingleCircle({
     Key? key,
     this.txt,
@@ -108,61 +111,251 @@ class SingleCircle extends StatelessWidget {
     this.length,
     required this.tableLength,
   }) : super(key: key);
+
+  @override
+  State<SingleCircle> createState() => _SingleCircleState();
+}
+
+class _SingleCircleState extends State<SingleCircle> {
+  final tableNumber = TextEditingController();
+  final seatNumber = TextEditingController();
+  final gName = TextEditingController();
+  final gType = TextEditingController();
+  final gContact = TextEditingController();
+  final gEmail = TextEditingController();
+  final gExtraMember = TextEditingController();
+  final gModeOfTransportation = TextEditingController();
+  final gAllotedParkingNumber = TextEditingController();
+  final gAward = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    tableNumber.text = '${widget.tableLength + 1}';
+    seatNumber.text = '${widget.txt}';
+  }
+
+  List dropDownItem = ['One', 'Two', 'Three', 'Four'];
+  String? dropDownValue;
+
   @override
   Widget build(BuildContext context) {
     // return Placeholder();
-    return InkWell(
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) => SimpleDialog(
-          contentPadding: const EdgeInsets.all(18),
-          title: const Text(
-            'Add Guests',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
+    return ClipOval(
+      child: ElevatedButton(
+        autofocus: true,
+        onPressed: (() {
+          showDialog(
+            context: context,
+            builder: (context) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(18),
+              title: const Text(
+                'Add Guests',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              children: [
+                //gtableumber -- will be saved to guests && table table aswell
+                TextFormField(
+                  controller: tableNumber,
+                  enabled: false,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Table Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gseatnumber -- will be saved to guests && chairs table aswell
+                TextFormField(
+                  controller: seatNumber,
+                  keyboardType: TextInputType.number,
+                  enabled: false,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Seat Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                //gname
+                TextFormField(
+                  controller: gName,
+                  keyboardType: TextInputType.text,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Guest Name',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                //gtype
+                DropdownButton<String>(
+                  value: dropDownValue,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  items: dropDownItem.map((value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      dropDownValue = value!;
+                    });
+                  },
+                ),
+                // TextFormField(
+                //   controller: gType,
+                //   keyboardType: TextInputType.text,
+                //   style: const TextStyle(
+                //     color: Colors.grey,
+                //   ),
+                //   decoration: const InputDecoration(
+                //     label: Text(
+                //       'Guest Type',
+                //       style: TextStyle(
+                //         color: Colors.black,
+                //       ),
+                //     ),
+                //     errorStyle: TextStyle(
+                //       fontSize: 13,
+                //     ),
+                //   ),
+                // ),
+                //gcontact***
+                TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: gContact,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                    label: Text(
+                      'Guest Phone Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gemail
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: gEmail,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                    label: Text(
+                      'Guest Email',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gextramember -- multiple values can be added
+                TextFormField(
+                  controller: gExtraMember,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                    label: Text(
+                      'Guest Extra Member-',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gmodeoftransportation
+                TextFormField(
+                  controller: gModeOfTransportation,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Table Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gallotedparkingnumber
+                TextFormField(
+                  controller: gAllotedParkingNumber,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Table Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                //gaward -- will be saved to guests && awards table aswell
+                TextFormField(
+                  controller: gAward,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                  ),
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Table Number',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          children: [
-            //gtableumber -- will be saved to guests && table table aswell
-            TextFormField(),
-            //gseatnumber -- will be saved to guests && chairs table aswell
-            TextFormField(),
-            //gname
-            TextFormField(),
-            //gtype
-            TextFormField(),
-            //gcontact***
-            TextFormField(),
-            //gemail
-            TextFormField(),
-            //gextramember -- multiple values can be added
-            TextFormField(),
-            //gmodeoftransportation
-            TextFormField(),
-            //gallotedparkingnumber
-            TextFormField(),
-            //gaward -- will be saved to guests && awards table aswell
-            TextFormField(),
-          ],
-        ),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color.fromARGB(255, 17, 150, 207),
-            width: 3,
-          ),
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: Center(
-            child: Text(
-          txt!,
-          style: const TextStyle(
-            fontSize: 18,
-          ),
-        )),
+          );
+        }),
+        child: Text(widget.txt.toString()),
       ),
     );
   }

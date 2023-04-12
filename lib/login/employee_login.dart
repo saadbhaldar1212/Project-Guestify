@@ -33,6 +33,13 @@ final db = FirebaseDatabase.instance.ref();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _EmployeeLoginState extends State<EmployeeLogin> {
+  @override
+  void initState() {
+    super.initState();
+    emailController.clear();
+    passwordController.clear();
+  }
+
   Future empSignInToHome() async {
     showDialog(
       context: context,

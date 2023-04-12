@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_adminlogin_info.dart';
 
-import '../events/home.dart';
 import '../utils/utility.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -155,19 +154,19 @@ class _AdminLoginState extends State<AdminLogin> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: (() {
-                Utils().toastMessage('Pressed');
-              }),
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: Color.fromARGB(255, 17, 150, 207),
-                ),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: (() {
+            //     Utils().toastMessage('Pressed');
+            //   }),
+            //   child: const Text(
+            //     'Forgot Password?',
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.w600,
+            //       fontSize: 14,
+            //       color: Color.fromARGB(255, 17, 150, 207),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

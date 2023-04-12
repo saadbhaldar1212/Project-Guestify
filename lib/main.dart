@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
-            // Utils().toastMessage(snapshot.error.toString());
           } else if (snapshot.hasData) {
             return const Dashboard();
           } else {

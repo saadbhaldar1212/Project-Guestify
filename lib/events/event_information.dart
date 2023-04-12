@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
-import 'package:guestify/seats/seats.dart';
+
 import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
 
@@ -370,11 +370,13 @@ class _EventInfoState extends State<EventInfo> {
                               }).then((value) {
                                 Utils()
                                     .toastMessage('Event Created Successfully');
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Dashboard(),
-                                    ));
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Dashboard(),
+                                  ),
+                                  (route) => false,
+                                );
                               }).onError((error, stackTrace) {
                                 Utils().toastMessage(error.toString());
                               });

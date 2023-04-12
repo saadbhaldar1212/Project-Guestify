@@ -86,7 +86,6 @@ class _SeatsUIState extends State<SeatsUI> {
             valueSetter: (newVal) {
               setState(() {
                 config = newVal;
-                print(config);
               });
             },
             itemsLength: length,
@@ -158,9 +157,10 @@ class _SingleCircleState extends State<SingleCircle> {
     final seatRef = db.child('seats/');
     const seatsPK = 'occupied';
     final awardRef = db.child('awards/');
+    const awardPK = 'award_list';
 
     Future forAward() async {
-      await awardRef.push().set({
+      await awardRef.child(awardPK).set({
         'Award': gAward.text,
       });
     }

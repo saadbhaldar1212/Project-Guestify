@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:guestify/utils/utility.dart';
 
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
@@ -31,6 +31,17 @@ class _SeatsUIState extends State<SeatsUI> {
     drawOrder: CircularLayoutDrawOrder.itemsOnTop,
   );
 
+  final seatRef = FirebaseDatabase.instance.ref().child('seats/');
+  static const pk = 'occupied';
+
+  final chairController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    seatRef.child(pk).update({'Total Chairs': chairController.text});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +50,6 @@ class _SeatsUIState extends State<SeatsUI> {
           config: config,
           itemsLength: length,
           itemBuilder: (context, index) {
-            // Can be any widget, preferably a circle
             return SingleCircle(
               tableLength: widget.tableLength!,
               length: length,
@@ -76,12 +86,14 @@ class _SeatsUIState extends State<SeatsUI> {
             valueSetter: (newVal) {
               setState(() {
                 config = newVal;
+                print(config);
               });
             },
             itemsLength: length,
             itemsLengthSetter: (newVal) {
               setState(() {
                 length = newVal;
+                chairController.text = newVal.toString();
               });
             },
           ),
@@ -96,14 +108,16 @@ class SingleCircle extends StatefulWidget {
   final String? txt;
   final Color? color;
   final int? length;
-  int tableLength;
+  int? tableLength;
+  int? totalChairs;
 
   SingleCircle({
     Key? key,
     this.txt,
     this.color,
     this.length,
-    required this.tableLength,
+    this.tableLength,
+    this.totalChairs,
   }) : super(key: key);
 
   @override
@@ -131,7 +145,7 @@ class _SingleCircleState extends State<SingleCircle> {
   @override
   void initState() {
     super.initState();
-    tableNumber.text = '${widget.tableLength + 1}';
+    tableNumber.text = '${widget.tableLength! + 1}';
     seatNumber.text = '${widget.txt}';
   }
 
@@ -140,11 +154,38 @@ class _SingleCircleState extends State<SingleCircle> {
 
   @override
   Widget build(BuildContext context) {
+    final guestRef = db.child('guest/');
     final seatRef = db.child('seats/');
-    final tableRef = db.child('tables/');
-    final chairRef = db.child('chairs/');
+    const seatsPK = 'occupied';
     final awardRef = db.child('awards/');
-    // want to add the guest type also
+
+    Future forAward() async {
+      await awardRef.push().set({
+        'Award': gAward.text,
+      });
+    }
+
+    Future forSeats() async {
+      await seatRef.child(seatsPK).set({
+        'Table Number': '${widget.tableLength! + 1}',
+        'Total Chairs': '${widget.length}',
+      });
+    }
+
+    Future addGuestData() async {
+      await guestRef.push().set({
+        'Table Number': '${widget.tableLength! + 1}',
+        'Chair Number': '${widget.txt}',
+        'Guest Name': gName.text,
+        'Guest Type': gType.text,
+        'Guest Phone Number': gContact.text,
+        'Guest Email': gEmail.text,
+        'Extra Memeber': gExtraMember.text,
+        'Mode of Transportation': gModeOfTransportation.text,
+        'Alloted Parking': gAllotedParkingNumber.text,
+        'Award': gAward.text,
+      });
+    }
 
     return Ink(
       child: InkWell(
@@ -185,12 +226,26 @@ class _SingleCircleState extends State<SingleCircle> {
                 floatingActionButton: ElevatedButton(
                   onPressed: (() {
                     if (_fKey.currentState!.validate()) {
-                      setState(() {
-                        _color = _color == Colors.red
-                            ? const Color.fromARGB(255, 17, 150, 207)
-                            : Colors.red;
+                      addGuestData().onError((error, stackTrace) {
+                        Utils().toastMessage(error.toString());
                       });
-                      Navigator.pop(context);
+
+                      forAward().onError((error, stackTrace) {
+                        Utils().toastMessage(error.toString());
+                      });
+
+                      forSeats().then(
+                        (value) {
+                          setState(() {
+                            _color = _color == Colors.red
+                                ? const Color.fromARGB(255, 17, 150, 207)
+                                : Colors.red;
+                          });
+                          Navigator.pop(context);
+                        },
+                      ).onError((error, stackTrace) {
+                        Utils().toastMessage(error.toString());
+                      });
                     }
                   }),
                   child: const Text(

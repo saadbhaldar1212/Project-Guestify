@@ -26,7 +26,6 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
   }
 
   int length = 1;
-  int val = 0;
 
   @override
   Widget build(BuildContext context) {

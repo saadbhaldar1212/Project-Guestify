@@ -16,11 +16,12 @@ class _SignOutButtonState extends State<SignOutButton> {
   signOut() async {
     await _auth.signOut().then((value) {
       Utils().toastMessage('Signed out successfully');
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => const WelcomeSplash(),
         ),
+        (route) => false,
       );
     }).onError((error, stackTrace) {
       Utils().toastMessage(error.toString());

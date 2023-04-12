@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_adminlogin_info.dart';
+import 'package:guestify/welcome/welcome2.dart';
 
 import '../utils/utility.dart';
 
@@ -31,10 +32,28 @@ final _formField = GlobalKey<FormState>();
 
 class _AdminLoginState extends State<AdminLogin> {
   @override
+  void initState() {
+    super.initState();
+    emailController.clear();
+    passwordController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: (() {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Welcome2(),
+                ),
+                (route) => false);
+          }),
+          icon: const Icon(Icons.chevron_left_sharp),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: const Color.fromRGBO(19, 159, 219, 10),
@@ -129,11 +148,12 @@ class _AdminLoginState extends State<AdminLogin> {
                                 .then((value) {
                               Utils()
                                   .toastMessage(value.user!.email.toString());
-                              Navigator.push(
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const Dashboard(),
                                 ),
+                                (route) => false,
                               );
                             }).onError((error, stackTrace) {
                               Utils().toastMessage(error.toString());

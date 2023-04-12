@@ -25,6 +25,13 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
   final database = FirebaseDatabase.instance.ref();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  @override
+  void initState() {
+    super.initState();
+    empName.clear();
+    empPass.clear();
+  }
+
   Future empSignIn() async {
     showDialog(
       context: context,
@@ -114,8 +121,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 child: TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
                                   focusNode: unitCodeCtrlFocusNode,
                                   cursorColor: Colors.white,
                                   style: const TextStyle(color: Colors.white),
@@ -155,8 +160,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 child: TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
                                   cursorColor: Colors.white,
                                   style: const TextStyle(color: Colors.white),
                                   controller: empPass,

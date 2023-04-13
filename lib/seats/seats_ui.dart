@@ -154,8 +154,9 @@ class _SingleCircleState extends State<SingleCircle> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
-    final seatRef = db.child('seats/');
-    const seatsPK = 'occupied';
+    // final seatRef = db.child('seats/');
+    // const occupiedSeats = 'occupied';
+    // const availableSeats = 'available';
     final awardRef = db.child('awards/');
     const awardPK = 'award_list';
 
@@ -165,12 +166,12 @@ class _SingleCircleState extends State<SingleCircle> {
       });
     }
 
-    Future forSeats() async {
-      await seatRef.child(seatsPK).set({
-        'Table Number': '${widget.tableLength! + 1}',
-        'Total Chairs': '${widget.length}',
-      });
-    }
+    // Future forSeats() async {
+    //   await seatRef.child(seatsPK).set({
+    //     'Table Number': '${widget.tableLength! + 1}',
+    //     'Total Chairs': '${widget.length}',
+    //   });
+    // }
 
     Future addGuestData() async {
       await guestRef.push().set({
@@ -178,7 +179,7 @@ class _SingleCircleState extends State<SingleCircle> {
         'Chair Number': '${widget.txt}',
         'Guest Name': gName.text,
         'Guest Type': gType.text,
-        'Guest Phone Number': gContact.text,
+        'Guest Phone Number': gContact,
         'Guest Email': gEmail.text,
         'Extra Memeber': gExtraMember.text,
         'Mode of Transportation': gModeOfTransportation.text,
@@ -230,11 +231,7 @@ class _SingleCircleState extends State<SingleCircle> {
                         Utils().toastMessage(error.toString());
                       });
 
-                      forAward().onError((error, stackTrace) {
-                        Utils().toastMessage(error.toString());
-                      });
-
-                      forSeats().then(
+                      forAward().then(
                         (value) {
                           setState(() {
                             _color = _color == Colors.red
@@ -246,6 +243,10 @@ class _SingleCircleState extends State<SingleCircle> {
                       ).onError((error, stackTrace) {
                         Utils().toastMessage(error.toString());
                       });
+
+                      // forSeats().onError((error, stackTrace) {
+                      //   Utils().toastMessage(error.toString());
+                      // });
                     }
                   }),
                   child: const Text(
@@ -264,7 +265,6 @@ class _SingleCircleState extends State<SingleCircle> {
                         padding: const EdgeInsets.all(40),
                         child: Column(
                           children: [
-                            //gtableumber -- will be saved to guests && table table aswell
                             TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -289,7 +289,6 @@ class _SingleCircleState extends State<SingleCircle> {
                                 return null;
                               },
                             ),
-                            //gseatnumber -- will be saved to guests && chairs table aswell
                             TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,

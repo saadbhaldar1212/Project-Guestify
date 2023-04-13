@@ -134,16 +134,63 @@ class _EventDashboardState extends State<EventDashboard> {
                           ),
                         ),
                         IconButton(
-                          onPressed: (() async {
+                          onPressed: (() {
                             showDialog(
                               context: context,
-                              builder: (context) => const Center(
-                                child: CircularProgressIndicator(),
+                              builder: (context) => SimpleDialog(
+                                elevation: 5,
+                                alignment: Alignment.center,
+                                title: const Text(
+                                  'Are you sure?',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.red),
+                                  textAlign: TextAlign.center,
+                                ),
+                                contentPadding: const EdgeInsets.all(20),
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Material(
+                                          color: Colors.green.shade400,
+                                          child: MaterialButton(
+                                            onPressed: (() {
+                                              eventRef.child(pk).remove();
+                                            }),
+                                            child: const Text(
+                                              'Yes & Continue',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Material(
+                                          color: Colors.red,
+                                          child: MaterialButton(
+                                            onPressed: (() {
+                                              Navigator.pop(context);
+                                            }),
+                                            child: const Text(
+                                              'No',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                             );
-                            await eventRef.child(pk).remove();
-                            // ignore: use_build_context_synchronously
-                            Navigator.pop(context);
                           }),
                           icon: const Icon(
                             Icons.delete,

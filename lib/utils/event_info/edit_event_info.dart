@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_edit_event_info.dart';
 import 'package:guestify/utils/utility.dart';
-import 'package:intl/intl.dart';
 
 class EditEventInfo extends StatefulWidget {
   EditEventInfo(
@@ -48,12 +47,6 @@ class _EditEventInfoState extends State<EditEventInfo> {
   final eventTimeController = TextEditingController();
 
   final FocusNode unitCodeCtrlFocusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    // eventDateController.text = widget.eventDate.toString();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -118,13 +118,20 @@ class _EventInfoState extends State<EventInfo> {
                     errorStyle: TextStyle(
                       fontSize: 13,
                     ),
+                    helperText: "add 'none' if not applicable",
+                    helperStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                   ),
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Enter email';
-                  //   }
-                  //   return null;
-                  // },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter email';
+                    } else if (value.contains(RegExp(r'[0-9]')) &&
+                        !value.contains(RegExp(r'[a-z][A-Z]'))) {
+                      return 'Enter valid Name';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -142,13 +149,20 @@ class _EventInfoState extends State<EventInfo> {
                     errorStyle: TextStyle(
                       fontSize: 13,
                     ),
+                    helperText: "add 'none' if not applicable",
+                    helperStyle: TextStyle(
+                      fontSize: 13,
+                    ),
                   ),
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Enter email';
-                  //   }
-                  //   return null;
-                  // },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter email';
+                    } else if (value.contains(RegExp(r'[0-9]')) &&
+                        !value.contains(RegExp(r'[a-z][A-Z]'))) {
+                      return 'Enter valid Name';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -170,6 +184,9 @@ class _EventInfoState extends State<EventInfo> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter Host name';
+                    } else if (value.contains(RegExp(r'[0-9]')) &&
+                        !value.contains(RegExp(r'[a-z][A-Z]'))) {
+                      return 'Enter valid Name';
                     }
                     return null;
                   },
@@ -234,7 +251,7 @@ class _EventInfoState extends State<EventInfo> {
                         DateTime? datePicked = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
+                            firstDate: DateTime.now(),
                             lastDate: DateTime(3000));
 
                         if (datePicked != null) {
@@ -316,12 +333,12 @@ class _EventInfoState extends State<EventInfo> {
                         fontSize: 13,
                       ),
                     ),
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return 'Enter email';
-                    //   }
-                    //   return null;
-                    // },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter email';
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ]),

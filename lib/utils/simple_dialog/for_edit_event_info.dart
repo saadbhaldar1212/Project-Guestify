@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '/utils/utility.dart';
 
 class ForEditEventInfo extends StatefulWidget {
-  const ForEditEventInfo({super.key, required this.title});
+  ForEditEventInfo({super.key, required this.title, this.event});
 
   final String title;
+  String? event;
 
   @override
   State<ForEditEventInfo> createState() => _ForEditEventInfoState();
@@ -16,6 +17,12 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
   final _fKey = GlobalKey<FormState>();
 
   final db = FirebaseDatabase.instance.ref();
+
+  @override
+  void initState() {
+    super.initState();
+    eventController.text = widget.event!;
+  }
 
   @override
   Widget build(BuildContext context) {

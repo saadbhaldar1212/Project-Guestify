@@ -126,7 +126,7 @@ class _EventDashboardState extends State<EventDashboard> {
                               isDismissible: false,
                               isScrollControlled: false,
                               context: context,
-                              builder: (context) => const EditEventInfo(),
+                              builder: (context) => EditEventInfo(),
                             );
                           }),
                           icon: const Icon(

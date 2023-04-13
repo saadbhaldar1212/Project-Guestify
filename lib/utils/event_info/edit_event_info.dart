@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -197,7 +195,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                       context: context,
                       builder: (context) => ForEditEventInfo(
                         title: 'Event Special Guest',
-                        event: widget.eventTopic,
+                        event: widget.eventSpecialGuest,
                       ),
                     ),
                     child: ListTile(
@@ -225,7 +223,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                       context: context,
                       builder: (context) => ForEditEventInfo(
                         title: 'Event Host',
-                        event: widget.eventTopic,
+                        event: widget.eventHost,
                       ),
                     ),
                     child: ListTile(
@@ -252,7 +250,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => ForEditEventInfo(
-                        title: 'Event Topic',
+                        title: 'Event Venue',
                         event: widget.eventVenue,
                       ),
                     ),
@@ -277,22 +275,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     ),
                   ),
                   InkWell(
-                    onTap: () async {
-                      DateTime? datePicked = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2030));
-
-                      if (datePicked != null) {
-                        setState(() {
-                          eventDateController.text =
-                              DateFormat().add_yMMMMd().format(datePicked);
-                        });
-                        // ignore: use_build_context_synchronously
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      }
-                    },
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ForDate(
+                        title: 'Event Date',
+                        event: widget.eventDate,
+                      ),
+                    ),
                     child: ListTile(
                       title: const Text(
                         'Event Date',
@@ -308,52 +297,19 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           fontSize: 18,
                         ),
                       ),
-                      // TextFormField(
-                      //   enableInteractiveSelection: true,
-                      //   enabled: false,
-                      //   cursorColor: Colors.white,
-                      //   style: const TextStyle(
-                      //     color: Colors.black,
-                      //   ),
-                      //   controller: eventDateController,
-                      //   decoration: const InputDecoration(
-                      //     errorStyle: TextStyle(
-                      //       fontSize: 12,
-                      //       color: Colors.red,
-                      //     ),
-                      //   ),
-                      //   cursorHeight: 20,
-                      //   textInputAction: TextInputAction.done,
-                      //   keyboardType: TextInputType.datetime,
-                      //   autofocus: false,
-                      //   validator: (value) {
-                      //     if (value!.isEmpty) {
-                      //       return 'This field cannot be empty';
-                      //     }
-                      //     return null;
-                      //   },
-                      // ),
                       trailing: const Icon(
                         Icons.calendar_month_outlined,
                       ),
                     ),
                   ),
                   InkWell(
-                    onTap: () async {
-                      TimeOfDay? pickedTime = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.fromDateTime(DateTime.now()),
-                        initialEntryMode: TimePickerEntryMode.dial,
-                      );
-                      if (pickedTime != null) {
-                        setState(() {
-                          eventTimeController.text =
-                              TimeOfDay.now().format(context);
-                        });
-                        // ignore: use_build_context_synchronously
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      }
-                    },
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ForTime(
+                        title: 'Event Time',
+                        event: widget.eventTime,
+                      ),
+                    ),
                     child: ListTile(
                       title: const Text(
                         'Event Time',
@@ -362,29 +318,12 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           fontSize: 13,
                         ),
                       ),
-                      subtitle: TextFormField(
-                        enableInteractiveSelection: true,
-                        enabled: false,
-                        cursorColor: Colors.white,
+                      subtitle: Text(
+                        snapshot.child('Event Time').value.toString(),
                         style: const TextStyle(
                           color: Colors.black,
+                          fontSize: 18,
                         ),
-                        decoration: const InputDecoration(
-                          errorStyle: TextStyle(
-                            fontSize: 12,
-                            color: Colors.red,
-                          ),
-                        ),
-                        controller: eventTimeController,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.datetime,
-                        autofocus: false,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'This field cannot be empty';
-                          }
-                          return null;
-                        },
                       ),
                       trailing: const Icon(
                         Icons.access_time,
@@ -396,8 +335,8 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     child: InkWell(
                       onTap: () => showDialog(
                         context: context,
-                        builder: (context) => ForEditEventInfo(
-                          title: 'Event Topic',
+                        builder: (context) => EditEventDescription(
+                          title: 'Event Description',
                           event: widget.eventDescription,
                         ),
                       ),

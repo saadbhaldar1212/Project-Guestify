@@ -45,65 +45,67 @@ class _SeatsUIState extends State<SeatsUI> {
   Widget build(BuildContext context) {
     final tableRef = db.child('table/');
     final seatRef = db.child('seats/');
-    return Column(
-      children: [
-        CircularWidgets(
-          config: config,
-          itemsLength: length,
-          itemBuilder: (context, index) {
-            return SingleCircle(
-              tableLength: widget.tableLength!,
-              length: length,
-              txt: index.toString(),
-              color: const Color.fromARGB(255, 17, 150, 207),
-            );
-          },
-          centerWidgetBuilder: (context) {
-            return Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromARGB(255, 17, 150, 207),
-                  width: 3,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          CircularWidgets(
+            config: config,
+            itemsLength: length,
+            itemBuilder: (context, index) {
+              return SingleCircle(
+                tableLength: widget.tableLength!,
+                length: length,
+                txt: index.toString(),
+                color: const Color.fromARGB(255, 17, 150, 207),
+              );
+            },
+            centerWidgetBuilder: (context) {
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 17, 150, 207),
+                    width: 3,
+                  ),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
                 ),
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Text(
-                  '${widget.tableLength! + 1}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                child: Center(
+                  child: Text(
+                    '${widget.tableLength! + 1}',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-        SizedBox(
-          width: 150,
-          child: FirebaseAnimatedList(
-            shrinkWrap: true,
-            query: seatRef,
-            itemBuilder: (context, snapshot, animation, index) {
-              return ConfigWidget(
-                config: config,
-                valueSetter: (newVal) {
-                  setState(() {
-                    config = newVal;
-                  });
-                },
-                itemsLength: length,
-                itemsLengthSetter: (newVal) {
-                  setState(() {
-                    length = newVal;
-                  });
-                },
               );
             },
           ),
-        ),
-      ],
+          SizedBox(
+            width: 150,
+            child: FirebaseAnimatedList(
+              shrinkWrap: true,
+              query: seatRef,
+              itemBuilder: (context, snapshot, animation, index) {
+                return ConfigWidget(
+                  config: config,
+                  valueSetter: (newVal) {
+                    setState(() {
+                      config = newVal;
+                    });
+                  },
+                  itemsLength: length,
+                  itemsLengthSetter: (newVal) {
+                    setState(() {
+                      length = newVal;
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

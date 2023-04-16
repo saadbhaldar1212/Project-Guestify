@@ -44,7 +44,7 @@ class _EventDashboardState extends State<EventDashboard> {
     final tableRef = db.child('table/');
     const tableKey = 'table_no';
     final seatRef = db.child('seats/');
-    const seatKey = 'table_no';
+    const seatKey = 'seat_no';
 
     return Scaffold(
       appBar: AppBar(
@@ -238,12 +238,7 @@ class _EventDashboardState extends State<EventDashboard> {
                           if (_tKey.currentState!.validate()) {
                             tableRef.child(tableKey).set({
                               'Number of Tables': tableC.text,
-                            }).then((value) {
-                              Get.to(
-                                () => const SeatsDashboard(
-                                    title: 'Seats Dashboard'),
-                              );
-                            });
+                            }).then((value) {});
                           }
                         }),
                         child: const Text('Go'),
@@ -251,38 +246,38 @@ class _EventDashboardState extends State<EventDashboard> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Form(
-                    key: _sKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: seatsC,
-                          style: const TextStyle(
-                            color: Colors.black,
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                        ElevatedButton(
-                          onPressed: (() {
-                            if (_sKey.currentState!.validate()) {
-                              seatRef.child(seatKey).set({
-                                'Number of Seats': seatsC.text,
-                              }).then((value) {
-                                Get.to(
-                                  () => const SeatsDashboard(
-                                      title: 'Seats Dashboard'),
-                                );
-                              });
-                            }
-                          }),
-                          child: const Text('Go'),
-                        )
-                      ],
-                    ),
-                  ),
-                )
+                // Container(
+                //   margin: const EdgeInsets.symmetric(horizontal: 40),
+                //   child: Form(
+                //     key: _sKey,
+                //     child: Column(
+                //       children: [
+                //         TextFormField(
+                //           controller: seatsC,
+                //           style: const TextStyle(
+                //             color: Colors.black,
+                //           ),
+                //           keyboardType: TextInputType.number,
+                //         ),
+                //         ElevatedButton(
+                //           onPressed: (() {
+                //             if (_sKey.currentState!.validate()) {
+                //               seatRef.child(seatKey).set({
+                //                 'Number of Seats': seatsC.text,
+                //               }).then((value) {
+                //                 Get.to(
+                //                   () => const SeatsDashboard(
+                //                       title: 'Seats Dashboard'),
+                //                 );
+                //               });
+                //             }
+                //           }),
+                //           child: const Text('Go'),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

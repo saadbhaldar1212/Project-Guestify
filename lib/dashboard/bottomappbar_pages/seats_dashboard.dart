@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 
@@ -26,9 +28,11 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
   }
 
   int length = 1;
+  final db = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
+    final tableRef = db.child('table/');
     return Scaffold(
       appBar: AppBar(
         actions: const [SignOutButton()],
@@ -50,15 +54,24 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 60,
-              children: List.generate(
-                length,
-                (index) => SeatsUI(
-                  tableLength: index,
-                ),
-              ),
+            FirebaseAnimatedList(
+              shrinkWrap: true,
+              query: tableRef,
+              itemBuilder: (context, snapshot, animation, index) {
+                String tLength =
+                    snapshot.child('Number of Tables').value.toString();
+                int tLengthf = int.parse(tLength);
+                return Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 60,
+                  children: List.generate(
+                    tLengthf,
+                    (index) => SeatsUI(
+                      tableLength: index,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

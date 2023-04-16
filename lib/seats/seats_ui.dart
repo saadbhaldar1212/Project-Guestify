@@ -1,10 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:guestify/utils/utility.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
+import '../utils/utility.dart';
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 
 import 'seats_ui_configuration/config_widget.dart';
 
@@ -31,19 +31,20 @@ class _SeatsUIState extends State<SeatsUI> {
     drawOrder: CircularLayoutDrawOrder.itemsOnTop,
   );
 
-  final seatRef = FirebaseDatabase.instance.ref().child('seats/');
-  static const pk = 'occupied';
-
   final chairController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    seatRef.child(pk).update({'Total Chairs': chairController.text});
+    // seatRef.child(pk).update({'Total Chairs': chairController.text});
   }
+
+  final db = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
+    final tableRef = db.child('table/');
+    final seatRef = db.child('seats/');
     return Column(
       children: [
         CircularWidgets(
@@ -81,19 +82,24 @@ class _SeatsUIState extends State<SeatsUI> {
         ),
         SizedBox(
           width: 150,
-          child: ConfigWidget(
-            config: config,
-            valueSetter: (newVal) {
-              setState(() {
-                config = newVal;
-              });
-            },
-            itemsLength: length,
-            itemsLengthSetter: (newVal) {
-              setState(() {
-                length = newVal;
-                chairController.text = newVal.toString();
-              });
+          child: FirebaseAnimatedList(
+            shrinkWrap: true,
+            query: seatRef,
+            itemBuilder: (context, snapshot, animation, index) {
+              return ConfigWidget(
+                config: config,
+                valueSetter: (newVal) {
+                  setState(() {
+                    config = newVal;
+                  });
+                },
+                itemsLength: length,
+                itemsLengthSetter: (newVal) {
+                  setState(() {
+                    length = newVal;
+                  });
+                },
+              );
             },
           ),
         ),
@@ -140,6 +146,9 @@ class _SingleCircleState extends State<SingleCircle> {
   final db = FirebaseDatabase.instance.ref();
 
   Color _color = const Color.fromARGB(255, 17, 150, 207);
+  final RegExp phoneRegex = RegExp(r'^[6-9]\d{9}$');
+  final RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
   @override
   void initState() {
@@ -157,14 +166,14 @@ class _SingleCircleState extends State<SingleCircle> {
     // final seatRef = db.child('seats/');
     // const occupiedSeats = 'occupied';
     // const availableSeats = 'available';
-    final awardRef = db.child('awards/');
-    const awardPK = 'award_list';
+    // final awardRef = db.child('awards/');
+    // const awardPK = 'award_list';
 
-    Future forAward() async {
-      await awardRef.child(awardPK).set({
-        'Award': gAward.text,
-      });
-    }
+    // Future forAward() async {
+    //   await awardRef.child(awardPK).set({
+    //     'Award': gAward.text,
+    //   });
+    // }
 
     // Future forSeats() async {
     //   await seatRef.child(seatsPK).set({
@@ -172,21 +181,6 @@ class _SingleCircleState extends State<SingleCircle> {
     //     'Total Chairs': '${widget.length}',
     //   });
     // }
-
-    Future addGuestData() async {
-      await guestRef.push().set({
-        'Table Number': '${widget.tableLength! + 1}',
-        'Chair Number': '${widget.txt}',
-        'Guest Name': gName.text,
-        'Guest Type': gType.text,
-        'Guest Phone Number': gContact,
-        'Guest Email': gEmail.text,
-        'Extra Memeber': gExtraMember.text,
-        'Mode of Transportation': gModeOfTransportation.text,
-        'Alloted Parking': gAllotedParkingNumber.text,
-        'Award': gAward.text,
-      });
-    }
 
     return Ink(
       child: InkWell(
@@ -224,37 +218,6 @@ class _SingleCircleState extends State<SingleCircle> {
                     ),
                   ],
                 ),
-                floatingActionButton: ElevatedButton(
-                  onPressed: (() {
-                    if (_fKey.currentState!.validate()) {
-                      addGuestData().onError((error, stackTrace) {
-                        Utils().toastMessage(error.toString());
-                      });
-
-                      forAward().then(
-                        (value) {
-                          setState(() {
-                            _color = _color == Colors.red
-                                ? const Color.fromARGB(255, 17, 150, 207)
-                                : Colors.red;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ).onError((error, stackTrace) {
-                        Utils().toastMessage(error.toString());
-                      });
-
-                      // forSeats().onError((error, stackTrace) {
-                      //   Utils().toastMessage(error.toString());
-                      // });
-                    }
-                  }),
-                  child: const Text(
-                    'Save Data',
-                  ),
-                ),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
                 body: SingleChildScrollView(
                   child: Form(
                     key: _fKey,
@@ -266,8 +229,6 @@ class _SingleCircleState extends State<SingleCircle> {
                         child: Column(
                           children: [
                             TextFormField(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
                               controller: tableNumber,
                               enabled: false,
                               style: const TextStyle(
@@ -389,6 +350,7 @@ class _SingleCircleState extends State<SingleCircle> {
                               },
                             ),
                             //gcontact***
+
                             TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -409,73 +371,86 @@ class _SingleCircleState extends State<SingleCircle> {
                                 ),
                               ),
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'This field cannot be empty';
-                                } else if (value.length > 10) {
-                                  return 'Length is greater';
-                                } else if (value.length < 10) {
-                                  return 'Length is smaller';
-                                } else if (value.startsWith(
-                                  RegExp(r'[0-4]'),
-                                )) {
-                                  return 'No such number is available in this Country';
+                                if (!phoneRegex.hasMatch(value!)) {
+                                  return 'Please enter valid phone number';
                                 }
                                 return null;
+                                // if (value!.isEmpty) {
+                                //   return 'This field cannot be empty';
+                                // } else if (value.length > 10) {
+                                //   return 'Length is greater';
+                                // } else if (value.length < 10) {
+                                //   return 'Length is smaller';
+                                // } else if (value.startsWith(
+                                //   RegExp(r'[0-4]'),
+                                // )) {
+                                //   return 'No such number is available in this Country';
+                                // }
+                                // return null;
                               },
                             ),
                             //gemail
                             TextFormField(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              keyboardType: TextInputType.emailAddress,
-                              controller: gEmail,
-                              style: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                              decoration: const InputDecoration(
-                                errorStyle: TextStyle(
-                                  fontSize: 13,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.emailAddress,
+                                controller: gEmail,
+                                style: const TextStyle(
+                                  color: Colors.grey,
                                 ),
-                                label: Text(
-                                  'Guest Email',
-                                  style: TextStyle(
-                                    color: Colors.black,
+                                decoration: const InputDecoration(
+                                  errorStyle: TextStyle(
+                                    fontSize: 13,
+                                  ),
+                                  label: Text(
+                                    'Guest Email',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              validator: (value) =>
-                                  EmailValidator.validate(value!) ||
-                                          value.startsWith(RegExp(r'[0-9]'))
-                                      ? null
-                                      : 'Enter valid email address',
-                              // validator: (value) {
-                              //   if (value!.isEmpty) {
-                              //     return 'This field cannot be empty';
-                              //   }
-                              //   if (value.endsWith('com')) {
-                              //     return 'Email should end with specific domain';
-                              //   } else if (!value.contains('@')) {
-                              //     return 'Enter a valid email';
-                              //   } else if (!value.contains('')) {
-                              //     return 'Enter a valid email';
-                              //   } else if (!value.startsWith(RegExp(r'[0-9]'), 0)) {
-                              //     return 'Enter a valid email';
-                              //   }
-                              //   if (!value.endsWith('in')) {
-                              //     return 'Email should end with specific domain';
-                              //   }
-                              //   if (!value.endsWith('ac.in')) {
-                              //     return 'Email should end with specific domain';
-                              //   }
-                              //   if (!value.endsWith('co.in')) {
-                              //     return 'Email should end with specific domain';
-                              //   }
-                              //   if (!value.contains('.')) {
-                              //     return 'Enter valid email address';
-                              //   }
-                              //   return null;
-                              // },
-                            ),
+                                validator: (value) {
+                                  if (!emailRegex.hasMatch(value!)) {
+                                    return 'Please enter valid email';
+                                  } else if (!value.endsWith('com') &&
+                                      !value.endsWith('.in') &&
+                                      !value.endsWith('.ac.in')) {
+                                    return 'Email should end with specific domain';
+                                  }
+                                  return null;
+                                }
+                                // EmailValidator.validate(value!) ||
+                                //         value.startsWith(RegExp(r'[0-9]'))
+                                //     ? null
+                                //     : 'Enter valid email address',
+                                // validator: (value) {
+                                //   if (value!.isEmpty) {
+                                //     return 'This field cannot be empty';
+                                //   }
+                                //   if (value.endsWith('com')) {
+                                //     return 'Email should end with specific domain';
+                                //   } else if (!value.contains('@')) {
+                                //     return 'Enter a valid email';
+                                //   } else if (!value.contains('')) {
+                                //     return 'Enter a valid email';
+                                //   } else if (!value.startsWith(RegExp(r'[0-9]'), 0)) {
+                                //     return 'Enter a valid email';
+                                //   }
+                                //   if (!value.endsWith('in')) {
+                                //     return 'Email should end with specific domain';
+                                //   }
+                                //   if (!value.endsWith('ac.in')) {
+                                //     return 'Email should end with specific domain';
+                                //   }
+                                //   if (!value.endsWith('co.in')) {
+                                //     return 'Email should end with specific domain';
+                                //   }
+                                //   if (!value.contains('.')) {
+                                //     return 'Enter valid email address';
+                                //   }
+                                //   return null;
+                                // },
+                                ),
                             //gextramember -- multiple values can be added
                             TextFormField(
                               autovalidateMode:
@@ -589,6 +564,47 @@ class _SingleCircleState extends State<SingleCircle> {
                     ),
                   ),
                 ),
+                floatingActionButton: ElevatedButton(
+                  onPressed: (() {
+                    if (_fKey.currentState!.validate()) {
+                      guestRef.push().set({
+                        'Table Number': tableNumber.text,
+                        'Chair Number': seatNumber.text,
+                        'Guest Name': gName.text,
+                        'Guest Type': gType.text,
+                        'Guest Phone Number': gContact.text,
+                        'Guest Email': gEmail.text,
+                        'Extra Memeber': gExtraMember.text,
+                        'Mode of Transportation': gModeOfTransportation.text,
+                        'Alloted Parking': gAllotedParkingNumber.text,
+                        'Award': gAward.text,
+                      }).then(
+                        (value) {
+                          setState(() {
+                            _color = _color == Colors.red
+                                ? const Color.fromARGB(255, 17, 150, 207)
+                                : Colors.red;
+                          });
+                          Navigator.pop(context);
+                        },
+                      ).onError((error, stackTrace) {
+                        // print(stackTrace);
+                        Utils().toastMessage(stackTrace.toString());
+                      });
+
+                      // forAward()
+
+                      // forSeats().onError((error, stackTrace) {
+                      //   Utils().toastMessage(error.toString());
+                      // });
+                    }
+                  }),
+                  child: const Text(
+                    'Save Data',
+                  ),
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
               ),
             );
           }),

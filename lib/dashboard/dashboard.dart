@@ -15,7 +15,7 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   int currentIndex = 0;
-  List bottomAppbarPages = [
+  List<Widget> bottomAppbarPages = [
     const EventDashboard(
       title: 'Event Dashboard',
     ),
@@ -36,7 +36,10 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: bottomAppbarPages.elementAt(currentIndex),
+      body: IndexedStack(
+        index: currentIndex,
+        children: bottomAppbarPages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
         currentIndex: currentIndex,

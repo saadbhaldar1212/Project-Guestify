@@ -3,6 +3,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/events/event_information.dart';
 import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
@@ -29,10 +31,20 @@ class _EventDashboardState extends State<EventDashboard> {
   final eventDateController = TextEditingController();
   final eventTimeController = TextEditingController();
 
+  final _tKey = GlobalKey<FormState>();
+  final tableC = TextEditingController();
+
+  final _sKey = GlobalKey<FormState>();
+  final seatsC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final eventRef = db.child('events/');
     const pk = 'event_info';
+    final tableRef = db.child('table/');
+    const tableKey = 'table_no';
+    final seatRef = db.child('seats/');
+    const seatKey = 'table_no';
 
     return Scaffold(
       appBar: AppBar(
@@ -202,6 +214,76 @@ class _EventDashboardState extends State<EventDashboard> {
                   ],
                 );
               },
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 50,
+            ),
+            child: Column(
+              children: [
+                Form(
+                  key: _tKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: tableC,
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      ElevatedButton(
+                        onPressed: (() {
+                          if (_tKey.currentState!.validate()) {
+                            tableRef.child(tableKey).set({
+                              'Number of Tables': tableC.text,
+                            }).then((value) {
+                              Get.to(
+                                () => const SeatsDashboard(
+                                    title: 'Seats Dashboard'),
+                              );
+                            });
+                          }
+                        }),
+                        child: const Text('Go'),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Form(
+                    key: _sKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: seatsC,
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        ElevatedButton(
+                          onPressed: (() {
+                            if (_sKey.currentState!.validate()) {
+                              seatRef.child(seatKey).set({
+                                'Number of Seats': seatsC.text,
+                              }).then((value) {
+                                Get.to(
+                                  () => const SeatsDashboard(
+                                      title: 'Seats Dashboard'),
+                                );
+                              });
+                            }
+                          }),
+                          child: const Text('Go'),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ],

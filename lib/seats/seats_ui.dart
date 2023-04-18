@@ -42,6 +42,7 @@ class _SeatsUIState extends State<SeatsUI> {
   @override
   Widget build(BuildContext context) {
     final seatRef = db.child('seats/');
+    // const seat_no = 'seat_no';
     return FirebaseAnimatedList(
         primary: false,
         shrinkWrap: true,
@@ -49,6 +50,8 @@ class _SeatsUIState extends State<SeatsUI> {
         itemBuilder: (context, snapshot, animation, index) {
           String newDbVal = snapshot.child('Number of Seats').value.toString();
           int newDbIntVal = int.parse(newDbVal) + 1;
+
+          // String isAvai = seatRef.child(seat_no).
 
           return CircularWidgets(
             config: config,
@@ -146,6 +149,8 @@ class _SingleCircleState extends State<SingleCircle> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
+    final seatRef = db.child('seats/');
+    const seat_no = 'seat_no';
 
     // showData() {
     //   db.child('guest/').once().then(
@@ -609,6 +614,12 @@ class _SingleCircleState extends State<SingleCircle> {
                           // print(stackTrace);
                           Utils().toastMessage(stackTrace.toString());
                         });
+
+                        seatRef.child(seat_no).push().set({
+                          'Table Number': tableNumber.text,
+                          'Chair Number': seatNumber.text,
+                        });
+
                         // }
 
                         // forAward()

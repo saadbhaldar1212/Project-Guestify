@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+// import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 
 import '../../seats/seats_ui.dart';
@@ -27,6 +27,19 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
       length -= 1;
     });
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.delayed(
+  //     const Duration(
+  //       seconds: 10,
+  //     ),
+  //     () => const Center(
+  //       child: CircularProgressIndicator(),
+  //     ),
+  //   );
+  // }
 
   int length = 1;
   final db = FirebaseDatabase.instance.ref();

@@ -40,6 +40,8 @@ class DashboardState extends State<Dashboard> {
         index: currentIndex,
         children: bottomAppbarPages,
       ),
+      // bottomAppbarPages.elementAt(currentIndex),
+
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: false,
         currentIndex: currentIndex,

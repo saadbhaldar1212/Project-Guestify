@@ -232,6 +232,14 @@ class _EventDashboardState extends State<EventDashboard> {
                           color: Colors.black,
                         ),
                         keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          label: Text(
+                            'Table length',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: (() {
@@ -246,38 +254,41 @@ class _EventDashboardState extends State<EventDashboard> {
                     ],
                   ),
                 ),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(horizontal: 40),
-                //   child: Form(
-                //     key: _sKey,
-                //     child: Column(
-                //       children: [
-                //         TextFormField(
-                //           controller: seatsC,
-                //           style: const TextStyle(
-                //             color: Colors.black,
-                //           ),
-                //           keyboardType: TextInputType.number,
-                //         ),
-                //         ElevatedButton(
-                //           onPressed: (() {
-                //             if (_sKey.currentState!.validate()) {
-                //               seatRef.child(seatKey).set({
-                //                 'Number of Seats': seatsC.text,
-                //               }).then((value) {
-                //                 Get.to(
-                //                   () => const SeatsDashboard(
-                //                       title: 'Seats Dashboard'),
-                //                 );
-                //               });
-                //             }
-                //           }),
-                //           child: const Text('Go'),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // )
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Form(
+                    key: _sKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: seatsC,
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            label: Text(
+                              'Seat length',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: (() {
+                            if (_sKey.currentState!.validate()) {
+                              seatRef.child(seatKey).set({
+                                'Number of Seats': seatsC.text,
+                              }).then((value) {});
+                            }
+                          }),
+                          child: const Text('Go'),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

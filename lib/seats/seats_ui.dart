@@ -271,7 +271,7 @@ class _SingleCircleState extends State<SingleCircle> {
                 builder: (context) => Scaffold(
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
                     centerTitle: true,
                     title: const Text('Guest Info'),
                     actions: [

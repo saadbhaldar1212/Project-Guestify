@@ -47,7 +47,46 @@ class _EventDashboardState extends State<EventDashboard> {
     const seatKey = 'seat_no';
 
     return Scaffold(
-      // appBar: AppBar(
+      appBar: AppBar(
+        toolbarHeight: 200,
+        backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
+        elevation: 0,
+        actions: [const SignOutButton()],
+        title: const ListTile(
+          contentPadding: EdgeInsets.all(30),
+          title: Text(
+            'Welcome,',
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          subtitle: Text(
+            'Admin',
+            textAlign: TextAlign.start,
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ),
+
+      // SizedBox(
+      //       width: double.infinity,
+      //       height: 300,
+      //       child: ClipRRect(
+      //         borderRadius: BorderRadius.only(
+      //           bottomLeft: Radius.elliptical(40, 40),
+      //           bottomRight: Radius.elliptical(40, 40),
+      //         ),
+      //         child: Card(
+      //           color: const Color.fromRGBO(0, 77, 120, 1.000),
+      //         ),
+      //       ),
+      //     ),
+
+      // AppBar(
       //   automaticallyImplyLeading: false,
       //   centerTitle: true,
       //   backgroundColor: const Color.fromARGB(255, 17, 150, 207),
@@ -66,17 +105,6 @@ class _EventDashboardState extends State<EventDashboard> {
       // ),
       body: ListView(
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: 300,
-            child: ClipRRect(
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(40), right: Radius.circular(40)),
-              child: Card(
-                color: const Color.fromRGBO(0, 77, 120, 1.000),
-              ),
-            ),
-          ),
           // Padding(
           //   padding: const EdgeInsets.all(28.0),
           //   child: Row(

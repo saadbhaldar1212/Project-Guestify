@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_edit_event_info.dart';
 import 'package:guestify/utils/utility.dart';
@@ -56,23 +57,18 @@ class _EditEventInfoState extends State<EditEventInfo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         elevation: 0,
         toolbarHeight: 50,
-        actions: [
-          IconButton(
-            onPressed: (() {
-              Navigator.pop(context);
-            }),
-            icon: const Icon(
-              Icons.close,
-            ),
-          ),
-        ],
         centerTitle: true,
         title: const Text(
           'Edit Event Info',
         ),
+        leading: IconButton(
+            onPressed: (() {
+              Get.back();
+            }),
+            icon: const Icon(Icons.chevron_left_sharp)),
       ),
       body: Form(
         key: _eventFormField,

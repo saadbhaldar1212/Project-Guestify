@@ -3,6 +3,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
+import 'package:guestify/utils/utility.dart';
 
 import '../../seats/seats_ui.dart';
 
@@ -16,32 +17,6 @@ class SeatsDashboard extends StatefulWidget {
 }
 
 class _SeatsDashboardState extends State<SeatsDashboard> {
-  void incrementCounter() {
-    setState(() {
-      length += 1;
-    });
-  }
-
-  void decrementCounter() {
-    setState(() {
-      length -= 1;
-    });
-  }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(
-  //     const Duration(
-  //       seconds: 10,
-  //     ),
-  //     () => const Center(
-  //       child: CircularProgressIndicator(),
-  //     ),
-  //   );
-  // }
-
-  int length = 1;
   final db = FirebaseDatabase.instance.ref();
 
   @override
@@ -49,17 +24,16 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
     final tableRef = db.child('table/');
     return Scaffold(
       appBar: AppBar(
-        actions: const [SignOutButton()],
         automaticallyImplyLeading: false,
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 17, 150, 207),
-        foregroundColor: Colors.white,
+        toolbarHeight: 200,
+        backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         elevation: 0,
-        toolbarHeight: 80,
-        title: Text(
-          widget.title,
-          style: const TextStyle(
-            fontSize: 24,
+        actions: const [SignOutButton()],
+        title: const Text(
+          'Guest Management',
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ),
@@ -73,44 +47,93 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
                 snapshot.child('Number of Tables').value.toString();
             int tLengthf = int.parse(tLength);
             return SingleChildScrollView(
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 60,
-                children: List.generate(
-                  tLengthf,
-                  (index) => SeatsUI(
-                    tableLength: index,
+              child: Column(
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    runSpacing: 50,
+                    children: List.generate(
+                      tLengthf,
+                      (index) => SeatsUI(
+                        tableLength: index,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             );
           },
         ),
       ),
-      // ListView.builder(
-      //     itemBuilder: (context, index) {
-      //       val = index;
-      //       return SeatsUI(tableLength: val);
-      //     },
-      //     itemCount: length),
-      // persistentFooterButtons: [
-      //   Text(
-      //     'No. of tables: $length',
-      //     style: const TextStyle(
-      //       color: Colors.black,
-      //       fontSize: 20,
-      //     ),
-      //   ),
-      //   IconButton(
-      //     onPressed: (() => incrementCounter()),
-      //     icon: const Icon(Icons.add),
-      //   ),
-      //   IconButton(
-      //     onPressed: length == 1 ? null : decrementCounter,
-      //     icon: const Icon(Icons.remove),
-      //   ),
-      // ],
-      // persistentFooterAlignment: AlignmentDirectional.center,
+      persistentFooterButtons: [
+        Material(
+          color: Colors.teal,
+          child: MaterialButton(
+            minWidth: double.infinity,
+            onPressed: (() {
+              showDialog(
+                context: context,
+                builder: (context) => SimpleDialog(
+                  elevation: 5,
+                  alignment: Alignment.center,
+                  title: const Text(
+                    'Are you sure?',
+                    style: TextStyle(fontSize: 18, color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                  contentPadding: const EdgeInsets.all(20),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.green.shade400,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Utils().toastMessage('Data Submitted');
+                              }),
+                              child: const Text(
+                                'Yes & Continue',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.red,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Navigator.pop(context);
+                              }),
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+            child: const Text(
+              'Submit Data',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

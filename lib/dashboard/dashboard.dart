@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'bottomappbar_pages/employee_dashboard.dart';
 import 'bottomappbar_pages/event_dashboard.dart';
-import 'bottomappbar_pages/seats_dashboard.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, this.title});
@@ -18,9 +17,6 @@ class DashboardState extends State<Dashboard> {
   List<Widget> bottomAppbarPages = [
     const EventDashboard(
       title: 'Event Dashboard',
-    ),
-    const SeatsDashboard(
-      title: 'Seats Dashboard',
     ),
     const EmployeeDashboard(
       title: 'Employee Dashboard',
@@ -43,6 +39,7 @@ class DashboardState extends State<Dashboard> {
       // bottomAppbarPages.elementAt(currentIndex),
 
       bottomNavigationBar: BottomNavigationBar(
+        // landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
         showUnselectedLabels: false,
         currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
@@ -55,14 +52,6 @@ class DashboardState extends State<Dashboard> {
             label: 'Events',
             activeIcon: Icon(
               Icons.event_available,
-              color: Color.fromARGB(255, 17, 150, 207),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chair_outlined),
-            label: 'Seats',
-            activeIcon: Icon(
-              Icons.chair_rounded,
               color: Color.fromARGB(255, 17, 150, 207),
             ),
           ),

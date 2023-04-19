@@ -35,6 +35,12 @@ class _SeatsUIState extends State<SeatsUI> {
   void initState() {
     super.initState();
     // seatRef.child(pk).update({'Total Chairs': chairController.text});
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
   final db = FirebaseDatabase.instance.ref();
@@ -53,42 +59,81 @@ class _SeatsUIState extends State<SeatsUI> {
 
           // String isAvai = seatRef.child(seat_no).
 
-          return CircularWidgets(
-            config: config,
-            itemsLength: newDbIntVal,
-            itemBuilder: (context, index) {
-              return SingleCircle(
-                tableLength: widget.tableLength!,
-                length: (newValue) {
-                  setState(() {
-                    length = newDbIntVal;
-                  });
-                },
-                txt: index.toString(),
-                color: const Color.fromARGB(255, 17, 150, 207),
-              );
-            },
-            centerWidgetBuilder: (context) {
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 17, 150, 207),
-                    width: 3,
-                  ),
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Text(
-                    '${widget.tableLength! + 1}',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+          Color _singleCircle = const Color.fromRGBO(0, 77, 120, 1.000);
+          Color _container = const Color.fromARGB(255, 17, 150, 207);
+
+          // String tableNumber =
+          // snapshot.child(seat_no).child('Table Number').value.toString();
+          // String chairNumber =
+          // snapshot.child(seat_no).child('Chair Number').value.toString();
+          // int cNumber = int.parse(chairNumber);
+
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  Ink(
+                    child: CircularWidgets(
+                      config: config,
+                      itemsLength: newDbIntVal,
+                      itemBuilder: (context, index) {
+                        return SingleCircle(
+                            tableLength: widget.tableLength!,
+                            length: (newValue) {
+                              setState(() {
+                                length = newDbIntVal;
+                              });
+                            },
+                            txt: index.toString(),
+                            color: _singleCircle
+                            // cNumber == newDbIntVal
+                            //     ? _singleCircle = Colors.red
+                            //     : _singleCircle,
+                            );
+                      },
+                      centerWidgetBuilder: (context) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _container,
+                              width: 3,
+                            ),
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${widget.tableLength! + 1}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                ),
-              );
-            },
+                ],
+              ),
+              Column(
+                children: [
+                  TextButton(
+                      onPressed: (() {
+                        Utils().toastMessage(
+                            'Table no: ${widget.tableLength! + 1}');
+                      }),
+                      child: const Text(
+                        'Delete this table',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                        ),
+                      ))
+                ],
+              ),
+            ],
           );
         });
   }

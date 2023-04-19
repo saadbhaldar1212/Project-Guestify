@@ -3,11 +3,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 // import 'package:get/get.dart';
 // import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/events/event_information.dart';
 import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
+import 'package:guestify/utils/utility.dart';
 
 class EventDashboard extends StatefulWidget {
   const EventDashboard({super.key, required this.title});
@@ -36,6 +39,8 @@ class _EventDashboardState extends State<EventDashboard> {
 
   final _sKey = GlobalKey<FormState>();
   final seatsC = TextEditingController();
+
+  // late List<bool> _isOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -175,35 +180,382 @@ class _EventDashboardState extends State<EventDashboard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 18),
-                  child: Material(
-                    elevation: 0,
+                  padding: const EdgeInsets.only(
+                    top: 16,
+                    right: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Material(
+                        color: const Color.fromRGBO(204, 237, 255, 1),
+                        child: MaterialButton(
+                          onPressed: (() {
+                            showDialog(
+                              context: context,
+                              builder: (context) => SimpleDialog(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                    ),
+                                    child: Form(
+                                      key: _tKey,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            controller: tableC,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              label: Text(
+                                                'Table length',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              errorStyle: TextStyle(
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Field is required';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 40),
+                                    child: Form(
+                                      key: _sKey,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            controller: seatsC,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              label: Text(
+                                                'Seat length',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              errorStyle: TextStyle(
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Field is required';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: (() {
+                                              if (_sKey.currentState!
+                                                  .validate()) {}
+                                              if (_tKey.currentState!
+                                                  .validate()) {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      SimpleDialog(
+                                                    elevation: 5,
+                                                    alignment: Alignment.center,
+                                                    title: const Text(
+                                                      'Are you sure?',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.red),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets.all(
+                                                            20),
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .green
+                                                                  .shade400,
+                                                              child:
+                                                                  MaterialButton(
+                                                                onPressed: (() {
+                                                                  seatRef
+                                                                      .child(
+                                                                          seatKey)
+                                                                      .update({
+                                                                    'Number of Seats':
+                                                                        seatsC
+                                                                            .text,
+                                                                  });
+                                                                  tableRef
+                                                                      .child(
+                                                                          tableKey)
+                                                                      .update({
+                                                                    'Number of Tables':
+                                                                        tableC
+                                                                            .text,
+                                                                  }).then(
+                                                                          (value) {
+                                                                    Navigator
+                                                                        .pushAndRemoveUntil(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                const SeatsDashboard(title: 'Guest Management'),
+                                                                      ),
+                                                                      (route) =>
+                                                                          false,
+                                                                    );
+                                                                  }).onError((error,
+                                                                          stackTrace) {
+                                                                    Utils().toastMessage(
+                                                                        error
+                                                                            .toString());
+                                                                  });
+                                                                }),
+                                                                child:
+                                                                    const Text(
+                                                                  'Yes & Continue',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: Material(
+                                                              color: Colors.red,
+                                                              child:
+                                                                  MaterialButton(
+                                                                onPressed: (() {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }),
+                                                                child:
+                                                                    const Text(
+                                                                  'No',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              }
+                                            }),
+                                            child: const Text('Go'),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                          child: const Text(
+                            'Manage Seats Layout',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromRGBO(0, 77, 120, 1.000),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: SizedBox(
+                    height: 250,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: MaterialButton(
-                        minWidth: 400,
-                        onPressed: (() {}),
-                        color: Colors.amber,
-                        textColor: Colors.white,
-                        child: const Text('Edit Event Data'),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(40),
+                      ),
+                      child: Card(
+                        color: const Color.fromRGBO(204, 237, 255, 1),
+                        elevation: 10,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.all(18.0),
+                                    child: Text(
+                                      'Event Details',
+                                      style: TextStyle(
+                                        color:
+                                            Color.fromRGBO(0, 77, 120, 1.000),
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                      ),
+                                      child: Text(
+                                        'Event name is ${snapshot.child('Event Name').value.toString()} The event is scheduled to take place on ${snapshot.child('Event Date').value.toString()}, from ${snapshot.child('Event Time').value.toString()} onwards at the esteemed ${snapshot.child('Event Venue').value.toString()}. We are delighted to announce that the event will be graced by our esteemed chief guest, ${snapshot.child('Event Chief Guest').value.toString()} and our special guest, ${snapshot.child('Event Special Guest').value.toString()}',
+                                        style: const TextStyle(
+                                          color:
+                                              Color.fromRGBO(0, 77, 120, 1.000),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Material(
-                    elevation: 0,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: MaterialButton(
-                        minWidth: 400,
-                        onPressed: (() {}),
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        child: const Text('Delete Event Data'),
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Material(
+                        elevation: 0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: MaterialButton(
+                            onPressed: (() {
+                              Get.to(
+                                () => EditEventInfo(),
+                              );
+                            }),
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            child: const Text('Edit Event Data'),
+                          ),
+                        ),
                       ),
-                    ),
+                      Material(
+                        elevation: 0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: MaterialButton(
+                            onPressed: (() {
+                              showDialog(
+                                context: context,
+                                builder: (context) => SimpleDialog(
+                                  elevation: 5,
+                                  alignment: Alignment.center,
+                                  title: const Text(
+                                    'Are you sure?',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.red),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(20),
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Material(
+                                            color: Colors.green.shade400,
+                                            child: MaterialButton(
+                                              onPressed: (() {
+                                                eventRef.child(pk).remove();
+                                              }),
+                                              child: const Text(
+                                                'Yes & Continue',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Material(
+                                            color: Colors.red,
+                                            child: MaterialButton(
+                                              onPressed: (() {
+                                                Navigator.pop(context);
+                                              }),
+                                              child: const Text(
+                                                'No',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            child: const Text('Delete Event Data'),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -292,62 +644,7 @@ class _EventDashboardState extends State<EventDashboard> {
       //               ),
       //               IconButton(
       //                 onPressed: (() {
-      //                   showDialog(
-      //                     context: context,
-      //                     builder: (context) => SimpleDialog(
-      //                       elevation: 5,
-      //                       alignment: Alignment.center,
-      //                       title: const Text(
-      //                         'Are you sure?',
-      //                         style: TextStyle(
-      //                             fontSize: 18, color: Colors.red),
-      //                         textAlign: TextAlign.center,
-      //                       ),
-      //                       contentPadding: const EdgeInsets.all(20),
-      //                       children: [
-      //                         Row(
-      //                           mainAxisAlignment:
-      //                               MainAxisAlignment.spaceEvenly,
-      //                           children: [
-      //                             ClipRRect(
-      //                               borderRadius: BorderRadius.circular(20),
-      //                               child: Material(
-      //                                 color: Colors.green.shade400,
-      //                                 child: MaterialButton(
-      //                                   onPressed: (() {
-      //                                     eventRef.child(pk).remove();
-      //                                   }),
-      //                                   child: const Text(
-      //                                     'Yes & Continue',
-      //                                     style: TextStyle(
-      //                                         fontSize: 14,
-      //                                         color: Colors.white),
-      //                                   ),
-      //                                 ),
-      //                               ),
-      //                             ),
-      //                             ClipRRect(
-      //                               borderRadius: BorderRadius.circular(20),
-      //                               child: Material(
-      //                                 color: Colors.red,
-      //                                 child: MaterialButton(
-      //                                   onPressed: (() {
-      //                                     Navigator.pop(context);
-      //                                   }),
-      //                                   child: const Text(
-      //                                     'No',
-      //                                     style: TextStyle(
-      //                                         fontSize: 14,
-      //                                         color: Colors.white),
-      //                                   ),
-      //                                 ),
-      //                               ),
-      //                             )
-      //                           ],
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   );
+
       //                 }),
       //                 icon: const Icon(
       //                   Icons.delete,
@@ -367,72 +664,7 @@ class _EventDashboardState extends State<EventDashboard> {
       //   ),
       //   child: Column(
       //     children: [
-      //       Form(
-      //         key: _tKey,
-      //         child: Column(
-      //           children: [
-      //             TextFormField(
-      //               controller: tableC,
-      //               style: const TextStyle(
-      //                 color: Colors.black,
-      //               ),
-      //               keyboardType: TextInputType.number,
-      //               decoration: const InputDecoration(
-      //                 label: Text(
-      //                   'Table length',
-      //                   style: TextStyle(
-      //                     color: Colors.black,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             ElevatedButton(
-      //               onPressed: (() {
-      //                 if (_tKey.currentState!.validate()) {
-      //                   tableRef.child(tableKey).set({
-      //                     'Number of Tables': tableC.text,
-      //                   }).then((value) {});
-      //                 }
-      //               }),
-      //               child: const Text('Go'),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Container(
-      //         margin: const EdgeInsets.symmetric(horizontal: 40),
-      //         child: Form(
-      //           key: _sKey,
-      //           child: Column(
-      //             children: [
-      //               TextFormField(
-      //                 controller: seatsC,
-      //                 style: const TextStyle(
-      //                   color: Colors.black,
-      //                 ),
-      //                 keyboardType: TextInputType.number,
-      //                 decoration: const InputDecoration(
-      //                   label: Text(
-      //                     'Seat length',
-      //                     style: TextStyle(
-      //                       color: Colors.black,
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ),
-      //               ElevatedButton(
-      //                 onPressed: (() {
-      //                   if (_sKey.currentState!.validate()) {
-      //                     seatRef.child(seatKey).set({
-      //                       'Number of Seats': seatsC.text,
-      //                     }).then((value) {});
-      //                   }
-      //                 }),
-      //                 child: const Text('Go'),
-      //               )
-      //             ],
-      //           ),
-      //         ),
+
       //       )
       //     ],
       //   ),

@@ -300,7 +300,7 @@ class _EventInfoState extends State<EventInfo> {
                         TimeOfDay? pickedTime = await showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
-                          initialEntryMode: TimePickerEntryMode.dialOnly,
+                          initialEntryMode: TimePickerEntryMode.dial,
                         );
                         if (pickedTime != null) {
                           setState(() {

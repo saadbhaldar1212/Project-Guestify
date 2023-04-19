@@ -33,7 +33,7 @@ class _EventInfoState extends State<EventInfo> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         centerTitle: true,
         title: const Text('Add Event'),
         actions: [

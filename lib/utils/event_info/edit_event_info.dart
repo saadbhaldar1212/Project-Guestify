@@ -56,10 +56,10 @@ class _EditEventInfoState extends State<EditEventInfo> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         automaticallyImplyLeading: true,
         elevation: 0,
-        toolbarHeight: 50,
+        toolbarHeight: 80,
         centerTitle: true,
         title: const Text(
           'Edit Event Info',

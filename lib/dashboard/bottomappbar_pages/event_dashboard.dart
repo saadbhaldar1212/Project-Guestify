@@ -1,12 +1,8 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
-// import 'package:get/get.dart';
-// import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/events/event_information.dart';
 import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';

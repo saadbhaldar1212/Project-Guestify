@@ -17,7 +17,7 @@ class SeatsUI extends StatefulWidget {
 }
 
 class _SeatsUIState extends State<SeatsUI> {
-  int length = 9;
+  int length = 5;
   CircularWidgetConfig config = const CircularWidgetConfig(
     innerSpacing: 0,
     itemRadius: 20,
@@ -35,12 +35,12 @@ class _SeatsUIState extends State<SeatsUI> {
   void initState() {
     super.initState();
     // seatRef.child(pk).update({'Total Chairs': chairController.text});
-    // Future.delayed(
-    //   const Duration(seconds: 2),
-    //   () => const Center(
-    //     child: CircularProgressIndicator(),
-    //   ),
-    // );
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
   final db = FirebaseDatabase.instance.ref();
@@ -80,7 +80,11 @@ class _SeatsUIState extends State<SeatsUI> {
                       itemBuilder: (context, index) {
                         return SingleCircle(
                             tableLength: widget.tableLength!,
-                            length: newDbIntVal,
+                            length: (newValue) {
+                              setState(() {
+                                length = newDbIntVal;
+                              });
+                            },
                             txt: index.toString(),
                             color: _singleCircle
                             // cNumber == newDbIntVal
@@ -139,7 +143,7 @@ class _SeatsUIState extends State<SeatsUI> {
 class SingleCircle extends StatefulWidget {
   final String? txt;
   final Color? color;
-  final int? length;
+  final void Function(int newValue)? length;
   int? tableLength;
   int? totalChairs;
 
@@ -190,8 +194,8 @@ class _SingleCircleState extends State<SingleCircle> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
-    // final seatRef = db.child('seats/');
-    // const seat_no = 'seat_no';
+    final seatRef = db.child('seats/');
+    const seat_no = 'seat_no';
 
     // showData() {
     //   db.child('guest/').once().then(
@@ -656,10 +660,10 @@ class _SingleCircleState extends State<SingleCircle> {
                           Utils().toastMessage(stackTrace.toString());
                         });
 
-                        // seatRef.child(seat_no).push().set({
-                        //   'Table Number': tableNumber.text,
-                        //   'Chair Number': seatNumber.text,
-                        // });
+                        seatRef.child(seat_no).push().set({
+                          'Table Number': tableNumber.text,
+                          'Chair Number': seatNumber.text,
+                        });
 
                         // }
 

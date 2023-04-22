@@ -30,33 +30,6 @@ class _EventInfoState extends State<EventInfo> {
   Widget build(BuildContext context) {
     final eventRef = database.child('events/');
     const primaryKey = "event_info";
-
-    TimeOfDay pickedTime;
-    DateTime datePicked;
-
-    Future pickTime() async {
-      pickedTime = (await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.dial,
-      ))!;
-      setState(() {
-        eventTimeController.text = pickedTime.format(context);
-      });
-    }
-
-    Future pickDate() async {
-      datePicked = (await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime(3000)))!;
-
-      setState(() {
-        eventDateController.text = DateFormat().add_yMMMMd().format(datePicked);
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -272,10 +245,21 @@ class _EventInfoState extends State<EventInfo> {
                         }
                         return null;
                       },
-                      onTap: () {
+                      onTap: () async {
                         // ignore: use_build_context_synchronously
                         FocusScope.of(context).requestFocus(FocusNode());
-                        pickDate();
+                        DateTime? datePicked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(3000));
+
+                        if (datePicked != null) {
+                          setState(() {
+                            eventDateController.text =
+                                DateFormat().add_yMMMMd().format(datePicked);
+                          });
+                        }
                       },
                     ),
                   ],
@@ -310,10 +294,20 @@ class _EventInfoState extends State<EventInfo> {
                         }
                         return null;
                       },
-                      onTap: () {
+                      onTap: () async {
                         // ignore: use_build_context_synchronously
                         FocusScope.of(context).requestFocus(FocusNode());
-                        pickTime();
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                          initialEntryMode: TimePickerEntryMode.dial,
+                        );
+                        if (pickedTime != null) {
+                          setState(() {
+                            eventTimeController.text =
+                                '${pickedTime.hour}:${pickedTime.minute}';
+                          });
+                        }
                       },
                     ),
                   ],

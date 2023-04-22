@@ -8,9 +8,7 @@ import 'package:guestify/utils/utility.dart';
 import '../../seats/seats_ui.dart';
 
 class SeatsDashboard extends StatefulWidget {
-  const SeatsDashboard({super.key, required this.title});
-
-  final String title;
+  const SeatsDashboard({super.key});
 
   @override
   State<SeatsDashboard> createState() => _SeatsDashboardState();

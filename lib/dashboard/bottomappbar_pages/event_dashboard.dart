@@ -46,6 +46,7 @@ class _EventDashboardState extends State<EventDashboard> {
     const tableKey = 'table_no';
     final seatRef = db.child('seats/');
     const seatKey = 'seat_no';
+    final guestRef = db.child('guest/');
 
     return Scaffold(
       appBar: AppBar(
@@ -215,10 +216,20 @@ class _EventDashboardState extends State<EventDashboard> {
                                               errorStyle: TextStyle(
                                                 fontSize: 13,
                                               ),
+                                              helperText:
+                                                  'By defualt all table will have 10 chairs',
+                                              helperStyle: TextStyle(
+                                                fontSize: 13,
+                                              ),
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty) {
                                                 return 'Field is required';
+                                              } else if (!value.isNum) {
+                                                return 'Input must be numeric only';
+                                              } else if (value
+                                                  .startsWith('0')) {
+                                                return 'Invalid Table Length';
                                               }
                                               return null;
                                             },
@@ -234,36 +245,41 @@ class _EventDashboardState extends State<EventDashboard> {
                                       key: _sKey,
                                       child: Column(
                                         children: [
-                                          TextFormField(
-                                            controller: seatsC,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            keyboardType: TextInputType.number,
-                                            decoration: const InputDecoration(
-                                              label: Text(
-                                                'Seat length',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              errorStyle: TextStyle(
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Field is required';
-                                              }
-                                              return null;
-                                            },
-                                          ),
+                                          // TextFormField(
+                                          //   controller: seatsC,
+                                          //   style: const TextStyle(
+                                          //     color: Colors.black,
+                                          //   ),
+                                          //   keyboardType: TextInputType.number,
+                                          //   decoration: const InputDecoration(
+                                          //     label: Text(
+                                          //       'Seat length',
+                                          //       style: TextStyle(
+                                          //         color: Colors.black,
+                                          //       ),
+                                          //     ),
+                                          //     errorStyle: TextStyle(
+                                          //       fontSize: 13,
+                                          //     ),
+                                          //   ),
+                                          //   validator: (value) {
+                                          //     if (value!.isEmpty) {
+                                          //       return 'Field is required';
+                                          //     } else if (!value.isNum) {
+                                          //       return 'Input must be numeric only';
+                                          //     } else if (value
+                                          //         .startsWith('0')) {
+                                          //       return 'Invalid Seat Length';
+                                          //     }
+                                          //     return null;
+                                          //   },
+                                          // ),
                                           ElevatedButton(
                                             onPressed: (() {
-                                              if (_sKey.currentState!
-                                                  .validate()) {}
                                               if (_tKey.currentState!
-                                                  .validate()) {
+                                                      .validate() &&
+                                                  _sKey.currentState!
+                                                      .validate()) {
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) =>
@@ -271,7 +287,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                     elevation: 5,
                                                     alignment: Alignment.center,
                                                     title: const Text(
-                                                      'Are you sure?',
+                                                      'Note: Once entered all the previous guest data will be erased',
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           color: Colors.red),
@@ -299,13 +315,14 @@ class _EventDashboardState extends State<EventDashboard> {
                                                               child:
                                                                   MaterialButton(
                                                                 onPressed: (() {
+                                                                  guestRef
+                                                                      .remove();
                                                                   seatRef
                                                                       .child(
                                                                           seatKey)
                                                                       .update({
                                                                     'Number of Seats':
-                                                                        seatsC
-                                                                            .text,
+                                                                        '10',
                                                                   });
                                                                   tableRef
                                                                       .child(
@@ -322,7 +339,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                       MaterialPageRoute(
                                                                         builder:
                                                                             (context) =>
-                                                                                const SeatsDashboard(title: 'Guest Management'),
+                                                                                const SeatsDashboard(),
                                                                       ),
                                                                       (route) =>
                                                                           false,

@@ -19,9 +19,9 @@ class SeatsUI extends StatefulWidget {
 class _SeatsUIState extends State<SeatsUI> {
   int length = 5;
   CircularWidgetConfig config = const CircularWidgetConfig(
-    innerSpacing: 0,
+    innerSpacing: 2,
     itemRadius: 20,
-    centerWidgetRadius: 30,
+    centerWidgetRadius: 50,
     startAngleDeg: -90,
     totalArchDeg: 360,
     isClockwise: true,
@@ -188,8 +188,7 @@ class _SingleCircleState extends State<SingleCircle> {
     seatNumber.text = '${widget.txt}';
   }
 
-  List dropDownItem = ['One', 'Two', 'Three', 'Four'];
-  String? dropDownValue;
+  String _value = '';
 
   @override
   Widget build(BuildContext context) {
@@ -372,50 +371,74 @@ class _SingleCircleState extends State<SingleCircle> {
                                 },
                               ),
                               //gtype
-                              // DropdownButton<String>(
-                              //   value: dropDownValue,
-                              //   style: const TextStyle(
-                              //     color: Colors.black,
-                              //   ),
-                              //   items: dropDownItem.map((value) {
-                              //     return DropdownMenuItem<String>(
-                              //       value: value,
-                              //       child: Text(value),
-                              //     );
-                              //   }).toList(),
-                              //   onChanged: (value) {
-                              //     // This is called when the user selects an item.
-                              //     setState(() {
-                              //       dropDownValue = value!;
-                              //     });
-                              //   },
-                              // ),
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: gType,
-                                keyboardType: TextInputType.text,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                decoration: const InputDecoration(
-                                  label: Text(
-                                    'Guest Type',
-                                    style: TextStyle(
-                                      color: Colors.black,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RadioListTile(
+                                      value: 'VIP',
+                                      dense: true,
+                                      title: const Text(
+                                        'VIP',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      groupValue: _value,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value = value.toString();
+                                          gType.text = _value;
+                                        });
+                                      },
                                     ),
                                   ),
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
+                                  Expanded(
+                                    child: RadioListTile(
+                                      dense: true,
+                                      value: 'Regular',
+                                      title: const Text(
+                                        'Regular',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      groupValue: _value,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value = value.toString();
+                                          gType.text = _value;
+                                        });
+                                      },
+                                    ),
                                   ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
+                                ],
                               ),
+                              // TextFormField(
+                              //   autovalidateMode:
+                              //       AutovalidateMode.onUserInteraction,
+                              //   controller: gType,
+                              //   keyboardType: TextInputType.text,
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //   ),
+                              //   decoration: const InputDecoration(
+                              //     label: Text(
+                              //       'Guest Type',
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //     errorStyle: TextStyle(
+                              //       fontSize: 13,
+                              //     ),
+                              //   ),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'This field cannot be empty';
+                              //     }
+                              //     return null;
+                              //   },
+                              // ),
                               //gcontact***
 
                               TextFormField(
@@ -545,86 +568,86 @@ class _SingleCircleState extends State<SingleCircle> {
                                 },
                               ),
                               //gmodeoftransportation
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: gModeOfTransportation,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                  label: Text(
-                                    'Mode of Transportation',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //gallotedparkingnumber
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: gAllotedParkingNumber,
-                                keyboardType: TextInputType.text,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                decoration: const InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                  label: Text(
-                                    'Alloted Parking Number',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //gaward -- will be saved to guests && awards table aswell
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: gAward,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                keyboardType: TextInputType.text,
-                                decoration: const InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                  label: Text(
-                                    'Guest Award',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                              ),
+                              // TextFormField(
+                              //   autovalidateMode:
+                              //       AutovalidateMode.onUserInteraction,
+                              //   controller: gModeOfTransportation,
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //   ),
+                              //   keyboardType: TextInputType.text,
+                              //   decoration: const InputDecoration(
+                              //     errorStyle: TextStyle(
+                              //       fontSize: 13,
+                              //     ),
+                              //     label: Text(
+                              //       'Mode of Transportation',
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'This field cannot be empty';
+                              //     }
+                              //     return null;
+                              //   },
+                              // ),
+                              // //gallotedparkingnumber
+                              // TextFormField(
+                              //   autovalidateMode:
+                              //       AutovalidateMode.onUserInteraction,
+                              //   controller: gAllotedParkingNumber,
+                              //   keyboardType: TextInputType.text,
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //   ),
+                              //   decoration: const InputDecoration(
+                              //     errorStyle: TextStyle(
+                              //       fontSize: 13,
+                              //     ),
+                              //     label: Text(
+                              //       'Alloted Parking Number',
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'This field cannot be empty';
+                              //     }
+                              //     return null;
+                              //   },
+                              // ),
+                              // //gaward -- will be saved to guests && awards table aswell
+                              // TextFormField(
+                              //   autovalidateMode:
+                              //       AutovalidateMode.onUserInteraction,
+                              //   controller: gAward,
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //   ),
+                              //   keyboardType: TextInputType.text,
+                              //   decoration: const InputDecoration(
+                              //     errorStyle: TextStyle(
+                              //       fontSize: 13,
+                              //     ),
+                              //     label: Text(
+                              //       'Guest Award',
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'This field cannot be empty';
+                              //     }
+                              //     return null;
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
@@ -643,9 +666,9 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
                           'Extra Memeber': gExtraMember.text,
-                          'Mode of Transportation': gModeOfTransportation.text,
-                          'Alloted Parking': gAllotedParkingNumber.text,
-                          'Award': gAward.text,
+                          // 'Mode of Transportation': gModeOfTransportation.text,
+                          // 'Alloted Parking': gAllotedParkingNumber.text,
+                          // 'Award': gAward.text,
                         }).then(
                           (value) {
                             setState(() {

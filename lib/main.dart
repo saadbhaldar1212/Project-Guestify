@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 // import 'package:flutter/services.dart';
 // import 'package:guestify/welcome/welcome.dart';
 import 'package:guestify/dashboard/dashboard.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromRGBO(19, 159, 219, 10),
       ).copyWith(
         dividerColor: Colors.transparent,
-        // useMaterial3: true,
+        useMaterial3: true,
         textTheme: const TextTheme(
           bodySmall: TextStyle(
             fontSize: 20,
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const Dashboard();
+            return const SeatsDashboard();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

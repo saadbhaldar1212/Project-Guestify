@@ -248,6 +248,18 @@ class _ForTimeState extends State<ForTime> {
     Navigator.pop(context);
   }
 
+  late TimeOfDay pickedTime;
+  Future pickTime() async {
+    pickedTime = (await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.dial,
+    ))!;
+    setState(() {
+      eventTimeController.text = pickedTime.format(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -264,20 +276,11 @@ class _ForTimeState extends State<ForTime> {
           child: Column(
             children: [
               InkWell(
-                onTap: () async {
-                  TimeOfDay? pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(DateTime.now()),
-                    initialEntryMode: TimePickerEntryMode.dial,
-                  );
-                  if (pickedTime != null) {
-                    setState(() {
-                      eventTimeController.text =
-                          '${pickedTime.hour}:${pickedTime.minute}';
-                    });
-                    // ignore: use_build_context_synchronously
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  }
+                onTap: () {
+                  // ignore: use_build_context_synchronously
+                  FocusScope.of(context).requestFocus(FocusNode());
+
+                  pickTime();
                 },
                 child: ListTile(
                   title: const Text(
@@ -379,6 +382,20 @@ class _ForDateState extends State<ForDate> {
     Navigator.pop(context);
   }
 
+  late DateTime datePicked;
+
+  Future pickDate() async {
+    datePicked = (await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(3000)))!;
+
+    setState(() {
+      eventDateController.text = DateFormat().add_yMMMMd().format(datePicked);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -395,21 +412,11 @@ class _ForDateState extends State<ForDate> {
           child: Column(
             children: [
               InkWell(
-                onTap: () async {
-                  DateTime? datePicked = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030));
+                onTap: () {
+                  // ignore: use_build_context_synchronously
+                  FocusScope.of(context).requestFocus(FocusNode());
 
-                  if (datePicked != null) {
-                    setState(() {
-                      eventDateController.text =
-                          DateFormat().add_yMMMMd().format(datePicked);
-                    });
-                    // ignore: use_build_context_synchronously
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  }
+                  pickDate();
                 },
                 child: ListTile(
                   title: const Text(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,6 @@ class _EventDashboardState extends State<EventDashboard> {
   final seatsC = TextEditingController();
 
   // late List<bool> _isOpen;
-
   @override
   Widget build(BuildContext context) {
     final eventRef = db.child('events/');
@@ -46,6 +47,11 @@ class _EventDashboardState extends State<EventDashboard> {
     const tableKey = 'table_no';
     final seatRef = db.child('seats/');
     const seatKey = 'seat_no';
+    final guestRef = db.child('guest/');
+
+    Future removeGuestDataBeforeManagingNewSeats() async {
+      await guestRef.remove();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -215,10 +221,20 @@ class _EventDashboardState extends State<EventDashboard> {
                                               errorStyle: TextStyle(
                                                 fontSize: 13,
                                               ),
+                                              helperText:
+                                                  'all table will have 10 (setting variable maybe for future) values',
+                                              helperStyle: TextStyle(
+                                                fontSize: 13,
+                                              ),
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty) {
                                                 return 'Field is required';
+                                              } else if (!value.isNum) {
+                                                return 'Value should be in digits';
+                                              } else if (value
+                                                  .startsWith('0')) {
+                                                return 'Table length cannot be 0';
                                               }
                                               return null;
                                             },
@@ -234,34 +250,34 @@ class _EventDashboardState extends State<EventDashboard> {
                                       key: _sKey,
                                       child: Column(
                                         children: [
-                                          TextFormField(
-                                            controller: seatsC,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            keyboardType: TextInputType.number,
-                                            decoration: const InputDecoration(
-                                              label: Text(
-                                                'Seat length',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              errorStyle: TextStyle(
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Field is required';
-                                              }
-                                              return null;
-                                            },
-                                          ),
+                                          // TextFormField(
+                                          //   controller: seatsC,
+                                          //   style: const TextStyle(
+                                          //     color: Colors.black,
+                                          //   ),
+                                          //   keyboardType: TextInputType.number,
+                                          //   decoration: const InputDecoration(
+                                          //     label: Text(
+                                          //       'Seat length',
+                                          //       style: TextStyle(
+                                          //         color: Colors.black,
+                                          //       ),
+                                          //     ),
+                                          //     errorStyle: TextStyle(
+                                          //       fontSize: 13,
+                                          //     ),
+                                          //   ),
+                                          //   validator: (value) {
+                                          //     if (value!.isEmpty) {
+                                          //       return 'Field is required';
+                                          //     } else if (!value.isNum) {
+                                          //       return 'Value should be in digits';
+                                          //     }
+                                          //     return null;
+                                          //   },
+                                          // ),
                                           ElevatedButton(
                                             onPressed: (() {
-                                              if (_sKey.currentState!
-                                                  .validate()) {}
                                               if (_tKey.currentState!
                                                   .validate()) {
                                                 showDialog(
@@ -271,7 +287,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                     elevation: 5,
                                                     alignment: Alignment.center,
                                                     title: const Text(
-                                                      'Are you sure?',
+                                                      'Note: Once entered, all the previous data will be erased',
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           color: Colors.red),
@@ -299,18 +315,19 @@ class _EventDashboardState extends State<EventDashboard> {
                                                               child:
                                                                   MaterialButton(
                                                                 onPressed: (() {
-                                                                  seatRef
-                                                                      .child(
-                                                                          seatKey)
-                                                                      .update({
-                                                                    'Number of Seats':
-                                                                        seatsC
-                                                                            .text,
-                                                                  });
+                                                                  // seatRef
+                                                                  //     .child(
+                                                                  //         seatKey)
+                                                                  //     .update({
+                                                                  //   'Number of Seats':
+                                                                  //       seatsC
+                                                                  //           .text,
+                                                                  // });
+                                                                  removeGuestDataBeforeManagingNewSeats();
                                                                   tableRef
                                                                       .child(
                                                                           tableKey)
-                                                                      .update({
+                                                                      .set({
                                                                     'Number of Tables':
                                                                         tableC
                                                                             .text,

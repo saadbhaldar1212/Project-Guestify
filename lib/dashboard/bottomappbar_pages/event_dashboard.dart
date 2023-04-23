@@ -188,6 +188,27 @@ class _EventDashboardState extends State<EventDashboard> {
                         color: const Color.fromRGBO(204, 237, 255, 1),
                         child: MaterialButton(
                           onPressed: (() {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SeatsDashboard(),
+                              ),
+                              (route) => false,
+                            );
+                          }),
+                          child: const Text(
+                            'View Seats',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromRGBO(0, 77, 120, 1.000),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Material(
+                        color: const Color.fromRGBO(204, 237, 255, 1),
+                        child: MaterialButton(
+                          onPressed: (() {
                             showDialog(
                               context: context,
                               builder: (context) => SimpleDialog(
@@ -413,7 +434,7 @@ class _EventDashboardState extends State<EventDashboard> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

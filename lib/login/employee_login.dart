@@ -139,12 +139,13 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                           if (_formField.currentState!.validate()) {
                             empSignInToHome().then((value) {
                               Utils().toastMessage('Logged in successfully');
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const EmployeeHome(),
-                              //   ),
-                              // );
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const EmployeeHome(),
+                                ),
+                                (route) => false,
+                              );
                             }).onError((error, stackTrace) {
                               Utils().toastMessage(error.toString());
                             });

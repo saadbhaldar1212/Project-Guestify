@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 // import 'package:flutter/services.dart';
 // import 'package:guestify/welcome/welcome.dart';
 import 'package:guestify/dashboard/dashboard.dart';
+import 'package:guestify/home/employee_home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const Dashboard();
+            return const EmployeeHome();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

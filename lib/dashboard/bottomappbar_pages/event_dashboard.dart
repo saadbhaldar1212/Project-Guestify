@@ -43,7 +43,7 @@ class _EventDashboardState extends State<EventDashboard> {
     final eventRef = db.child('events/');
     const pk = 'event_info';
     final tableRef = db.child('table/');
-    const tableKey = 'table_no';
+    const tableKey = 'total_no_of_tables';
     final seatRef = db.child('seats/');
     const seatKey = 'seat_no';
     final guestRef = db.child('guest/');
@@ -193,7 +193,7 @@ class _EventDashboardState extends State<EventDashboard> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const SeatsDashboard(),
+                                  builder: (context) => SeatsDashboard(),
                                 ),
                               );
                             }),
@@ -362,7 +362,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                       MaterialPageRoute(
                                                                         builder:
                                                                             (context) =>
-                                                                                const SeatsDashboard(),
+                                                                                SeatsDashboard(tableLength: tableC.text),
                                                                       ),
                                                                       (route) =>
                                                                           false,

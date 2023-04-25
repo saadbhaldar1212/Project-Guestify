@@ -305,7 +305,7 @@ class _EventInfoState extends State<EventInfo> {
                         if (pickedTime != null) {
                           setState(() {
                             eventTimeController.text =
-                                '${pickedTime.hour}:${pickedTime.minute}';
+                                pickedTime.format(context);
                           });
                         }
                       },

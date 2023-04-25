@@ -272,8 +272,7 @@ class _ForTimeState extends State<ForTime> {
                   );
                   if (pickedTime != null) {
                     setState(() {
-                      eventTimeController.text =
-                          '${pickedTime.hour}:${pickedTime.minute}';
+                      eventTimeController.text = pickedTime.format(context);
                     });
                     // ignore: use_build_context_synchronously
                     FocusScope.of(context).requestFocus(FocusNode());

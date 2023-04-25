@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+// import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import '../utils/utility.dart';
 import 'seats_ui_configuration/circular_widget_config.dart';
@@ -17,7 +17,6 @@ class SeatsUI extends StatefulWidget {
 }
 
 class _SeatsUIState extends State<SeatsUI> {
-  int length = 5;
   CircularWidgetConfig config = const CircularWidgetConfig(
     innerSpacing: 2,
     itemRadius: 20,
@@ -30,112 +29,59 @@ class _SeatsUIState extends State<SeatsUI> {
   );
 
   final chairController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    // seatRef.child(pk).update({'Total Chairs': chairController.text});
-    Future.delayed(
-      const Duration(seconds: 2),
-      () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
+  int chairLength = 11;
 
   final db = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
-    final seatRef = db.child('seats/');
-    // const seat_no = 'seat_no';
-    return FirebaseAnimatedList(
-        primary: false,
-        shrinkWrap: true,
-        query: seatRef,
-        itemBuilder: (context, snapshot, animation, index) {
-          String newDbVal = snapshot.child('Number of Seats').value.toString();
-          int newDbIntVal = int.parse(newDbVal) + 1;
-
-          // String isAvai = seatRef.child(seat_no).
-
-          Color _singleCircle = const Color.fromRGBO(0, 77, 120, 1.000);
-          Color _container = const Color.fromARGB(255, 17, 150, 207);
-
-          // String tableNumber =
-          // snapshot.child(seat_no).child('Table Number').value.toString();
-          // String chairNumber =
-          // snapshot.child(seat_no).child('Chair Number').value.toString();
-          // int cNumber = int.parse(chairNumber);
-
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  Ink(
-                    child: CircularWidgets(
-                      config: config,
-                      itemsLength: newDbIntVal,
-                      itemBuilder: (context, index) {
-                        return SingleCircle(
-                            tableLength: widget.tableLength!,
-                            length: (newValue) {
-                              setState(() {
-                                length = newDbIntVal;
-                              });
-                            },
-                            txt: index.toString(),
-                            color: _singleCircle
-                            // cNumber == newDbIntVal
-                            //     ? _singleCircle = Colors.red
-                            //     : _singleCircle,
-                            );
-                      },
-                      centerWidgetBuilder: (context) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _container,
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${widget.tableLength! + 1}',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+    final seatOccupiedFromTablesRef = db.child('table/');
+    return Column(
+      children: [
+        Ink(
+          child: CircularWidgets(
+            config: config,
+            itemsLength: chairLength,
+            itemBuilder: (context, index) {
+              return SingleCircle(
+                tableLength: widget.tableLength!,
+                length: (newValue) {
+                  setState(() {
+                    chairLength = chairLength;
+                  });
+                },
+                txt: index.toString(),
+                color: const Color.fromRGBO(0, 77, 120, 1.000),
+                // cNumber == newDbIntVal
+                //     ? _singleCircle = Colors.red
+                //     : _singleCircle,
+              );
+            },
+            centerWidgetBuilder: (context) {
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 17, 150, 207),
+                    width: 3,
+                  ),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Center(
+                  child: Text(
+                    '${widget.tableLength! + 1}',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
                     ),
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  TextButton(
-                      onPressed: (() {
-                        Utils().toastMessage(
-                            'Table no: ${widget.tableLength! + 1}');
-                      }),
-                      child: const Text(
-                        'Delete this table',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                        ),
-                      ))
-                ],
-              ),
-            ],
-          );
-        });
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -188,13 +134,13 @@ class _SingleCircleState extends State<SingleCircle> {
     seatNumber.text = '${widget.txt}';
   }
 
-  String _value = '';
-
   @override
   Widget build(BuildContext context) {
-    final guestRef = db.child('guest/');
-    final seatRef = db.child('seats/');
-    const seat_no = 'seat_no';
+    // final guestRef = db.child('guest/');
+    // final seatRef = db.child('seats/');
+    // const seat_no = 'seat_no';
+
+    final tableRef = db.child('table/');
 
     // showData() {
     //   db.child('guest/').once().then(
@@ -371,48 +317,48 @@ class _SingleCircleState extends State<SingleCircle> {
                                 },
                               ),
                               //gtype
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: RadioListTile(
-                                      value: 'VIP',
-                                      dense: true,
-                                      title: const Text(
-                                        'VIP',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value.toString();
-                                          gType.text = _value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RadioListTile(
-                                      dense: true,
-                                      value: 'Regular',
-                                      title: const Text(
-                                        'Regular',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      groupValue: _value,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value = value.toString();
-                                          gType.text = _value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     Expanded(
+                              //       child: RadioListTile(
+                              //         value: 'VIP',
+                              //         dense: true,
+                              //         title: const Text(
+                              //           'VIP',
+                              //           style: TextStyle(
+                              //             color: Colors.black,
+                              //           ),
+                              //         ),
+                              //         groupValue: _value,
+                              //         onChanged: (value) {
+                              //           setState(() {
+                              //             _value = value.toString();
+                              //             gType.text = _value;
+                              //           });
+                              //         },
+                              //       ),
+                              //     ),
+                              //     Expanded(
+                              //       child: RadioListTile(
+                              //         dense: true,
+                              //         value: 'Regular',
+                              //         title: const Text(
+                              //           'Regular',
+                              //           style: TextStyle(
+                              //             color: Colors.black,
+                              //           ),
+                              //         ),
+                              //         groupValue: _value,
+                              //         onChanged: (value) {
+                              //           setState(() {
+                              //             _value = value.toString();
+                              //             gType.text = _value;
+                              //           });
+                              //         },
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               // TextFormField(
                               //   autovalidateMode:
                               //       AutovalidateMode.onUserInteraction,
@@ -447,7 +393,7 @@ class _SingleCircleState extends State<SingleCircle> {
                                 keyboardType: TextInputType.phone,
                                 controller: gContact,
                                 style: const TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                 ),
                                 decoration: const InputDecoration(
                                   errorStyle: TextStyle(
@@ -465,18 +411,6 @@ class _SingleCircleState extends State<SingleCircle> {
                                     return 'Please enter valid phone number';
                                   }
                                   return null;
-                                  // if (value!.isEmpty) {
-                                  //   return 'This field cannot be empty';
-                                  // } else if (value.length > 10) {
-                                  //   return 'Length is greater';
-                                  // } else if (value.length < 10) {
-                                  //   return 'Length is smaller';
-                                  // } else if (value.startsWith(
-                                  //   RegExp(r'[0-4]'),
-                                  // )) {
-                                  //   return 'No such number is available in this Country';
-                                  // }
-                                  // return null;
                                 },
                               ),
                               //gemail
@@ -486,7 +420,7 @@ class _SingleCircleState extends State<SingleCircle> {
                                   keyboardType: TextInputType.emailAddress,
                                   controller: gEmail,
                                   style: const TextStyle(
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                   ),
                                   decoration: const InputDecoration(
                                     errorStyle: TextStyle(
@@ -506,6 +440,8 @@ class _SingleCircleState extends State<SingleCircle> {
                                         !value.endsWith('.in') &&
                                         !value.endsWith('.ac.in')) {
                                       return 'Email should end with specific domain';
+                                    } else if (!value.contains('.')) {
+                                      return 'Enter valid Email';
                                     }
                                     return null;
                                   }
@@ -657,18 +593,18 @@ class _SingleCircleState extends State<SingleCircle> {
                   floatingActionButton: ElevatedButton(
                     onPressed: (() {
                       if (_fKey.currentState!.validate()) {
-                        // if (chairDataInGuest.toString().isEmpty) {
-                        guestRef.push().set({
+                        tableRef
+                            .child('occupied_tables_and_chairs')
+                            .child(tableNumber.text)
+                            .child(seatNumber.text)
+                            .set({
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
                           'Guest Name': gName.text,
-                          'Guest Type': gType.text,
+                          // 'Guest Type': gType.text,
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
                           'Extra Memeber': gExtraMember.text,
-                          // 'Mode of Transportation': gModeOfTransportation.text,
-                          // 'Alloted Parking': gAllotedParkingNumber.text,
-                          // 'Award': gAward.text,
                         }).then(
                           (value) {
                             setState(() {
@@ -681,11 +617,6 @@ class _SingleCircleState extends State<SingleCircle> {
                         ).onError((error, stackTrace) {
                           // print(stackTrace);
                           Utils().toastMessage(stackTrace.toString());
-                        });
-
-                        seatRef.child(seat_no).push().set({
-                          'Table Number': tableNumber.text,
-                          'Chair Number': seatNumber.text,
                         });
 
                         // }

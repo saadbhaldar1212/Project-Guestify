@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+// import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
@@ -8,7 +8,12 @@ import 'package:guestify/utils/utility.dart';
 import '../../seats/seats_ui.dart';
 
 class SeatsDashboard extends StatefulWidget {
-  const SeatsDashboard({super.key});
+  SeatsDashboard({
+    super.key,
+    this.tableLength,
+  });
+
+  String? tableLength;
 
   @override
   State<SeatsDashboard> createState() => _SeatsDashboardState();
@@ -16,12 +21,18 @@ class SeatsDashboard extends StatefulWidget {
 
 class _SeatsDashboardState extends State<SeatsDashboard> {
   final db = FirebaseDatabase.instance.ref();
+  late int fetchTableLength;
 
   @override
   Widget build(BuildContext context) {
-    final tableRef = db.child('table/');
+    // final tableRef = db.child('table/');
+    // const tableFetchKey = 'total_no_of_tables';
+
+    fetchTableLength = int.parse(widget.tableLength!);
+
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         automaticallyImplyLeading: false,
         toolbarHeight: 200,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
@@ -35,32 +46,24 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: FirebaseAnimatedList(
-          shrinkWrap: true,
-          query: tableRef,
-          itemBuilder: (context, snapshot, animation, index) {
-            String tLength =
-                snapshot.child('Number of Tables').value.toString();
-            int tLengthf = int.parse(tLength);
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 50,
-                    children: List.generate(
-                      tLengthf,
-                      (index) => SeatsUI(
-                        tableLength: index,
-                      ),
-                    ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            children: [
+              Wrap(
+                spacing: 15,
+                alignment: WrapAlignment.spaceAround,
+                runSpacing: 30,
+                children: List.generate(
+                  fetchTableLength,
+                  (index) => SeatsUI(
+                    tableLength: index,
                   ),
-                ],
+                ),
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
       persistentFooterButtons: [

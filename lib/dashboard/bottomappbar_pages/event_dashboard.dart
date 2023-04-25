@@ -182,25 +182,27 @@ class _EventDashboardState extends State<EventDashboard> {
                     right: 10,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Material(
-                        color: const Color.fromRGBO(204, 237, 255, 1),
-                        child: MaterialButton(
-                          onPressed: (() {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SeatsDashboard(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Material(
+                          color: const Color.fromRGBO(204, 237, 255, 1),
+                          child: MaterialButton(
+                            onPressed: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SeatsDashboard(),
+                                ),
+                              );
+                            }),
+                            child: const Text(
+                              'View Seats',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color.fromRGBO(0, 77, 120, 1.000),
                               ),
-                              (route) => false,
-                            );
-                          }),
-                          child: const Text(
-                            'View Seats',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromRGBO(0, 77, 120, 1.000),
                             ),
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import '../utils/utility.dart';
@@ -33,54 +34,61 @@ class _SeatsUIState extends State<SeatsUI> {
 
   final db = FirebaseDatabase.instance.ref();
 
+  Color _color = const Color.fromARGB(255, 17, 150, 207);
+
   @override
   Widget build(BuildContext context) {
-    final seatOccupiedFromTablesRef = db.child('table/');
-    return Column(
-      children: [
-        Ink(
-          child: CircularWidgets(
-            config: config,
-            itemsLength: chairLength,
-            itemBuilder: (context, index) {
-              return SingleCircle(
-                tableLength: widget.tableLength!,
-                length: (newValue) {
-                  setState(() {
-                    chairLength = chairLength;
-                  });
-                },
-                txt: index.toString(),
-                color: const Color.fromRGBO(0, 77, 120, 1.000),
-                // cNumber == newDbIntVal
-                //     ? _singleCircle = Colors.red
-                //     : _singleCircle,
-              );
-            },
-            centerWidgetBuilder: (context) {
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 17, 150, 207),
-                    width: 3,
-                  ),
-                  shape: BoxShape.circle,
-                  color: Colors.white,
+    final seatOccupiedFromTablesRef = db
+        .child('table/')
+        .child('all_tables_and_chairs')
+        .child('table_${widget.tableLength! + 1}');
+    return FirebaseAnimatedList(
+      shrinkWrap: true,
+      primary: false,
+      query: seatOccupiedFromTablesRef,
+      itemBuilder: (context, snapshot, animation, index) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Ink(
+                child: CircularWidgets(
+                  config: config,
+                  itemsLength: chairLength,
+                  itemBuilder: (context, index1) {
+                    return SingleCircle(
+                      tableLength: widget.tableLength!,
+                      length: chairLength,
+                      txt: index1.toString(),
+                      color: _color,
+                    );
+                  },
+                  centerWidgetBuilder: (context) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 17, 150, 207),
+                          width: 3,
+                        ),
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${widget.tableLength! + 1}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                child: Center(
-                  child: Text(
-                    '${widget.tableLength! + 1}',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              );
-            },
+              ),
+            ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
@@ -88,8 +96,8 @@ class _SeatsUIState extends State<SeatsUI> {
 // ignore: must_be_immutable
 class SingleCircle extends StatefulWidget {
   final String? txt;
-  final Color? color;
-  final void Function(int newValue)? length;
+  Color? color;
+  int? length;
   int? tableLength;
   int? totalChairs;
 
@@ -594,9 +602,9 @@ class _SingleCircleState extends State<SingleCircle> {
                     onPressed: (() {
                       if (_fKey.currentState!.validate()) {
                         tableRef
-                            .child('occupied_tables_and_chairs')
-                            .child(tableNumber.text)
-                            .child(seatNumber.text)
+                            .child('all_tables_and_chairs')
+                            .child('table_${tableNumber.text}')
+                            .child('chair_${seatNumber.text}')
                             .set({
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
@@ -605,6 +613,8 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
                           'Extra Memeber': gExtraMember.text,
+                          'seat_status': 'occupied',
+                          'seat_color': 'red',
                         }).then(
                           (value) {
                             setState(() {

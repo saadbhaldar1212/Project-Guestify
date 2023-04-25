@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -21,14 +22,10 @@ class SeatsDashboard extends StatefulWidget {
 
 class _SeatsDashboardState extends State<SeatsDashboard> {
   final db = FirebaseDatabase.instance.ref();
-  late int fetchTableLength;
 
   @override
   Widget build(BuildContext context) {
-    // final tableRef = db.child('table/');
-    // const tableFetchKey = 'total_no_of_tables';
-
-    fetchTableLength = int.parse(widget.tableLength!);
+    final tableRef = db.child('table/').child('total_no_of_tables');
 
     return Scaffold(
       appBar: AppBar(
@@ -46,25 +43,32 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            children: [
-              Wrap(
-                spacing: 15,
-                alignment: WrapAlignment.spaceAround,
-                runSpacing: 30,
-                children: List.generate(
-                  fetchTableLength,
-                  (index) => SeatsUI(
-                    tableLength: index,
+      body: FirebaseAnimatedList(
+        query: tableRef,
+        itemBuilder: (context, snapshot, animation, index) {
+          String total = snapshot.child('Number of Tables').value.toString();
+          int noOfTables = int.parse(total);
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                children: [
+                  Wrap(
+                    spacing: 15,
+                    alignment: WrapAlignment.spaceAround,
+                    runSpacing: 30,
+                    children: List.generate(
+                      noOfTables,
+                      (index) => SeatsUI(
+                        tableLength: index,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
       persistentFooterButtons: [
         Material(

@@ -5,7 +5,7 @@ import 'circular_widget_config.dart';
 
 class CircularWidgets extends StatelessWidget {
   /// how many outer items to display
-  final int itemsLength;
+  final int? itemsLength;
 
   /// outer item builder
   final IndexedWidgetBuilder itemBuilder;
@@ -19,7 +19,7 @@ class CircularWidgets extends StatelessWidget {
   const CircularWidgets({
     Key? key,
     required this.itemBuilder,
-    required this.itemsLength,
+    this.itemsLength,
     required this.config,
     this.centerWidgetBuilder,
   }) : super(key: key);
@@ -28,7 +28,7 @@ class CircularWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     //list widgets
     final List<LayoutId> itemIds = [];
-    for (var i = 0; i < itemsLength; i++) {
+    for (var i = 0; i < itemsLength!; i++) {
       final id = 'Item($i)';
       itemIds.add(
         LayoutId(

@@ -144,7 +144,7 @@ class _SingleCircleState extends State<SingleCircle> {
 
   @override
   Widget build(BuildContext context) {
-    // final guestRef = db.child('guest/');
+    final guestRef = db.child('guest/');
     // final seatRef = db.child('seats/');
     // const seat_no = 'seat_no';
 
@@ -615,6 +615,16 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Extra Memeber': gExtraMember.text,
                           'seat_status': 'occupied',
                           'seat_color': 'red',
+                        });
+
+                        guestRef.push().set({
+                          'Table Number': tableNumber.text,
+                          'Chair Number': seatNumber.text,
+                          'Guest Name': gName.text,
+                          // 'Guest Type': gType.text,
+                          'Guest Phone Number': gContact.text,
+                          'Guest Email': gEmail.text,
+                          'Extra Memeber': gExtraMember.text,
                         }).then(
                           (value) {
                             setState(() {

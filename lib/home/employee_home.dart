@@ -1,7 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:guestify/utils/signout_button/signout_button.dart';
+// import 'package:get/get.dart';
 
 class EmployeeHome extends StatefulWidget {
   const EmployeeHome({super.key});
@@ -37,6 +38,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
             onPressed: (() {}),
             icon: const Icon(Icons.search),
           ),
+          const SignOutButton()
         ],
       ),
       body: Stack(

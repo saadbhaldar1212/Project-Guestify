@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_edit_event_info.dart';
-import 'package:guestify/utils/utility.dart';
 
 class EditEventInfo extends StatefulWidget {
   EditEventInfo(
@@ -155,7 +154,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => ForEditEventInfo(
-                        title: 'Event Topic',
+                        title: 'Event Chief Guest',
                         event: widget.eventChiefGuest,
                       ),
                     ),
@@ -381,32 +380,13 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           color: Colors.green.shade400,
                           child: MaterialButton(
                             onPressed: (() {
-                              eventRef.child(primaryKey).update({
-                                "Event Name": eventNameController.text,
-                                "Event Topic": eventTopicController.text,
-                                "Event Chief Guest":
-                                    eventChiefGuestController.text,
-                                "Event Special Guest":
-                                    eventSpecialGuestController.text,
-                                "Event Host": eventHostController.text,
-                                "Event Venue": eventVenueController.text,
-                                "Event Date": eventDateController.text,
-                                "Event Time": eventTimeController.text,
-                                "Event Description":
-                                    eventDescriptionController.text,
-                              }).then((value) {
-                                Utils()
-                                    .toastMessage('Event Edited Successfully');
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Dashboard(),
-                                  ),
-                                  (route) => false,
-                                );
-                              }).onError((error, stackTrace) {
-                                Utils().toastMessage(error.toString());
-                              });
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Dashboard(),
+                                ),
+                                (route) => false,
+                              );
                             }),
                             child: const Text(
                               'Yes & Continue',
@@ -439,7 +419,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
             );
           }
         }),
-        child: const Text('Edit data'),
+        child: const Text('Done'),
       ),
     );
   }

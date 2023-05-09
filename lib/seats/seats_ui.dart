@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 
+import '../utils/radio_options.dart';
 import '../utils/utility.dart';
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
@@ -141,6 +142,15 @@ class _SingleCircleState extends State<SingleCircle> {
     tableNumber.text = '${widget.tableLength! + 1}';
     seatNumber.text = '${widget.txt}';
   }
+
+  // Define the default selected value.
+  String? _selectedValue = 'Regular';
+
+  // Define the radio options.
+  final List<RadioOption> _options = [
+    RadioOption(title: 'Regular', value: 'Regular'),
+    RadioOption(title: 'VIP', value: 'VIP'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -325,74 +335,47 @@ class _SingleCircleState extends State<SingleCircle> {
                                 },
                               ),
                               //gtype
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: RadioListTile(
-                              //         value: 'VIP',
-                              //         dense: true,
-                              //         title: const Text(
-                              //           'VIP',
-                              //           style: TextStyle(
-                              //             color: Colors.black,
-                              //           ),
-                              //         ),
-                              //         groupValue: _value,
-                              //         onChanged: (value) {
-                              //           setState(() {
-                              //             _value = value.toString();
-                              //             gType.text = _value;
-                              //           });
-                              //         },
-                              //       ),
-                              //     ),
-                              //     Expanded(
-                              //       child: RadioListTile(
-                              //         dense: true,
-                              //         value: 'Regular',
-                              //         title: const Text(
-                              //           'Regular',
-                              //           style: TextStyle(
-                              //             color: Colors.black,
-                              //           ),
-                              //         ),
-                              //         groupValue: _value,
-                              //         onChanged: (value) {
-                              //           setState(() {
-                              //             _value = value.toString();
-                              //             gType.text = _value;
-                              //           });
-                              //         },
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              // TextFormField(
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   controller: gType,
-                              //   keyboardType: TextInputType.text,
-                              //   style: const TextStyle(
-                              //     color: Colors.grey,
-                              //   ),
-                              //   decoration: const InputDecoration(
-                              //     label: Text(
-                              //       'Guest Type',
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //       ),
-                              //     ),
-                              //     errorStyle: TextStyle(
-                              //       fontSize: 13,
-                              //     ),
-                              //   ),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'This field cannot be empty';
-                              //     }
-                              //     return null;
-                              //   },
-                              // ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: RadioListTile<String>(
+                                      autofocus: true,
+                                      dense: true,
+                                      title: Text(
+                                        _options[0].title,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      value: _options[0].value,
+                                      groupValue: _selectedValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedValue = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: RadioListTile<String>(
+                                      title: Text(
+                                        _options[1].title,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      value: _options[1].value,
+                                      groupValue: _selectedValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedValue = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+
                               //gcontact***
 
                               TextFormField(
@@ -452,39 +435,7 @@ class _SingleCircleState extends State<SingleCircle> {
                                       return 'Enter valid Email';
                                     }
                                     return null;
-                                  }
-                                  // EmailValidator.validate(value!) ||
-                                  //         value.startsWith(RegExp(r'[0-9]'))
-                                  //     ? null
-                                  //     : 'Enter valid email address',
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     return 'This field cannot be empty';
-                                  //   }
-                                  //   if (value.endsWith('com')) {
-                                  //     return 'Email should end with specific domain';
-                                  //   } else if (!value.contains('@')) {
-                                  //     return 'Enter a valid email';
-                                  //   } else if (!value.contains('')) {
-                                  //     return 'Enter a valid email';
-                                  //   } else if (!value.startsWith(RegExp(r'[0-9]'), 0)) {
-                                  //     return 'Enter a valid email';
-                                  //   }
-                                  //   if (!value.endsWith('in')) {
-                                  //     return 'Email should end with specific domain';
-                                  //   }
-                                  //   if (!value.endsWith('ac.in')) {
-                                  //     return 'Email should end with specific domain';
-                                  //   }
-                                  //   if (!value.endsWith('co.in')) {
-                                  //     return 'Email should end with specific domain';
-                                  //   }
-                                  //   if (!value.contains('.')) {
-                                  //     return 'Enter valid email address';
-                                  //   }
-                                  //   return null;
-                                  // },
-                                  ),
+                                  }),
                               //gextramember -- multiple values can be added
                               TextFormField(
                                 autovalidateMode:
@@ -609,7 +560,7 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
                           'Guest Name': gName.text,
-                          // 'Guest Type': gType.text,
+                          'Guest Type': _selectedValue.toString(),
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
                           'Extra Memeber': gExtraMember.text,
@@ -621,7 +572,7 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
                           'Guest Name': gName.text,
-                          // 'Guest Type': gType.text,
+                          'Guest Type': _selectedValue.toString(),
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
                           'Extra Memeber': gExtraMember.text,

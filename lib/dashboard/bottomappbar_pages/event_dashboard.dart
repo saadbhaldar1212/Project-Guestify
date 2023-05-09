@@ -50,15 +50,12 @@ class _EventDashboardState extends State<EventDashboard> {
 
     void createTablesWithChairs(int numOfTables) {
       for (int i = 1; i <= numOfTables; i++) {
-        // Create a child node for the table with the table number as the key
         final tableRefForCreatingItIntoDatbase =
             tableRef.child('all_tables_and_chairs').child('table_$i');
 
         for (int j = 1; j <= 10; j++) {
-          // Create a child node for each chair with the chair number as the key
           final chairRef = tableRefForCreatingItIntoDatbase.child('chair_$j');
 
-          // Set the initial seat status for each chair to "unoccupied"
           chairRef.update({
             'seat_status': 'unoccupied',
             'seat_color': 'green',
@@ -362,6 +359,9 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                   tableRef
                                                                       .child(
                                                                           'all_tables_and_chairs')
+                                                                      .remove();
+
+                                                                  guestRef
                                                                       .remove();
 
                                                                   int noOfTables =

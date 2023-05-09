@@ -22,6 +22,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
 
   int counterForPresent = 0;
   int total = 0;
+  int index1 = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,9 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                       String key = snapshot.key.toString();
 
                       String lstData =
-                          '${snapshot.child('Table Number').value.toString()}-${snapshot.child('Chair Number').value.toString()}';
+                          '${snapshot.child('Table Number').value.toString()}-${snapshot.child('Chair Number').value.toString()}, , Name: ${snapshot.child('Guest Name').value.toString()}';
+
+                      index1 = index + 1;
 
                       return SingleChildScrollView(
                         child: Column(
@@ -121,7 +124,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         // total = total - 1;
                                       }
 
-                                      // print(_dData.toString());
+                                      print(_dData.toString());
                                     });
                                   },
                                 ),
@@ -166,7 +169,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
           showDialog(
             context: context,
             builder: (context) => SimpleDialog(
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.all(20),
               title: const Text(
                 'Summary',
                 style: TextStyle(
@@ -204,7 +207,15 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
-                    )
+                    ),
+                    Text(
+                      index1.toString(),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               ],

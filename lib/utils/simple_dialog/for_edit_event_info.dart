@@ -72,6 +72,11 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
                   cursorHeight: 20,
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
                   autofocus: false,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -177,6 +182,11 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
                   textInputAction: TextInputAction.newline,
                   keyboardType: TextInputType.multiline,
                   autofocus: false,
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter Event Topic';

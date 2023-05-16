@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guestify/home/host_index.dart';
+import 'package:guestify/home/host_home.dart';
 import 'package:guestify/login/admin_login.dart';
 import 'package:guestify/login/employee_login.dart';
 
@@ -98,10 +98,10 @@ class _Welcome2State extends State<Welcome2> {
               AnimatedOpacity(
                 opacity: _customOpacity,
                 duration: const Duration(microseconds: 500),
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
                       'Event Management',
                       style: TextStyle(

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +25,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
+    final present_event_day = db.child('present_event_day/');
 
     return Scaffold(
       appBar: AppBar(
@@ -60,8 +59,18 @@ class _EmployeeHomeState extends State<EmployeeHome> {
 
                       String key = snapshot.key.toString();
 
-                      String lstData =
-                          '${snapshot.child('Table Number').value.toString()}-${snapshot.child('Chair Number').value.toString()}, , Name: ${snapshot.child('Guest Name').value.toString()}';
+                      final lstData = {
+                        'Table Number':
+                            '${snapshot.child('Table Number').value.toString()}',
+                        'Chair Number':
+                            '${snapshot.child('Chair Number').value.toString()}',
+                        'Guest Name':
+                            '${snapshot.child('Guest Name').value.toString()}',
+                        'Guest Email':
+                            '${snapshot.child('Guest Email').value.toString()}',
+                        'Guest Phone Number':
+                            '${snapshot.child('Guest Phone Number').value.toString()}',
+                      };
 
                       index1 = index + 1;
 
@@ -112,18 +121,32 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         _selectedItems.remove(key);
                                         counterForPresent =
                                             counterForPresent - 1;
-                                        _dData.remove(lstData);
+                                        _dData.remove(lstData.toString());
+                                        present_event_day
+                                            .child('present')
+                                            .remove();
                                         // _pOrA = 'A';
-                                        // total = total + 1;
                                       } else {
                                         _selectedItems.add(key);
                                         counterForPresent =
                                             counterForPresent + 1;
-                                        _dData.add(lstData);
-                                        // _pOrA = 'P';
-                                        // total = total - 1;
+                                        _dData.add(lstData.toString());
+                                        present_event_day
+                                            .child('present')
+                                            .push()
+                                            .update({
+                                          'Table Number':
+                                              '${snapshot.child('Table Number').value.toString()}',
+                                          'Chair Number':
+                                              '${snapshot.child('Chair Number').value.toString()}',
+                                          'Guest Name':
+                                              '${snapshot.child('Guest Name').value.toString()}',
+                                          'Guest Email':
+                                              '${snapshot.child('Guest Email').value.toString()}',
+                                          'Guest Phone Number':
+                                              '${snapshot.child('Guest Phone Number').value.toString()}'
+                                        });
                                       }
-
                                       print(_dData.toString());
                                     });
                                   },
@@ -153,7 +176,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                         CircleAvatar(
                           backgroundColor: Colors.red,
                           radius: 30,
-                          child: Text('$total'),
+                          child: Text('$index1'),
                         )
                       ],
                     ),
@@ -217,6 +240,72 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                       ),
                     ),
                   ],
+                ),
+                ElevatedButton(
+                  onPressed: (() {
+                    showDialog(
+                      context: context,
+                      builder: (context) => SimpleDialog(
+                        title: const Text(
+                          'Are you sure?',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Material(
+                                  color: Colors.green.shade400,
+                                  child: MaterialButton(
+                                    onPressed: (() {
+                                      present_event_day.set({
+                                        'Guest': _dData.toList(),
+                                      }).then((value) {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmployeeHome(),
+                                            ),
+                                            (route) => false);
+                                      });
+                                    }),
+                                    child: const Text(
+                                      'Yes & Continue',
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Material(
+                                  color: Colors.red,
+                                  child: MaterialButton(
+                                    onPressed: (() {
+                                      Navigator.pop(context);
+                                    }),
+                                    child: const Text(
+                                      'No',
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                  child: const Text('Submit'),
                 ),
               ],
             ),

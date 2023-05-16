@@ -124,7 +124,15 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         _dData.remove(lstData.toString());
                                         present_event_day
                                             .child('present')
-                                            .remove();
+                                            .orderByKey()
+                                            .equalTo(key)
+                                            .onChildAdded
+                                            .listen((event) {
+                                          present_event_day
+                                              .child('present')
+                                              .child('${event.snapshot.key}')
+                                              .remove();
+                                        });
                                         // _pOrA = 'A';
                                       } else {
                                         _selectedItems.add(key);
@@ -134,7 +142,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         present_event_day
                                             .child('present')
                                             .push()
-                                            .update({
+                                            .set({
                                           'Table Number':
                                               '${snapshot.child('Table Number').value.toString()}',
                                           'Chair Number':

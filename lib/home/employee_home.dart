@@ -122,40 +122,33 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         counterForPresent =
                                             counterForPresent - 1;
                                         _dData.remove(lstData.toString());
-                                        present_event_day
-                                            .child('present')
-                                            .orderByKey()
-                                            .equalTo(key)
-                                            .onChildAdded
-                                            .listen((event) {
-                                          present_event_day
-                                              .child('present')
-                                              .child('${event.snapshot.key}')
-                                              .remove();
-                                        });
+
+                                        // present_event_day
+                                        //     .child('present')
+                                        //     .child('${present_event_day.key}')
+                                        //     .remove();
                                         // _pOrA = 'A';
                                       } else {
                                         _selectedItems.add(key);
                                         counterForPresent =
                                             counterForPresent + 1;
                                         _dData.add(lstData.toString());
-                                        present_event_day
-                                            .child('present')
-                                            .push()
-                                            .set({
-                                          'Table Number':
-                                              '${snapshot.child('Table Number').value.toString()}',
-                                          'Chair Number':
-                                              '${snapshot.child('Chair Number').value.toString()}',
-                                          'Guest Name':
-                                              '${snapshot.child('Guest Name').value.toString()}',
-                                          'Guest Email':
-                                              '${snapshot.child('Guest Email').value.toString()}',
-                                          'Guest Phone Number':
-                                              '${snapshot.child('Guest Phone Number').value.toString()}'
-                                        });
+                                        // present_event_day.child('present').set({
+                                        //   'Table Number':
+                                        //       '${snapshot.child('Table Number').value.toString()}',
+                                        //   // '${_dData[0]}',
+                                        //   'Chair Number':
+                                        //       '${snapshot.child('Chair Number').value.toString()}',
+                                        //   'Guest Name':
+                                        //       '${snapshot.child('Guest Name').value.toString()}',
+                                        //   'Guest Email':
+                                        //       '${snapshot.child('Guest Email').value.toString()}',
+                                        //   'Guest Phone Number':
+                                        //       '${snapshot.child('Guest Phone Number').value.toString()}'
+                                        // });
                                       }
                                       print(_dData.toString());
+                                      print(key);
                                     });
                                   },
                                 ),

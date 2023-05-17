@@ -57,8 +57,8 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
             AnimatedOpacity(
               opacity: _customOpacity,
               duration: const Duration(milliseconds: 500),
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   Text(
                     'G U E S T I F Y',
                     style: TextStyle(

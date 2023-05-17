@@ -14,13 +14,13 @@ class _HostIndexState extends State<HostIndex> {
 
   @override
   Widget build(BuildContext context) {
-    final present_event_day = db.child('present_event_day/Guest');
+    final presentEventDay = db.child('present_event_day/Guest');
 
     return Scaffold(
       body: SingleChildScrollView(
         child: FirebaseAnimatedList(
           shrinkWrap: true,
-          query: present_event_day,
+          query: presentEventDay,
           itemBuilder: (context, snapshot, animation, index) {
             return Card(
               child: Row(

@@ -25,7 +25,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
-    final present_event_day = db.child('present_event_day/');
+    final presentEventDay = db.child('present_event_day/');
 
     return Scaffold(
       appBar: AppBar(
@@ -61,15 +61,17 @@ class _EmployeeHomeState extends State<EmployeeHome> {
 
                       final lstData = {
                         'Table Number':
-                            '${snapshot.child('Table Number').value.toString()}',
+                            snapshot.child('Table Number').value.toString(),
                         'Chair Number':
-                            '${snapshot.child('Chair Number').value.toString()}',
+                            snapshot.child('Chair Number').value.toString(),
                         'Guest Name':
-                            '${snapshot.child('Guest Name').value.toString()}',
+                            snapshot.child('Guest Name').value.toString(),
                         'Guest Email':
-                            '${snapshot.child('Guest Email').value.toString()}',
-                        'Guest Phone Number':
-                            '${snapshot.child('Guest Phone Number').value.toString()}',
+                            snapshot.child('Guest Email').value.toString(),
+                        'Guest Phone Number': snapshot
+                            .child('Guest Phone Number')
+                            .value
+                            .toString(),
                       };
 
                       index1 = index + 1;
@@ -147,8 +149,8 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         //       '${snapshot.child('Guest Phone Number').value.toString()}'
                                         // });
                                       }
-                                      print(_dData.toString());
-                                      print(key);
+                                      // print(_dData.toString());
+                                      // print(key);
                                     });
                                   },
                                 ),
@@ -264,7 +266,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                   color: Colors.green.shade400,
                                   child: MaterialButton(
                                     onPressed: (() {
-                                      present_event_day.set({
+                                      presentEventDay.set({
                                         'Guest': _dData.toList(),
                                       }).then((value) {
                                         Navigator.pushAndRemoveUntil(

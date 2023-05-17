@@ -5,11 +5,11 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      contentPadding: const EdgeInsets.all(20),
+    return const SimpleDialog(
+      contentPadding: EdgeInsets.all(20),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             'Instructions',
             style: TextStyle(
@@ -30,10 +30,10 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     '1) While creating account for an employee,',
                     style: TextStyle(
@@ -52,9 +52,9 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '2) While creating account for an employee,',
                     style: TextStyle(
@@ -73,9 +73,9 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '3) While creating account for an employee,',
                     style: TextStyle(
@@ -94,9 +94,9 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '4) Length of Password must always be,',
                     style: TextStyle(
@@ -115,9 +115,9 @@ class SimpleDialogForEmployeeDashboard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '5) Password must have atleast,',
                     style: TextStyle(

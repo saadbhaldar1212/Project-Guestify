@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +52,6 @@ class _EditEventInfoState extends State<EditEventInfo> {
 
   @override
   Widget build(BuildContext context) {
-    const primaryKey = "event_info";
     final eventRef = database.child('events/');
 
     return Scaffold(

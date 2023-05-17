@@ -305,9 +305,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                       ),
                     ),
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(23.0),
                         child: Text(

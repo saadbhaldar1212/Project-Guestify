@@ -5,11 +5,11 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      contentPadding: const EdgeInsets.all(20),
+    return const SimpleDialog(
+      contentPadding: EdgeInsets.all(20),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             'Instructions',
             style: TextStyle(
@@ -30,10 +30,10 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     '1) Admin login credentials will be provided by Creators of this app',
                     style: TextStyle(
@@ -44,9 +44,9 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     "2) Admin can change password by itself if admin forgot's it",
                     style: TextStyle(
@@ -57,9 +57,9 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '3) Length of Password must always be, greater than 6',
                     style: TextStyle(
@@ -70,9 +70,9 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '4) Password must have atleast, one capital letter',
                     style: TextStyle(

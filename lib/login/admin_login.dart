@@ -48,7 +48,7 @@ class _AdminLoginState extends State<AdminLogin> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Welcome2(),
+                  builder: (context) => const Welcome2(),
                 ),
                 (route) => false);
           }),

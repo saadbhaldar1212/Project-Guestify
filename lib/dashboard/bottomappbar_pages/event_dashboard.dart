@@ -44,8 +44,8 @@ class _EventDashboardState extends State<EventDashboard> {
     const pk = 'event_info';
     final tableRef = db.child('table/');
     const tableKey = 'total_no_of_tables';
-    final seatRef = db.child('seats/');
-    const seatKey = 'seat_no';
+    // final seatRef = db.child('seats/');
+    // const seatKey = 'seat_no';
     final guestRef = db.child('guest/');
 
     void createTablesWithChairs(int numOfTables) {
@@ -482,9 +482,9 @@ class _EventDashboardState extends State<EventDashboard> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Padding(
                                     padding: EdgeInsets.all(18.0),
                                     child: Text(

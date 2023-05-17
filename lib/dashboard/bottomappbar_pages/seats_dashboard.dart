@@ -1,10 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/send_message/ui_send_message.dart';
 // import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
-import 'package:guestify/utils/utility.dart';
 
 import '../../seats/seats_ui.dart';
 
@@ -97,7 +99,13 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
                             color: Colors.green.shade400,
                             child: MaterialButton(
                               onPressed: (() {
-                                Utils().toastMessage('Data Submitted');
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UISendMessage(),
+                                    ),
+                                    (route) => false);
                               }),
                               child: const Text(
                                 'Yes & Continue',

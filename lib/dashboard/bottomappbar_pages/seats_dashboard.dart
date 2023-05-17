@@ -78,7 +78,30 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           child: MaterialButton(
             minWidth: double.infinity,
             onPressed: (() {
-              showDialog(
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UISendMessage(),
+                ),
+              );
+            }),
+            child: const Text(
+              'Submit Data',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/*
+
+showDialog(
                 context: context,
                 builder: (context) => SimpleDialog(
                   elevation: 5,
@@ -99,13 +122,12 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
                             color: Colors.green.shade400,
                             child: MaterialButton(
                               onPressed: (() {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const UISendMessage(),
-                                    ),
-                                    (route) => false);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const UISendMessage(),
+                                  ),
+                                );
                               }),
                               child: const Text(
                                 'Yes & Continue',
@@ -136,17 +158,5 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
                   ],
                 ),
               );
-            }),
-            child: const Text(
-              'Submit Data',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+
+*/

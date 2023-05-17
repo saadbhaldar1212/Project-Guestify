@@ -153,6 +153,7 @@ class _SingleCircleState extends State<SingleCircle> {
   @override
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
+    const guest_info = 'guest_info';
     // final seatRef = db.child('seats/');
     // const seat_no = 'seat_no';
 
@@ -566,7 +567,7 @@ class _SingleCircleState extends State<SingleCircle> {
                           'seat_color': 'red',
                         });
 
-                        guestRef.push().set({
+                        guestRef.child(guest_info).push().set({
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
                           'Guest Name': gName.text,

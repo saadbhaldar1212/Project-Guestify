@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/signout_button/signout_button.dart';
+
 class HostIndex extends StatefulWidget {
   const HostIndex({super.key});
 
@@ -14,28 +16,137 @@ class _HostIndexState extends State<HostIndex> {
 
   @override
   Widget build(BuildContext context) {
-    final presentEventDay = db.child('present_event_day/Guest');
+    final presentEventDay = db.child('present_event_day/');
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red.shade800,
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: const Text(
+          'Present Guests',
+        ),
+        // actions: [
+        //   // IconButton(
+        //   //   onPressed: (() {}),
+        //   //   icon: const Icon(Icons.search),
+        //   // ),
+        //   const SignOutButton()
+        // ],
+      ),
       body: SingleChildScrollView(
         child: FirebaseAnimatedList(
           shrinkWrap: true,
-          query: presentEventDay,
+          query: presentEventDay.child('present_guest'),
           itemBuilder: (context, snapshot, animation, index) {
-            return Card(
-              child: Row(
-                children: [
-                  Column(
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Card(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                color: Colors.red.shade100,
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        snapshot.child('Chair Number').value.toString(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Guest Name: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            snapshot.child('Guest Name').value.toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Guest Email: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            snapshot.child('Guest Email').value.toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Table Number: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            snapshot.child('Table Number').value.toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Chair Number: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            snapshot.child('Chair Number').value.toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Guest Phone Number: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            snapshot
+                                .child('Guest Phone Number')
+                                .value
+                                .toString(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             );
           },

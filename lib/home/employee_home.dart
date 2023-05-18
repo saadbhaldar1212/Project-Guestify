@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
+import 'package:guestify/utils/utility.dart';
 // import 'package:get/get.dart';
 
 class EmployeeHome extends StatefulWidget {
@@ -13,6 +14,7 @@ class EmployeeHome extends StatefulWidget {
 
 class _EmployeeHomeState extends State<EmployeeHome> {
   final Color _color = Colors.red.shade300;
+  // ignore: prefer_final_fields
   List<String> _dData = [];
   final Set<String> _selectedItems = {};
 
@@ -22,9 +24,15 @@ class _EmployeeHomeState extends State<EmployeeHome> {
   int total = 0;
   int index1 = 0;
 
+  String? tableNumber;
+  String? chairNumber;
+  String? guestName;
+  String? guestEmail;
+  String? guestPhoneNumber;
+
   @override
   Widget build(BuildContext context) {
-    final guestRef = db.child('guest/');
+    final guestRef = db.child('guest/').child('guest_info/');
     final presentEventDay = db.child('present_event_day/');
 
     return Scaffold(
@@ -73,6 +81,13 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                             .value
                             .toString(),
                       };
+
+                      tableNumber = lstData['Table Number'].toString();
+                      chairNumber = lstData['Chair Number'].toString();
+                      guestName = lstData['Guest Name'].toString();
+                      guestEmail = lstData['Guest Email'].toString();
+                      guestPhoneNumber =
+                          lstData['Guest Phone Number'].toString();
 
                       index1 = index + 1;
 
@@ -135,18 +150,19 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                         counterForPresent =
                                             counterForPresent + 1;
                                         _dData.add(lstData.toString());
-                                        // present_event_day.child('present').set({
-                                        //   'Table Number':
-                                        //       '${snapshot.child('Table Number').value.toString()}',
-                                        //   // '${_dData[0]}',
-                                        //   'Chair Number':
-                                        //       '${snapshot.child('Chair Number').value.toString()}',
-                                        //   'Guest Name':
-                                        //       '${snapshot.child('Guest Name').value.toString()}',
-                                        //   'Guest Email':
-                                        //       '${snapshot.child('Guest Email').value.toString()}',
-                                        //   'Guest Phone Number':
-                                        //       '${snapshot.child('Guest Phone Number').value.toString()}'
+                                        // presentEventDay.child('present').set({
+                                        // 'Data': _dData.toString(),
+                                        // 'Table Number':
+                                        //     '${snapshot.child('Table Number').value.toString()}',
+                                        // // '${_dData[0]}',
+                                        // 'Chair Number':
+                                        //     '${snapshot.child('Chair Number').value.toString()}',
+                                        // 'Guest Name':
+                                        //     '${snapshot.child('Guest Name').value.toString()}',
+                                        // 'Guest Email':
+                                        //     '${snapshot.child('Guest Email').value.toString()}',
+                                        // 'Guest Phone Number':
+                                        //     '${snapshot.child('Guest Phone Number').value.toString()}'
                                         // });
                                       }
                                       // print(_dData.toString());
@@ -266,8 +282,16 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                   color: Colors.green.shade400,
                                   child: MaterialButton(
                                     onPressed: (() {
-                                      presentEventDay.set({
-                                        'Guest': _dData.toList(),
+                                      presentEventDay
+                                          .child('present_guest')
+                                          .push()
+                                          .set({
+                                        'Table Number': tableNumber.toString(),
+                                        'Chair Number': chairNumber.toString(),
+                                        'Guest Name': guestName.toString(),
+                                        'Guest Email': guestEmail.toString(),
+                                        'Guest Phone Number':
+                                            guestPhoneNumber.toString(),
                                       }).then((value) {
                                         Navigator.pushAndRemoveUntil(
                                             context,
@@ -276,6 +300,8 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                                   const EmployeeHome(),
                                             ),
                                             (route) => false);
+                                      }).onError((error, stackTrace) {
+                                        Utils().toastMessage(error.toString());
                                       });
                                     }),
                                     child: const Text(

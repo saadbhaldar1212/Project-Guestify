@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/home/employee_home.dart';
+import 'package:guestify/home/host_home.dart';
 // import 'package:flutter/services.dart';
 
 import 'dashboard/dashboard.dart';
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const Dashboard();
+            return const HostIndex();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

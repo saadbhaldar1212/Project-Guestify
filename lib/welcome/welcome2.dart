@@ -1,7 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/home/host_home.dart';
 import 'package:guestify/login/admin_login.dart';
 import 'package:guestify/login/employee_login.dart';
+import 'package:guestify/utils/utility.dart';
 
 class Welcome2 extends StatefulWidget {
   const Welcome2({super.key});
@@ -22,49 +24,11 @@ class TransformHelper {
 }
 
 class _Welcome2State extends State<Welcome2> {
-  // late Animation animation;
-  // late AnimationController animationController;
   double _customOpacity = 0;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   animationController = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(milliseconds: 500),
-  //   );
-  //   animation = Tween(begin: 0.0, end: 400.0).animate(animationController);
-  //   animationController.addListener(() {
-  //     print(animation.value);
-  //     setState(() {});
-  //   });
-  //   animationController.forward();
-  // }
-
-  // var employeeLogo = const Icon(Icons.person);
-  // var adminLogo = const Icon(Icons.verified_user_rounded);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     onPressed: (() {
-      //       Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => WelcomeSplash(),
-      //             fullscreenDialog: true,
-      //           ));
-      //     }),
-      //     icon: const Icon(
-      //       Icons.keyboard_arrow_left,
-      //       color: Colors.black,
-      //     ),
-      //   ),
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      // ),
       body: ListView(
         children: [
           Column(
@@ -162,11 +126,13 @@ class _Welcome2State extends State<Welcome2> {
                                 child: MaterialButton(
                                   onPressed: (() {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HostIndex(),
-                                        ));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const HostIndex(),
+                                      ),
+                                    ).onError((error, stackTrace) {
+                                      Utils().toastMessage(error.toString());
+                                    });
                                   }),
                                   child: const Text(
                                     'Continue as Host',

@@ -61,7 +61,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventNameController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     labelText: 'Event Name',
@@ -84,7 +84,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventTopicController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -108,7 +108,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventChiefGuestController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     labelText: 'Event Chief Guest',
@@ -138,7 +138,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventSpecialGuestController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -169,7 +169,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventHostController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -196,7 +196,7 @@ class _EventInfoState extends State<EventInfo> {
                   style: const TextStyle(color: Colors.black),
                   controller: eventVenueController,
                   cursorHeight: 20,
-                  textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.text,
                   autofocus: false,
                   decoration: const InputDecoration(

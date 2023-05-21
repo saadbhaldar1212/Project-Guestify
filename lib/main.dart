@@ -1,14 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/event_dashboard.dart';
 import 'package:guestify/home/employee_home.dart';
-import 'package:guestify/home/host_home.dart';
 import 'package:guestify/welcome/welcome.dart';
-// import 'package:flutter/services.dart';
 
 import 'dashboard/dashboard.dart';
-// import 'package:guestify/dashboard/dashboard.dart';
-// import 'package:guestify/home/employee_home.dart';
+// import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

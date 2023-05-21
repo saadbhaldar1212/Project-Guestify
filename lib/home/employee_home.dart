@@ -3,6 +3,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 import 'package:guestify/utils/utility.dart';
+import 'package:guestify/welcome/welcome.dart';
+import 'package:guestify/welcome/welcome2.dart';
 // import 'package:get/get.dart';
 
 class EmployeeHome extends StatefulWidget {
@@ -15,7 +17,7 @@ class EmployeeHome extends StatefulWidget {
 class _EmployeeHomeState extends State<EmployeeHome> {
   final Color _color = Colors.red.shade300;
   // ignore: prefer_final_fields
-  List<String> _dData = [];
+  Map<dynamic, dynamic> _dData = {};
   final Set<String> _selectedItems = {};
 
   final db = FirebaseDatabase.instance.ref();
@@ -29,6 +31,8 @@ class _EmployeeHomeState extends State<EmployeeHome> {
   String? guestName;
   String? guestEmail;
   String? guestPhoneNumber;
+
+  bool isPresent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +48,10 @@ class _EmployeeHomeState extends State<EmployeeHome> {
           'Employee',
         ),
         actions: [
-          IconButton(
-            onPressed: (() {}),
-            icon: const Icon(Icons.search),
-          ),
+          // IconButton(
+          //   onPressed: (() {}),
+          //   icon: const Icon(Icons.search),
+          // ),
           const SignOutButton()
         ],
       ),
@@ -82,12 +86,7 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                             .toString(),
                       };
 
-                      tableNumber = lstData['Table Number'].toString();
-                      chairNumber = lstData['Chair Number'].toString();
-                      guestName = lstData['Guest Name'].toString();
-                      guestEmail = lstData['Guest Email'].toString();
-                      guestPhoneNumber =
-                          lstData['Guest Phone Number'].toString();
+                      // tableNumber = _dData[1];
 
                       index1 = index + 1;
 
@@ -134,39 +133,51 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                   ),
                                   onTap: () {
                                     setState(() {
+                                      var key1 = '';
                                       if (_selectedItems.contains(key)) {
                                         _selectedItems.remove(key);
                                         counterForPresent =
                                             counterForPresent - 1;
-                                        _dData.remove(lstData.toString());
+                                        _dData.remove(key);
 
-                                        // present_event_day
-                                        //     .child('present')
-                                        //     .child('${present_event_day.key}')
-                                        //     .remove();
-                                        // _pOrA = 'A';
+                                        presentEventDay
+                                            // .child('present_guest')
+                                            .child(key1)
+                                            .remove();
+
+                                        print(_dData);
                                       } else {
                                         _selectedItems.add(key);
                                         counterForPresent =
                                             counterForPresent + 1;
-                                        _dData.add(lstData.toString());
-                                        // presentEventDay.child('present').set({
-                                        // 'Data': _dData.toString(),
-                                        // 'Table Number':
-                                        //     '${snapshot.child('Table Number').value.toString()}',
-                                        // // '${_dData[0]}',
-                                        // 'Chair Number':
-                                        //     '${snapshot.child('Chair Number').value.toString()}',
-                                        // 'Guest Name':
-                                        //     '${snapshot.child('Guest Name').value.toString()}',
-                                        // 'Guest Email':
-                                        //     '${snapshot.child('Guest Email').value.toString()}',
-                                        // 'Guest Phone Number':
-                                        //     '${snapshot.child('Guest Phone Number').value.toString()}'
-                                        // });
+
+                                        _dData.addAll(lstData);
+
+                                        print(_dData);
+                                        presentEventDay
+                                            .child('present_guest')
+                                            .push()
+                                            .set({
+                                          'Table Number':
+                                              _dData['Table Number'].toString(),
+                                          'Chair Number':
+                                              _dData['Chair Number'].toString(),
+                                          'Guest Name':
+                                              _dData['Guest Name'].toString(),
+                                          'Guest Email':
+                                              _dData['Guest Email'].toString(),
+                                          'Guest Phone Number':
+                                              _dData['Guest Phone Number']
+                                                  .toString(),
+                                        }).onError((error, stackTrace) {
+                                          Utils()
+                                              .toastMessage(error.toString());
+                                        });
+
+                                        key1 = presentEventDay
+                                            .onChildAdded.first
+                                            .toString();
                                       }
-                                      // print(_dData.toString());
-                                      // print(key);
                                     });
                                   },
                                 ),
@@ -282,27 +293,16 @@ class _EmployeeHomeState extends State<EmployeeHome> {
                                   color: Colors.green.shade400,
                                   child: MaterialButton(
                                     onPressed: (() {
-                                      presentEventDay
-                                          .child('present_guest')
-                                          .push()
-                                          .set({
-                                        'Table Number': tableNumber.toString(),
-                                        'Chair Number': chairNumber.toString(),
-                                        'Guest Name': guestName.toString(),
-                                        'Guest Email': guestEmail.toString(),
-                                        'Guest Phone Number':
-                                            guestPhoneNumber.toString(),
-                                      }).then((value) {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EmployeeHome(),
-                                            ),
-                                            (route) => false);
-                                      }).onError((error, stackTrace) {
-                                        Utils().toastMessage(error.toString());
-                                      });
+                                      // presentEventDay
+                                      //     .child('present_guest')
+                                      //     .remove();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WelcomeSplash(),
+                                          ),
+                                          (route) => false);
                                     }),
                                     child: const Text(
                                       'Yes & Continue',

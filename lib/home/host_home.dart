@@ -35,6 +35,7 @@ class _HostIndexState extends State<HostIndex> {
         // ],
       ),
       body: SingleChildScrollView(
+        primary: true,
         child: FirebaseAnimatedList(
           shrinkWrap: true,
           query: presentEventDay.child('present_guest'),

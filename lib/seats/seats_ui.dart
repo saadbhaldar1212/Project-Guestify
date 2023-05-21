@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:get/get.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import '../utils/radio_options.dart';
@@ -339,7 +340,7 @@ class _SingleCircleState extends State<SingleCircle> {
                                   Expanded(
                                     child: RadioListTile<String>(
                                       autofocus: true,
-                                      dense: true,
+                                      // dense: true,
                                       title: Text(
                                         _options[0].title,
                                         style: const TextStyle(
@@ -357,6 +358,7 @@ class _SingleCircleState extends State<SingleCircle> {
                                   ),
                                   Expanded(
                                     child: RadioListTile<String>(
+                                      dense: true,
                                       title: Text(
                                         _options[1].title,
                                         style: const TextStyle(
@@ -440,8 +442,9 @@ class _SingleCircleState extends State<SingleCircle> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 controller: gExtraMember,
+                                keyboardType: TextInputType.number,
                                 style: const TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                 ),
                                 decoration: const InputDecoration(
                                   errorStyle: TextStyle(
@@ -453,10 +456,19 @@ class _SingleCircleState extends State<SingleCircle> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  helperText: 'Enter a number',
+                                  helperStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                  ),
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'This field cannot be empty';
+                                  } else if (!value.isNum) {
+                                    return 'Input must be numeric only';
+                                  } else if (value.startsWith('0')) {
+                                    return 'Invalid Table Length';
                                   }
                                   return null;
                                 },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guestify/home/employee_home.dart';
 import 'package:guestify/home/host_home.dart';
+import 'package:guestify/welcome/welcome.dart';
 // import 'package:flutter/services.dart';
 
 import 'dashboard/dashboard.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const HostIndex();
+            return const WelcomeSplash();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

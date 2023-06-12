@@ -4,7 +4,7 @@
 // import 'package:guestify/utils/signout_button/signout_button.dart';
 // import 'package:guestify/utils/utility.dart';
 // import 'package:guestify/welcome/welcome.dart';
-// import 'package:guestify/welcome/welcome2.dart';
+// // import 'package:guestify/welcome/welcome2.dart';
 // // import 'package:get/get.dart';
 
 // class EmployeeHome extends StatefulWidget {
@@ -358,7 +358,7 @@ import '../utils/signout_button/signout_button.dart';
 DatabaseReference guestReference =
     FirebaseDatabase.instance.ref().child('guest/guest_info');
 DatabaseReference attendanceSummaryReference =
-    FirebaseDatabase.instance.ref().child('attendanceSummary');
+    FirebaseDatabase.instance.ref().child('attendanceSummary/');
 
 class EmployeeModule extends StatelessWidget {
   const EmployeeModule({super.key});
@@ -373,50 +373,54 @@ class EmployeeModule extends StatelessWidget {
         title: const Text(
           'Employee',
         ),
-        actions: [
+        actions: const [
           // IconButton(
           //   onPressed: (() {}),
           //   icon: const Icon(Icons.search),
           // ),
-          const SignOutButton()
+          SignOutButton()
         ],
       ),
       body: FirebaseAnimatedList(
         query: guestReference,
         itemBuilder: (context, snapshot, animation, index) {
-          // Map<String, dynamic> guest = snapshot.value;
+          Map guest = snapshot.value as Map;
           String? guestKey = snapshot.key;
 
           // Retrieve the attendance status
-          // String attendanceStatus = guest['attendanceStatus'] ?? '';
+          String attendanceStatus = guest['attendanceStatus'] ?? '';
 
-          return GestureDetector(
-            onTap: () {
-              bool isPresent =
-                  snapshot.child('Guest Attendance').value == 'Present';
-              markAttendance(guestKey!, !isPresent);
-            },
-            child: Card(
-              child: ListTile(
-                title: Text(
-                  snapshot.child('Guest Name').value.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
+          return ListTileTheme(
+            selectedColor: Colors.amber,
+            child: ListTile(
+              tileColor: Colors.red.shade100,
+              onTap: () {
+                if (attendanceStatus == 'Present') {
+                  bool isPresent = attendanceStatus == 'Present';
+                  markAttendance(guestKey!, !isPresent);
+                } else {
+                  bool isPresent = attendanceStatus == 'Absent';
+                  markAttendance(guestKey!, isPresent);
+                }
+              },
+              title: Text(
+                snapshot.child('Guest Name').value.toString(),
+                style: const TextStyle(
+                  color: Colors.black,
                 ),
-                subtitle: Text(
-                  snapshot.child('Guest Email').value.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                trailing: snapshot.child('Guest Attendance').value == 'Present'
-                    ? const Icon(
-                        Icons.check,
-                        color: Colors.black,
-                      )
-                    : null,
               ),
+              subtitle: Text(
+                snapshot.child('Guest Email').value.toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              trailing: snapshot.child('Guest Attendance').value == 'Present'
+                  ? const Icon(
+                      Icons.check,
+                      color: Colors.black,
+                    )
+                  : null,
             ),
           );
         },
@@ -433,12 +437,11 @@ class EmployeeModule extends StatelessWidget {
     // Update the attendance summary
     attendanceSummaryReference.runTransaction((transaction) async {
       DataSnapshot snapshot = await transaction.once();
-      Map<String, dynamic>? attendanceSummary =
-          (snapshot.value ?? {}) as Map<String, dynamic>?;
+      Map attendanceSummary = (snapshot.value ?? {}) as Map;
 
-      attendanceSummary?['totalGuests'] =
+      attendanceSummary['totalGuests'] =
           (attendanceSummary['totalGuests'] ?? 0) + 1;
-      attendanceSummary?['presentGuests'] =
+      attendanceSummary['presentGuests'] =
           (attendanceSummary['presentGuests'] ?? 0) + (isPresent ? 1 : 0);
 
       transaction.update(attendanceSummaryReference, attendanceSummary);

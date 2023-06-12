@@ -574,7 +574,7 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Guest Type': _selectedValue.toString(),
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
-                          'Extra Memeber': gExtraMember.text,
+                          'Extra Member': gExtraMember.text,
                           'seat_status': 'occupied',
                           'seat_color': 'red',
                         });
@@ -586,7 +586,8 @@ class _SingleCircleState extends State<SingleCircle> {
                           'Guest Type': _selectedValue.toString(),
                           'Guest Phone Number': gContact.text,
                           'Guest Email': gEmail.text,
-                          'Extra Memeber': gExtraMember.text,
+                          'Extra Member': gExtraMember.text,
+                          'attendanceStatus': 'Absent',
                         }).then(
                           (value) {
                             setState(() {

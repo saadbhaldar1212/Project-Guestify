@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/employee_dashboard.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/event_dashboard.dart';
+// import 'package:guestify/dashboard/bottomappbar_pages/event_dashboard.dart';
 import 'package:guestify/home/employee_home.dart';
-import 'package:guestify/welcome/welcome.dart';
+// import 'package:guestify/welcome/welcome.dart';
 
-import 'dashboard/dashboard.dart';
+// import 'dashboard/dashboard.dart';
 // import 'package:flutter/services.dart';
 
 Future<void> main() async {
@@ -46,7 +48,9 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const EmployeeModule();
+            return const EventDashboard(
+              title: '',
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),

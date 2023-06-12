@@ -142,7 +142,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const EmployeeHome(),
+                                  builder: (context) => const EmployeeModule(),
                                 ),
                                 (route) => false,
                               );

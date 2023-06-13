@@ -5,6 +5,8 @@ import 'package:guestify/dashboard/bottomappbar_pages/employee_dashboard.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/event_dashboard.dart';
 // import 'package:guestify/dashboard/bottomappbar_pages/event_dashboard.dart';
 import 'package:guestify/home/employee_home.dart';
+import 'package:guestify/home/host_home.dart';
+import 'package:guestify/welcome/welcome2.dart';
 // import 'package:guestify/welcome/welcome.dart';
 
 // import 'dashboard/dashboard.dart';

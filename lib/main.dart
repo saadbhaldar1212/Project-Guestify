@@ -48,9 +48,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const EventDashboard(
-              title: '',
-            );
+            return const EmployeeModule();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

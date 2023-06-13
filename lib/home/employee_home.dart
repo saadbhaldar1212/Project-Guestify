@@ -354,14 +354,21 @@ import 'package:firebase_database/firebase_database.dart';
 
 import '../utils/signout_button/signout_button.dart';
 
-// Assuming you have a reference to the Firebase Realtime Database
-DatabaseReference guestReference =
-    FirebaseDatabase.instance.ref().child('guest/guest_info');
-DatabaseReference attendanceSummaryReference =
-    FirebaseDatabase.instance.ref().child('attendanceSummary/');
-
-class EmployeeModule extends StatelessWidget {
+class EmployeeModule extends StatefulWidget {
   const EmployeeModule({super.key});
+
+  @override
+  State<EmployeeModule> createState() => _EmployeeModuleState();
+}
+
+class _EmployeeModuleState extends State<EmployeeModule> {
+  DatabaseReference guestReference =
+      FirebaseDatabase.instance.ref().child('guest/guest_info');
+  DatabaseReference attendanceSummaryReference =
+      FirebaseDatabase.instance.ref().child('attendanceSummary/');
+
+  Color _color = Colors.red.shade200;
+  final Set<String> _selectedItems = {};
 
   @override
   Widget build(BuildContext context) {
@@ -381,49 +388,96 @@ class EmployeeModule extends StatelessWidget {
           SignOutButton()
         ],
       ),
-      body: FirebaseAnimatedList(
-        query: guestReference,
-        itemBuilder: (context, snapshot, animation, index) {
-          Map guest = snapshot.value as Map;
-          String? guestKey = snapshot.key;
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              child: FirebaseAnimatedList(
+                shrinkWrap: true,
+                query: guestReference,
+                itemBuilder: (context, snapshot, animation, index) {
+                  Map guest = snapshot.value as Map;
+                  String? guestKey = snapshot.key;
 
-          // Retrieve the attendance status
-          String attendanceStatus = guest['attendanceStatus'] ?? '';
+                  String attendanceStatus = guest['attendanceStatus'] ?? '';
+                  String fGuestName =
+                      snapshot.child('Guest Name').value.toString();
+                  String new1 = fGuestName.characters.first;
 
-          return ListTileTheme(
-            selectedColor: Colors.amber,
-            child: ListTile(
-              tileColor: Colors.red.shade100,
-              onTap: () {
-                if (attendanceStatus == 'Present') {
-                  bool isPresent = attendanceStatus == 'Present';
-                  markAttendance(guestKey!, !isPresent);
-                } else {
-                  bool isPresent = attendanceStatus == 'Absent';
-                  markAttendance(guestKey!, isPresent);
-                }
-              },
-              title: Text(
-                snapshot.child('Guest Name').value.toString(),
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
+                  String key = snapshot.key.toString();
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: ListTileTheme(
+                            selectedTileColor: Colors.green,
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.all(20),
+                              tileColor: _color,
+                              selected: _selectedItems.contains(key),
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                radius: 40,
+                                child: Text(
+                                  new1,
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                if (attendanceStatus == 'Present') {
+                                  bool isPresent =
+                                      attendanceStatus == 'Present';
+                                  markAttendance(guestKey!, !isPresent);
+                                } else {
+                                  bool isPresent = attendanceStatus == 'Absent';
+                                  markAttendance(guestKey!, isPresent);
+                                }
+
+                                setState(() {
+                                  if (_selectedItems.contains(key)) {
+                                    _selectedItems.remove(key);
+                                  } else {
+                                    _selectedItems.add(key);
+                                  }
+                                });
+                              },
+                              title: Text(
+                                snapshot.child('Guest Name').value.toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              subtitle: Text(
+                                snapshot.child('Guest Email').value.toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              trailing:
+                                  snapshot.child('Guest Attendance').value ==
+                                          'Present'
+                                      ? const Icon(
+                                          Icons.check,
+                                          color: Colors.black,
+                                        )
+                                      : null,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-              subtitle: Text(
-                snapshot.child('Guest Email').value.toString(),
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              trailing: snapshot.child('Guest Attendance').value == 'Present'
-                  ? const Icon(
-                      Icons.check,
-                      color: Colors.black,
-                    )
-                  : null,
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

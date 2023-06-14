@@ -16,10 +16,16 @@ class _EmployeeModuleState extends State<EmployeeModule> {
   DatabaseReference guestReference =
       FirebaseDatabase.instance.ref().child('guest/guest_info');
 
+  DatabaseReference guestReferenceForTakingAttendance =
+      FirebaseDatabase.instance.ref().child('guest/');
+
+  DatabaseReference presentDay =
+      FirebaseDatabase.instance.ref().child('present_guests/');
+
   Color _color = Colors.red.shade200;
   final Set<String> _selectedItems = {};
 
-  int counterForPresent = 1;
+  int counterForPresent = 0;
   int total = 0;
   int? total1;
 
@@ -93,11 +99,38 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                                 if (attendanceStatus == 'Present') {
                                   bool isPresent =
                                       attendanceStatus == 'Present';
-                                  markAttendance(guestKey!, !isPresent);
+
+                                  guestReference.child(guestKey!).update({
+                                    'attendanceStatus':
+                                        !isPresent ? 'Present' : 'Absent',
+                                  });
+
+                                  guestReferenceForTakingAttendance
+                                      .child('present_guests')
+                                      .child(guestKey)
+                                      .remove();
+
                                   counterForPresent = counterForPresent - 1;
                                 } else {
                                   bool isPresent = attendanceStatus == 'Absent';
-                                  markAttendance(guestKey!, isPresent);
+
+                                  guestReference.child(guestKey!).update({
+                                    'attendanceStatus':
+                                        isPresent ? 'Present' : 'Absent',
+                                  });
+
+                                  guestReferenceForTakingAttendance
+                                      .child('present_guests')
+                                      .child(guestKey)
+                                      .set({
+                                    'Guest Name': guest['Guest Name'],
+                                    'Guest Email': guest['Guest Email'],
+                                    'Guest Phone Number':
+                                        guest['Guest Phone Number'],
+                                    'Table Number': guest['Table Number'],
+                                    'Chair Number': guest['Chair Number'],
+                                  });
+
                                   counterForPresent = counterForPresent + 1;
                                 }
 
@@ -133,171 +166,66 @@ class _EmployeeModuleState extends State<EmployeeModule> {
           ],
         ),
       ),
-      floatingActionButton: total == 2
-          ? ElevatedButton(
-              onPressed: (() {
-                showDialog(
-                  context: context,
-                  builder: (context) => SimpleDialog(
-                    contentPadding: const EdgeInsets.all(20),
-                    title: const Text(
-                      'Summary',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            'Present Guests: ',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            counterForPresent.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Total Guests: ',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            total.toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: (() {
-                          showDialog(
-                            context: context,
-                            builder: (context) => SimpleDialog(
-                              title: const Text(
-                                'Are you sure?',
-                                style: TextStyle(
-                                  color: Colors.black,
+      floatingActionButton: ElevatedButton(
+        onPressed: (() {
+          showDialog(
+            context: context,
+            builder: (context) => SimpleDialog(
+              title: const Text(
+                'Are you sure?',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Material(
+                        color: Colors.green.shade400,
+                        child: MaterialButton(
+                          onPressed: (() {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const WelcomeSplash(),
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Material(
-                                        color: Colors.green.shade400,
-                                        child: MaterialButton(
-                                          onPressed: (() {
-                                            Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const WelcomeSplash(),
-                                                ),
-                                                (route) => false);
-                                          }),
-                                          child: const Text(
-                                            'Yes & Continue',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Material(
-                                        color: Colors.red,
-                                        child: MaterialButton(
-                                          onPressed: (() {
-                                            Navigator.pop(context);
-                                          }),
-                                          child: const Text(
-                                            'No',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                        child: const Text('Submit'),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              child: const Text('Submit Data'),
-            )
-          : ElevatedButton(
-              onPressed: null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Submit Data'),
-                  IconButton(
-                    onPressed: (() {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const SimpleDialog(
-                          title: Text('Atleast 2 Guests should be added'),
-                          titlePadding: EdgeInsets.all(20),
-                          titleTextStyle: TextStyle(
-                            color: Colors.red,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                                (route) => false);
+                          }),
+                          child: const Text(
+                            'Yes & Continue',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
                           ),
                         ),
-                      );
-                    }),
-                    icon: const Icon(
-                      Icons.info_outline,
-                      size: 25,
-                      color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Material(
+                        color: Colors.red,
+                        child: MaterialButton(
+                          onPressed: (() {
+                            Navigator.pop(context);
+                          }),
+                          child: const Text(
+                            'No',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
+          );
+        }),
+        child: const Text('Submit Data'),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-
-  // Method to mark attendance for a guest
-  void markAttendance(String guestKey, bool isPresent) {
-    guestReference.child(guestKey).update({
-      'attendanceStatus': isPresent ? 'Present' : 'Absent',
-    });
   }
 }

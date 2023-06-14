@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields, constant_identifier_names
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:get/get.dart';

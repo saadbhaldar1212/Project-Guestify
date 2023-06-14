@@ -4,8 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-// import '../utils/signout_button/signout_button.dart';
-
 class HostIndex extends StatefulWidget {
   const HostIndex({super.key});
 
@@ -37,13 +35,13 @@ class _HostIndexState extends State<HostIndex> {
         title: const Text(
           'Present Guests',
         ),
-        // actions: [
-        //   // IconButton(
-        //   //   onPressed: (() {}),
-        //   //   icon: const Icon(Icons.search),
-        //   // ),
-        //   const SignOutButton()
-        // ],
+        actions: [
+          IconButton(
+            onPressed: (() {}),
+            icon: const Icon(Icons.search),
+          ),
+          // const SignOutButton()
+        ],
       ),
       body: SingleChildScrollView(
         primary: true,

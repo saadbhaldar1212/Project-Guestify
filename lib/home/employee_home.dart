@@ -39,12 +39,12 @@ class _EmployeeModuleState extends State<EmployeeModule> {
         title: const Text(
           'Employee',
         ),
-        actions: const [
-          // IconButton(
-          //   onPressed: (() {}),
-          //   icon: const Icon(Icons.search),
-          // ),
-          SignOutButton()
+        actions: [
+          IconButton(
+            onPressed: (() {}),
+            icon: const Icon(Icons.search),
+          ),
+          const SignOutButton()
         ],
       ),
       body: SingleChildScrollView(

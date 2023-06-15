@@ -27,7 +27,7 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final tableRef = db.child('table/').child('total_no_of_tables');
+    final tableRef = db.child('table/');
 
     return Scaffold(
       appBar: AppBar(
@@ -48,8 +48,9 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
       body: FirebaseAnimatedList(
         query: tableRef,
         itemBuilder: (context, snapshot, animation, index) {
-          String total = snapshot.child('Number of Tables').value.toString();
-          int noOfTables = int.parse(total);
+          Map total = snapshot.value as Map;
+          int noOfTables = total.length;
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(18.0),

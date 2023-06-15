@@ -374,15 +374,8 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                   tableRef
                                                                       .child(
                                                                           'occupied_tables_and_chairs')
-                                                                      .remove();
-                                                                  tableRef
-                                                                      .child(
-                                                                          tableKey)
-                                                                      .update({
-                                                                    'Number of Tables':
-                                                                        tableC
-                                                                            .text,
-                                                                  }).then(
+                                                                      .remove()
+                                                                      .then(
                                                                           (value) {
                                                                     Navigator
                                                                         .pushAndRemoveUntil(

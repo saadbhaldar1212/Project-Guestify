@@ -42,8 +42,7 @@ class _SeatsUIState extends State<SeatsUI> {
 
   @override
   Widget build(BuildContext context) {
-    final seatOccupiedFromTablesRef =
-        db.child('table/').child('total_no_of_tables/');
+    final seatOccupiedFromTablesRef = db.child('table/');
     return FirebaseAnimatedList(
       shrinkWrap: true,
       primary: false,

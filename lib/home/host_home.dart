@@ -4,6 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/search_bar/search_bar.dart';
+
 class HostIndex extends StatefulWidget {
   const HostIndex({super.key});
 
@@ -11,17 +13,10 @@ class HostIndex extends StatefulWidget {
   State<HostIndex> createState() => _HostIndexState();
 }
 
-class GuestInfo {
-  final Map key1;
-  final String key2;
-
-  GuestInfo({required this.key1, required this.key2});
-}
-
 class _HostIndexState extends State<HostIndex> {
   final db = FirebaseDatabase.instance.ref();
 
-  List<GuestInfo> _guestInfoList = [];
+  final searchBar = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +31,19 @@ class _HostIndexState extends State<HostIndex> {
           'Present Guests',
         ),
         actions: [
-          IconButton(
-            onPressed: (() {}),
-            icon: const Icon(Icons.search),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimSearchBar(
+              width: 400,
+              textController: searchBar,
+              onSuffixTap: () {
+                setState(() {
+                  searchBar.clear();
+                });
+              },
+              onSubmitted: (value) {},
+            ),
           ),
-          // const SignOutButton()
         ],
       ),
       body: SingleChildScrollView(

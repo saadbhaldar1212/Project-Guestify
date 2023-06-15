@@ -5,6 +5,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 
+import '../../utils/search_bar/search_bar.dart';
+
 class SeatsDashboardForViewData extends StatefulWidget {
   SeatsDashboardForViewData({
     super.key,
@@ -24,6 +26,8 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
   final tableNumber = TextEditingController();
   final seatNumber = TextEditingController();
 
+  final searchBar = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final seatRef = db.child('guest/guest_info');
@@ -42,10 +46,17 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: (() {}),
-            icon: const Icon(
-              Icons.search,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimSearchBar(
+              width: 400,
+              textController: searchBar,
+              onSuffixTap: () {
+                setState(() {
+                  searchBar.clear();
+                });
+              },
+              onSubmitted: (value) {},
             ),
           ),
         ],

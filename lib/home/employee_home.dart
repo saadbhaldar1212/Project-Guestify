@@ -2,6 +2,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../utils/search_bar/search_bar.dart';
 import '../utils/signout_button/signout_button.dart';
 import '../welcome/welcome.dart';
 
@@ -22,6 +23,8 @@ class _EmployeeModuleState extends State<EmployeeModule> {
   DatabaseReference presentDay =
       FirebaseDatabase.instance.ref().child('present_guests/');
 
+  final searchBar = TextEditingController();
+
   Color _color = Colors.red.shade200;
   final Set<String> _selectedItems = {};
 
@@ -40,9 +43,18 @@ class _EmployeeModuleState extends State<EmployeeModule> {
           'Employee',
         ),
         actions: [
-          IconButton(
-            onPressed: (() {}),
-            icon: const Icon(Icons.search),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimSearchBar(
+              width: 400,
+              textController: searchBar,
+              onSuffixTap: () {
+                setState(() {
+                  searchBar.clear();
+                });
+              },
+              onSubmitted: (value) {},
+            ),
           ),
           const SignOutButton()
         ],

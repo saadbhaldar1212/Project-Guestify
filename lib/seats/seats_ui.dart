@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields, constant_identifier_names
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:get/get.dart';
 
 import '../utils/radio_options.dart';
@@ -41,6 +42,7 @@ class _SeatsUIState extends State<SeatsUI> {
   @override
   Widget build(BuildContext context) {
     // final seatOccupiedFromTablesRef = db.child('table/');
+    // final seatRef = db.child('seats/');
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -175,21 +177,24 @@ class _SingleCircleState extends State<SingleCircle> {
     //     'Total Chairs': '${widget.length}',
     //   });
     // }
-    return Ink(
-      child: InkWell(
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _color,
-            ),
-            child: Center(
-              child: Text(
-                widget.txt.toString(),
-              ),
-            ),
+    return FirebaseAnimatedList(
+      query: seatRef,
+      itemBuilder: (context, snapshot, animation, index) {
+        Map seats = snapshot.value as Map;
+        String occupiedTable = seats['Table Number'];
+        String occupiedSeat = seats['Chair Number'];
+
+        return ListTile(
+          tileColor: occupiedTable == (widget.tableLength! + 1).toString() &&
+                  occupiedSeat == widget.txt.toString()
+              ? widget.color = Colors.red
+              : const Color.fromARGB(255, 17, 150, 207),
+          title: Text(
+            widget.txt.toString(),
           ),
+          shape: const CircleBorder(),
           onTap: () {
-            if (_color == Colors.red) {
+            if (widget.color == Colors.red) {
               Utils().toastMessage(
                 'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}',
               );
@@ -562,7 +567,7 @@ class _SingleCircleState extends State<SingleCircle> {
                         }).then(
                           (value) {
                             setState(() {
-                              _color = _color == Colors.red
+                              widget.color = widget.color == Colors.red
                                   ? const Color.fromARGB(255, 17, 150, 207)
                                   : Colors.red;
                             });
@@ -591,7 +596,9 @@ class _SingleCircleState extends State<SingleCircle> {
                 ),
               );
             }
-          }),
+          },
+        );
+      },
     );
     //   },
     // );

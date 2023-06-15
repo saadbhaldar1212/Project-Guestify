@@ -36,8 +36,6 @@ class _EventDashboardState extends State<EventDashboard> {
   final _sKey = GlobalKey<FormState>();
   final seatsC = TextEditingController();
 
-  // late List<bool> _isOpen;
-
   @override
   Widget build(BuildContext context) {
     final eventRef = db.child('events/');
@@ -46,6 +44,15 @@ class _EventDashboardState extends State<EventDashboard> {
     const tableKey = 'total_no_of_tables';
     final seatRef = db.child('seats/');
     final guestRef = db.child('guest/');
+
+    void createChairs() {
+      // for (int i = 1; i <= 10; i++) {
+      //   seatRef.push().update({
+      //     'seat_status': 'unoccupied',
+      //     'seat_color': 'green',
+      //   });
+      // }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -349,6 +356,8 @@ class _EventDashboardState extends State<EventDashboard> {
 
                                                                   guestRef
                                                                       .remove();
+
+                                                                  createChairs();
 
                                                                   tableRef
                                                                       .child(

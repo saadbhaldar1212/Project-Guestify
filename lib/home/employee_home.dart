@@ -59,15 +59,13 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                   String? guestKey = snapshot.key;
 
                   String attendanceStatus = guest['attendanceStatus'] ?? '';
-
-                  String fGuestName =
-                      snapshot.child('Guest Name').value.toString();
-                  String new1 = fGuestName.characters.first;
-
                   String key = snapshot.key.toString();
 
                   total = index + 1;
                   total1 = total;
+
+                  String guestName =
+                      snapshot.child('Guest Name').value.toString();
 
                   return SingleChildScrollView(
                     child: Column(
@@ -81,21 +79,8 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                                     ? _color = Colors.green
                                     : _color = Colors.red.shade100,
                             child: ListTile(
-                              contentPadding: const EdgeInsets.all(20),
                               tileColor: _color,
                               selected: _selectedItems.contains(key),
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
-                                radius: 40,
-                                child: Text(
-                                  new1,
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
                               onTap: () {
                                 if (attendanceStatus == 'Present') {
                                   bool isPresent =
@@ -143,15 +128,61 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                                   }
                                 });
                               },
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 16.0),
+                              leading: CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromRGBO(0, 77, 120, 1.000),
+                                radius: 30,
+                                child: Center(
+                                  child: Text(
+                                    guestName[0],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               title: Text(
                                 snapshot.child('Guest Name').value.toString(),
                                 style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
                                   color: Colors.black,
                                 ),
                               ),
-                              subtitle: Text(
-                                snapshot.child('Guest Email').value.toString(),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot
+                                        .child('Guest Email')
+                                        .value
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                  Text(
+                                    snapshot
+                                        .child('Guest Phone Number')
+                                        .value
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              trailing: Text(
+                                '${snapshot.child('Table Number').value}-${snapshot.child('Chair Number').value}',
                                 style: const TextStyle(
+                                  fontSize: 34.0,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),

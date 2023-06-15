@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_final_fields, constant_identifier_names
+// ignore_for_file: prefer_final_fields, constant_identifier_names, unused_field, unused_local_variable
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:get/get.dart';
 
 import '../utils/radio_options.dart';
@@ -177,253 +176,218 @@ class _SingleCircleState extends State<SingleCircle> {
     //     'Total Chairs': '${widget.length}',
     //   });
     // }
-    return FirebaseAnimatedList(
-      query: seatRef,
-      itemBuilder: (context, snapshot, animation, index) {
-        Map seats = snapshot.value as Map;
-        String occupiedTable = seats['Table Number'];
-        String occupiedSeat = seats['Chair Number'];
 
-        return ListTile(
-          dense: false,
-          tileColor: occupiedTable == (widget.tableLength! + 1).toString() &&
-                  occupiedSeat == widget.txt.toString()
-              ? widget.color = Colors.red
-              : const Color.fromARGB(255, 17, 150, 207),
-          title: Text(
-            widget.txt.toString(),
+    return Ink(
+      child: InkWell(
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: widget.color,
           ),
-          shape: const CircleBorder(),
-          onTap: () {
-            if (widget.color == Colors.red) {
-              Utils().toastMessage(
-                'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}',
-              );
+          child: Center(
+            child: Text(
+              widget.txt.toString(),
+            ),
+          ),
+        ),
+        onTap: () {
+          if (widget.color == Colors.red) {
+            Utils().toastMessage(
+              'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}',
+            );
 
-              // showModalBottomSheet(
-              //   isDismissible: false,
-              //   enableDrag: false,
-              //   useRootNavigator: false,
-              //   context: context,
-              //   builder: (context) => );
-            } else {
-              showModalBottomSheet(
-                isDismissible: false,
-                enableDrag: false,
-                useRootNavigator: false,
-                context: context,
-                builder: (context) => Scaffold(
-                  appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
-                    centerTitle: true,
-                    title: const Text('Guest Info'),
-                    actions: [
-                      IconButton(
-                        onPressed: (() {
-                          Navigator.pop(context);
-                        }),
-                        icon: const Icon(
-                          Icons.close,
-                        ),
+            // showModalBottomSheet(
+            //   isDismissible: false,
+            //   enableDrag: false,
+            //   useRootNavigator: false,
+            //   context: context,
+            //   builder: (context) => );
+          } else {
+            showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              useRootNavigator: false,
+              context: context,
+              builder: (context) => Scaffold(
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
+                  centerTitle: true,
+                  title: const Text('Guest Info'),
+                  actions: [
+                    IconButton(
+                      onPressed: (() {
+                        Navigator.pop(context);
+                      }),
+                      icon: const Icon(
+                        Icons.close,
                       ),
-                    ],
-                  ),
-                  body: SingleChildScrollView(
-                    child: Form(
-                      key: _fKey,
-                      child: Card(
-                        elevation: 40,
-                        margin: const EdgeInsets.all(40),
-                        child: Container(
-                          padding: const EdgeInsets.all(40),
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                controller: tableNumber,
-                                enabled: false,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  label: Text(
-                                    'Table Number',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
+                    ),
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  child: Form(
+                    key: _fKey,
+                    child: Card(
+                      elevation: 40,
+                      margin: const EdgeInsets.all(40),
+                      child: Container(
+                        padding: const EdgeInsets.all(40),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: tableNumber,
+                              enabled: false,
+                              style: const TextStyle(
+                                color: Colors.grey,
                               ),
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: seatNumber,
-                                keyboardType: TextInputType.number,
-                                enabled: false,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                                decoration: const InputDecoration(
-                                  label: Text(
-                                    'Seat Number',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //gname
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: gName,
-                                keyboardType: TextInputType.text,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                decoration: const InputDecoration(
-                                  label: Text(
-                                    'Guest Name',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //gtype
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: RadioListTile<String>(
-                                      autofocus: true,
-                                      // dense: true,
-                                      title: Text(
-                                        _options[0].title,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      value: _options[0].value,
-                                      groupValue: _selectedValue,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedValue = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RadioListTile<String>(
-                                      dense: true,
-                                      title: Text(
-                                        _options[1].title,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      value: _options[1].value,
-                                      groupValue: _selectedValue,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedValue = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              //gcontact***
-
-                              TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                keyboardType: TextInputType.phone,
-                                controller: gContact,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
-                                decoration: const InputDecoration(
-                                  errorStyle: TextStyle(
-                                    fontSize: 13,
-                                  ),
-                                  label: Text(
-                                    'Guest Phone Number',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (!phoneRegex.hasMatch(value!)) {
-                                    return 'Please enter valid phone number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //gemail
-                              TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: gEmail,
-                                  style: const TextStyle(
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                label: Text(
+                                  'Table Number',
+                                  style: TextStyle(
                                     color: Colors.black,
                                   ),
-                                  decoration: const InputDecoration(
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                    label: Text(
-                                      'Guest Email',
-                                      style: TextStyle(
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'This field cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: seatNumber,
+                              keyboardType: TextInputType.number,
+                              enabled: false,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              decoration: const InputDecoration(
+                                label: Text(
+                                  'Seat Number',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'This field cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                            //gname
+                            TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: gName,
+                              keyboardType: TextInputType.text,
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                              decoration: const InputDecoration(
+                                label: Text(
+                                  'Guest Name',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'This field cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                            //gtype
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RadioListTile<String>(
+                                    autofocus: true,
+                                    // dense: true,
+                                    title: Text(
+                                      _options[0].title,
+                                      style: const TextStyle(
                                         color: Colors.black,
                                       ),
                                     ),
+                                    value: _options[0].value,
+                                    groupValue: _selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedValue = value;
+                                      });
+                                    },
                                   ),
-                                  validator: (value) {
-                                    if (!emailRegex.hasMatch(value!)) {
-                                      return 'Please enter valid email';
-                                    } else if (!value.endsWith('com') &&
-                                        !value.endsWith('.in') &&
-                                        !value.endsWith('.ac.in')) {
-                                      return 'Email should end with specific domain';
-                                    } else if (!value.contains('.')) {
-                                      return 'Enter valid Email';
-                                    }
-                                    return null;
-                                  }),
-                              //gextramember -- multiple values can be added
-                              TextFormField(
+                                ),
+                                Expanded(
+                                  child: RadioListTile<String>(
+                                    dense: true,
+                                    title: Text(
+                                      _options[1].title,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    value: _options[1].value,
+                                    groupValue: _selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedValue = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            //gcontact***
+
+                            TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              keyboardType: TextInputType.phone,
+                              controller: gContact,
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                              decoration: const InputDecoration(
+                                errorStyle: TextStyle(
+                                  fontSize: 13,
+                                ),
+                                label: Text(
+                                  'Guest Phone Number',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (!phoneRegex.hasMatch(value!)) {
+                                  return 'Please enter valid phone number';
+                                }
+                                return null;
+                              },
+                            ),
+                            //gemail
+                            TextFormField(
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                controller: gExtraMember,
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.emailAddress,
+                                controller: gEmail,
                                 style: const TextStyle(
                                   color: Colors.black,
                                 ),
@@ -432,176 +396,207 @@ class _SingleCircleState extends State<SingleCircle> {
                                     fontSize: 13,
                                   ),
                                   label: Text(
-                                    'Guest Extra Member-',
+                                    'Guest Email',
                                     style: TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
-                                  helperText: 'Enter a number',
-                                  helperStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                  ),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'This field cannot be empty';
-                                  } else if (!value.isNum) {
-                                    return 'Input must be numeric only';
-                                  } else if (value.startsWith('0')) {
-                                    return 'Invalid Table Length';
+                                  if (!emailRegex.hasMatch(value!)) {
+                                    return 'Please enter valid email';
+                                  } else if (!value.endsWith('com') &&
+                                      !value.endsWith('.in') &&
+                                      !value.endsWith('.ac.in')) {
+                                    return 'Email should end with specific domain';
+                                  } else if (!value.contains('.')) {
+                                    return 'Enter valid Email';
                                   }
                                   return null;
-                                },
+                                }),
+                            //gextramember -- multiple values can be added
+                            TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: gExtraMember,
+                              keyboardType: TextInputType.number,
+                              style: const TextStyle(
+                                color: Colors.black,
                               ),
-                              //gmodeoftransportation
-                              // TextFormField(
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   controller: gModeOfTransportation,
-                              //   style: const TextStyle(
-                              //     color: Colors.grey,
-                              //   ),
-                              //   keyboardType: TextInputType.text,
-                              //   decoration: const InputDecoration(
-                              //     errorStyle: TextStyle(
-                              //       fontSize: 13,
-                              //     ),
-                              //     label: Text(
-                              //       'Mode of Transportation',
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'This field cannot be empty';
-                              //     }
-                              //     return null;
-                              //   },
-                              // ),
-                              // //gallotedparkingnumber
-                              // TextFormField(
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   controller: gAllotedParkingNumber,
-                              //   keyboardType: TextInputType.text,
-                              //   style: const TextStyle(
-                              //     color: Colors.grey,
-                              //   ),
-                              //   decoration: const InputDecoration(
-                              //     errorStyle: TextStyle(
-                              //       fontSize: 13,
-                              //     ),
-                              //     label: Text(
-                              //       'Alloted Parking Number',
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'This field cannot be empty';
-                              //     }
-                              //     return null;
-                              //   },
-                              // ),
-                              // //gaward -- will be saved to guests && awards table aswell
-                              // TextFormField(
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   controller: gAward,
-                              //   style: const TextStyle(
-                              //     color: Colors.grey,
-                              //   ),
-                              //   keyboardType: TextInputType.text,
-                              //   decoration: const InputDecoration(
-                              //     errorStyle: TextStyle(
-                              //       fontSize: 13,
-                              //     ),
-                              //     label: Text(
-                              //       'Guest Award',
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'This field cannot be empty';
-                              //     }
-                              //     return null;
-                              //   },
-                              // ),
-                            ],
-                          ),
+                              decoration: const InputDecoration(
+                                errorStyle: TextStyle(
+                                  fontSize: 13,
+                                ),
+                                label: Text(
+                                  'Guest Extra Member-',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                helperText: 'Enter a number',
+                                helperStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'This field cannot be empty';
+                                } else if (!value.isNum) {
+                                  return 'Input must be numeric only';
+                                } else if (value.startsWith('0')) {
+                                  return 'Invalid Table Length';
+                                }
+                                return null;
+                              },
+                            ),
+                            //gmodeoftransportation
+                            // TextFormField(
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   controller: gModeOfTransportation,
+                            //   style: const TextStyle(
+                            //     color: Colors.grey,
+                            //   ),
+                            //   keyboardType: TextInputType.text,
+                            //   decoration: const InputDecoration(
+                            //     errorStyle: TextStyle(
+                            //       fontSize: 13,
+                            //     ),
+                            //     label: Text(
+                            //       'Mode of Transportation',
+                            //       style: TextStyle(
+                            //         color: Colors.black,
+                            //       ),
+                            //     ),
+                            //   ),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'This field cannot be empty';
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
+                            // //gallotedparkingnumber
+                            // TextFormField(
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   controller: gAllotedParkingNumber,
+                            //   keyboardType: TextInputType.text,
+                            //   style: const TextStyle(
+                            //     color: Colors.grey,
+                            //   ),
+                            //   decoration: const InputDecoration(
+                            //     errorStyle: TextStyle(
+                            //       fontSize: 13,
+                            //     ),
+                            //     label: Text(
+                            //       'Alloted Parking Number',
+                            //       style: TextStyle(
+                            //         color: Colors.black,
+                            //       ),
+                            //     ),
+                            //   ),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'This field cannot be empty';
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
+                            // //gaward -- will be saved to guests && awards table aswell
+                            // TextFormField(
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   controller: gAward,
+                            //   style: const TextStyle(
+                            //     color: Colors.grey,
+                            //   ),
+                            //   keyboardType: TextInputType.text,
+                            //   decoration: const InputDecoration(
+                            //     errorStyle: TextStyle(
+                            //       fontSize: 13,
+                            //     ),
+                            //     label: Text(
+                            //       'Guest Award',
+                            //       style: TextStyle(
+                            //         color: Colors.black,
+                            //       ),
+                            //     ),
+                            //   ),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'This field cannot be empty';
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  floatingActionButton: ElevatedButton(
-                    onPressed: (() {
-                      if (_fKey.currentState!.validate()) {
-                        seatRef.push().set({
-                          'Table Number': tableNumber.text,
-                          'Chair Number': seatNumber.text,
-                          'Guest Name': gName.text,
-                          'Guest Type': _selectedValue.toString(),
-                          'Guest Phone Number': gContact.text,
-                          'Guest Email': gEmail.text,
-                          'Extra Member': gExtraMember.text,
-                          'seat_status': 'occupied',
-                          'seat_color': 'red',
-                        });
-
-                        guestRef.child(guest_info).push().set({
-                          'Table Number': tableNumber.text,
-                          'Chair Number': seatNumber.text,
-                          'Guest Name': gName.text,
-                          'Guest Type': _selectedValue.toString(),
-                          'Guest Phone Number': gContact.text,
-                          'Guest Email': gEmail.text,
-                          'Extra Member': gExtraMember.text,
-                          'attendanceStatus': 'Absent',
-                        }).then(
-                          (value) {
-                            setState(() {
-                              widget.color = widget.color == Colors.red
-                                  ? const Color.fromARGB(255, 17, 150, 207)
-                                  : Colors.red;
-                            });
-                            Navigator.pop(context);
-                          },
-                        ).onError((error, stackTrace) {
-                          // print(stackTrace);
-                          Utils().toastMessage(stackTrace.toString());
-                        });
-
-                        // }
-
-                        // forAward()
-
-                        // forSeats().onError((error, stackTrace) {
-                        //   Utils().toastMessage(error.toString());
-                        // });
-                      }
-                    }),
-                    child: const Text(
-                      'Save Data',
-                    ),
-                  ),
-                  floatingActionButtonLocation:
-                      FloatingActionButtonLocation.centerFloat,
                 ),
-              );
-            }
-          },
-        );
-      },
+                floatingActionButton: ElevatedButton(
+                  onPressed: (() {
+                    if (_fKey.currentState!.validate()) {
+                      seatRef.child('occupied_seats/').push().set({
+                        'Table Number': tableNumber.text,
+                        'Chair Number': seatNumber.text,
+                        'Guest Name': gName.text,
+                        'Guest Type': _selectedValue.toString(),
+                        'Guest Phone Number': gContact.text,
+                        'Guest Email': gEmail.text,
+                        'Extra Member': gExtraMember.text,
+                        'seat_status': 'occupied',
+                        'seat_color': 'red',
+                      });
+
+                      guestRef.child(guest_info).push().set({
+                        'Table Number': tableNumber.text,
+                        'Chair Number': seatNumber.text,
+                        'Guest Name': gName.text,
+                        'Guest Type': _selectedValue.toString(),
+                        'Guest Phone Number': gContact.text,
+                        'Guest Email': gEmail.text,
+                        'Extra Member': gExtraMember.text,
+                        'attendanceStatus': 'Absent',
+                      }).then(
+                        (value) {
+                          setState(() {
+                            widget.color = widget.color == Colors.red
+                                ? const Color.fromARGB(255, 17, 150, 207)
+                                : Colors.red;
+                          });
+                          Navigator.pop(context);
+                        },
+                      ).onError((error, stackTrace) {
+                        // print(stackTrace);
+                        Utils().toastMessage(stackTrace.toString());
+                      });
+
+                      // }
+
+                      // forAward()
+
+                      // forSeats().onError((error, stackTrace) {
+                      //   Utils().toastMessage(error.toString());
+                      // });
+                    }
+                  }),
+                  child: const Text(
+                    'Save Data',
+                  ),
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+              ),
+            );
+          }
+        },
+      ),
     );
-    //   },
-    // );
   }
+  //   },
+  // );
 }

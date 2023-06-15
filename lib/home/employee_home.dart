@@ -59,6 +59,7 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                   String? guestKey = snapshot.key;
 
                   String attendanceStatus = guest['attendanceStatus'] ?? '';
+
                   String fGuestName =
                       snapshot.child('Guest Name').value.toString();
                   String new1 = fGuestName.characters.first;

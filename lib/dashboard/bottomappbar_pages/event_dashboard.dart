@@ -44,25 +44,8 @@ class _EventDashboardState extends State<EventDashboard> {
     const pk = 'event_info';
     final tableRef = db.child('table/');
     const tableKey = 'total_no_of_tables';
-    // final seatRef = db.child('seats/');
-    // const seatKey = 'seat_no';
+    final seatRef = db.child('seats/');
     final guestRef = db.child('guest/');
-
-    void createTablesWithChairs(int numOfTables) {
-      for (int i = 1; i <= numOfTables; i++) {
-        final tableRefForCreatingItIntoDatbase =
-            tableRef.child('all_tables_and_chairs').child('table_$i');
-
-        for (int j = 1; j <= 10; j++) {
-          final chairRef = tableRefForCreatingItIntoDatbase.child('chair_$j');
-
-          chairRef.update({
-            'seat_status': 'unoccupied',
-            'seat_color': 'green',
-          });
-        }
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -356,26 +339,25 @@ class _EventDashboardState extends State<EventDashboard> {
                                                               child:
                                                                   MaterialButton(
                                                                 onPressed: (() {
+                                                                  seatRef
+                                                                      .remove();
+
                                                                   tableRef
                                                                       .child(
-                                                                          'all_tables_and_chairs')
+                                                                          tableKey)
                                                                       .remove();
 
                                                                   guestRef
                                                                       .remove();
 
-                                                                  int noOfTables =
-                                                                      int.parse(
-                                                                          tableC
-                                                                              .text);
-                                                                  createTablesWithChairs(
-                                                                      noOfTables);
-
                                                                   tableRef
                                                                       .child(
-                                                                          'occupied_tables_and_chairs')
-                                                                      .remove()
-                                                                      .then(
+                                                                          'total_no_of_tables')
+                                                                      .set({
+                                                                    'Number of Tables':
+                                                                        tableC
+                                                                            .text
+                                                                  }).then(
                                                                           (value) {
                                                                     Navigator
                                                                         .pushAndRemoveUntil(

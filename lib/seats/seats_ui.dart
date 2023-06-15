@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_final_fields, constant_identifier_names
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:get/get.dart';
-// import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import '../utils/radio_options.dart';
 import '../utils/utility.dart';
@@ -42,54 +40,47 @@ class _SeatsUIState extends State<SeatsUI> {
 
   @override
   Widget build(BuildContext context) {
-    final seatOccupiedFromTablesRef = db.child('table/');
-    return FirebaseAnimatedList(
-      shrinkWrap: true,
-      primary: false,
-      query: seatOccupiedFromTablesRef,
-      itemBuilder: (context, snapshot, animation, index) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Ink(
-                child: CircularWidgets(
-                  config: config,
-                  itemsLength: chairLength,
-                  itemBuilder: (context, index1) {
-                    return SingleCircle(
-                      tableLength: widget.tableLength!,
-                      length: chairLength,
-                      txt: index1.toString(),
-                      color: _color,
-                    );
-                  },
-                  centerWidgetBuilder: (context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 17, 150, 207),
-                          width: 3,
-                        ),
-                        shape: BoxShape.circle,
-                        color: Colors.white,
+    // final seatOccupiedFromTablesRef = db.child('table/');
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Ink(
+            child: CircularWidgets(
+              config: config,
+              itemsLength: chairLength,
+              itemBuilder: (context, index1) {
+                return SingleCircle(
+                  tableLength: widget.tableLength!,
+                  length: chairLength,
+                  txt: index1.toString(),
+                  color: _color,
+                );
+              },
+              centerWidgetBuilder: (context) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 17, 150, 207),
+                      width: 3,
+                    ),
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${widget.tableLength! + 1}',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
                       ),
-                      child: Center(
-                        child: Text(
-                          '${widget.tableLength! + 1}',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
@@ -143,10 +134,7 @@ class _SingleCircleState extends State<SingleCircle> {
     seatNumber.text = '${widget.txt}';
   }
 
-  // Define the default selected value.
   String? _selectedValue = 'Regular';
-
-  // Define the radio options.
   final List<RadioOption> _options = [
     RadioOption(title: 'Regular', value: 'Regular'),
     RadioOption(title: 'VIP', value: 'VIP'),
@@ -156,7 +144,7 @@ class _SingleCircleState extends State<SingleCircle> {
   Widget build(BuildContext context) {
     final guestRef = db.child('guest/');
     const guest_info = 'guest_info';
-    // final seatRef = db.child('seats/');
+    final seatRef = db.child('seats/');
     // const seat_no = 'seat_no';
 
     final tableRef = db.child('table/');
@@ -187,26 +175,12 @@ class _SingleCircleState extends State<SingleCircle> {
     //     'Total Chairs': '${widget.length}',
     //   });
     // }
-
-    // return FirebaseAnimatedList(
-    //   query: guestRef,
-    //   primary: false,
-    //   shrinkWrap: true,
-    //   itemBuilder: (context, snapshot, animation, index) {
-    //     String hasSeats = snapshot.child('Chair Number').value.toString();
-    //     String hasTables = snapshot.child('Table Number').value.toString();
     return Ink(
       child: InkWell(
           child: Container(
             decoration: BoxDecoration(
-              shape: BoxShape.circle, color: _color,
-              // hasSeats.isNotEmpty && hasTables.isNotEmpty
-              //     ? _color = Colors.red
-              //     : const Color.fromARGB(255, 17, 150, 207)
-
-              // _color = _color == Colors.red
-              //     ? const Color.fromARGB(255, 17, 150, 207)
-              //     : Colors.red,
+              shape: BoxShape.circle,
+              color: _color,
             ),
             child: Center(
               child: Text(
@@ -564,11 +538,7 @@ class _SingleCircleState extends State<SingleCircle> {
                   floatingActionButton: ElevatedButton(
                     onPressed: (() {
                       if (_fKey.currentState!.validate()) {
-                        tableRef
-                            .child('all_tables_and_chairs')
-                            .child('table_${tableNumber.text}')
-                            .child('chair_${seatNumber.text}')
-                            .set({
+                        seatRef.push().set({
                           'Table Number': tableNumber.text,
                           'Chair Number': seatNumber.text,
                           'Guest Name': gName.text,

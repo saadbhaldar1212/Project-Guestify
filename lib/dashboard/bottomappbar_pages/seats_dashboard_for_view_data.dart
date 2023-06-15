@@ -35,7 +35,7 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         elevation: 0,
         title: const Text(
-          'Guest Management',
+          'View Data',
           style: TextStyle(
             fontSize: 35,
             fontWeight: FontWeight.w300,
@@ -54,17 +54,60 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
         shrinkWrap: true,
         query: seatRef,
         itemBuilder: (context, snapshot, animation, index) {
+          String guestName = snapshot.child('Guest Name').value.toString();
           return SingleChildScrollView(
             child: Column(
               children: [
-                ListTileTheme(
-                  child: ListTile(
-                    tileColor: Colors.red.shade100,
-                    title: Text(
-                      'Guest Name: ${snapshot.child('Guest Name').value.toString()}',
-                      style: const TextStyle(
-                        color: Colors.black,
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 16.0),
+                  leading: CircleAvatar(
+                    backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
+                    radius: 30,
+                    child: Center(
+                      child: Text(
+                        guestName[0],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0,
+                          color: Colors.white,
+                        ),
                       ),
+                    ),
+                  ),
+                  title: Text(
+                    snapshot.child('Guest Name').value.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        snapshot.child('Guest Email').value.toString(),
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      Text(
+                        snapshot.child('Guest Phone Number').value.toString(),
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Text(
+                    '${snapshot.child('Table Number').value}-${snapshot.child('Chair Number').value}',
+                    style: const TextStyle(
+                      fontSize: 34.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -87,7 +130,7 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
               );
             }),
             child: const Text(
-              'Done',
+              'Ok',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,

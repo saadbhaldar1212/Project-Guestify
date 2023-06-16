@@ -26,28 +26,11 @@ class CustomStepProgressIndicator extends StatelessWidget {
   final Gradient? gradientColor;
   final Gradient? selectedGradientColor;
   final Gradient? unselectedGradientColor;
-
-  /// Apply [BlendMode] to [ShaderMask] when [gradientColor], [selectedGradientColor], or [unselectedGradientColor] defined
   final BlendMode? blendMode;
-
-  /// Assign alignment [MainAxisAlignment] for indicator's container
-  ///
-  /// **NOTE**: if not provided it defaults to [MainAxisAlignment.center]
   final MainAxisAlignment mainAxisAlignment;
-
-  /// Assign alignment [CrossAxisAlignment] for indicator's container
-  ///
-  /// **NOTE**: if not provided it defaults to [CrossAxisAlignment.center]
   final CrossAxisAlignment crossAxisAlignment;
-
-  /// Assign alignment [MainAxisAlignment] for a single step
-  ///
-  /// **NOTE**: if not provided it defaults to [MainAxisAlignment.center]
   final MainAxisAlignment stepMainAxisAlignment;
 
-  /// Assign alignment [CrossAxisAlignment] for a single step
-  ///
-  /// **NOTE**: if not provided it defaults to [CrossAxisAlignment.center]
   final CrossAxisAlignment stepCrossAxisAlignment;
 
   const CustomStepProgressIndicator({
@@ -118,8 +101,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
   bool get _isOnlyOneStep =>
       totalSteps == 1 || (currentStep == 0 && padding == 0);
 
-  /// Apply a [Row] when the [direction] of the indicator is [Axis.horizontal],
-  /// or a [Column] otherwise ([Axis.vertical])
   Widget _applyWidgetDirection(
       List<Widget> Function(double) children, BoxConstraints constraits) {
     if (direction == Axis.horizontal) {
@@ -137,12 +118,10 @@ class CustomStepProgressIndicator extends StatelessWidget {
     }
   }
 
-  /// If the gradient given is defined, then wrap the given [child] in a gradient [ShaderMask]
   Widget _applyShaderMask(Gradient? gradient, Widget child) {
     if (gradient != null) {
       return ShaderMask(
         shaderCallback: (rect) => gradient.createShader(rect),
-        // Apply user defined blendMode if defined, default otherwise
         blendMode: blendMode != null ? blendMode! : BlendMode.modulate,
         child: child,
       );
@@ -151,15 +130,11 @@ class CustomStepProgressIndicator extends StatelessWidget {
     }
   }
 
-  /// Compute the maximum possible size of the indicator between
-  /// [size], [selectedSize], [unselectedSize], and [customSize]
   double get maxDefinedSize {
-    // If customSize not defined, use size, selectedSize, unselectedSize
     if (customSize == null) {
       return max(size, max(selectedSize ?? 0, unselectedSize ?? 0));
     }
 
-    // When customSize defined, compute max possible size
     double currentMaxSize = 0;
 
     for (int step = 0; step < totalSteps; ++step) {
@@ -172,18 +147,13 @@ class CustomStepProgressIndicator extends StatelessWidget {
     return currentMaxSize;
   }
 
-  /// As much space as possible when size not unbounded, otherwise use fallbackLength.
-  /// If indicator is in the opposite direction, then use size
   double _sizeOrMaxLength(bool isCorrectDirection, double maxLength) =>
       isCorrectDirection
-          // If space is not unbounded, then fill it with the indicator
           ? maxLength != double.infinity
               ? double.infinity
               : fallbackLength
           : maxDefinedSize;
 
-  /// Draw just two containers in case no specific step setting is required
-  /// i.e. it becomes a linear progress indicator with two steps: selected and unselected
   bool get _isOptimizable =>
       padding == 0 &&
       customColor == null &&
@@ -191,36 +161,28 @@ class CustomStepProgressIndicator extends StatelessWidget {
       customSize == null &&
       onTap == null;
 
-  /// Compute single step length, based on total length available
   double _stepHeightOrWidthValue(double maxSize) =>
       (_maxHeightOrWidthValue(maxSize) - (padding * 2 * totalSteps)) /
       totalSteps;
 
-  /// Total length (horizontal or vertical) available for the indicator
   double _maxHeightOrWidthValue(double maxSize) =>
       maxSize != double.infinity ? maxSize : fallbackLength;
 
-  /// Choose what [Color] to assign
-  /// given current [step] index (zero-based)
   Color _chooseStepColor(int step, int stepIndex) {
-    // Compute id given step is unselected or not
     final isUnselectedStepColor = progressDirection == TextDirection.ltr
         ? step > currentStep
         : step < totalSteps - currentStep;
 
-    // Override all the other color options when gradient is defined
     if (gradientColor != null ||
         (isUnselectedStepColor && unselectedGradientColor != null) ||
         (!isUnselectedStepColor && selectedGradientColor != null)) {
       return Colors.white;
     }
 
-    // Assign customColor if not null
     if (customColor != null) {
       return customColor!(stepIndex);
     }
 
-    // Selected or Unselected color based on the progressDirection
     if (isUnselectedStepColor) {
       return unselectedColor;
     } else {
@@ -228,20 +190,17 @@ class CustomStepProgressIndicator extends StatelessWidget {
     }
   }
 
-  /// `true` if color of the step given index is [selectedColor]
   bool _isSelectedColor(int step) =>
       customColor == null &&
       !(progressDirection == TextDirection.ltr
           ? step > currentStep
           : step < totalSteps - currentStep);
 
-  /// Build only two steps when the condition of [_isOptimizable] is verified
   List<Widget> _buildOptimizedSteps(double indicatorLength) {
     List<Widget> stepList = [];
     final isLtr = progressDirection == TextDirection.ltr;
     final isHorizontal = direction == Axis.horizontal;
 
-    // Choose gradient based on direction defined
     final firstStepGradient =
         isLtr ? selectedGradientColor : unselectedGradientColor;
     final secondStepGradient =
@@ -250,7 +209,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
     final firstStepLength = indicatorLength * (currentStep / totalSteps);
     final secondStepLength = indicatorLength - firstStepLength;
 
-    // Add first step
     stepList.add(
       _applyShaderMask(
         firstStepGradient,
@@ -285,7 +243,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
       ),
     );
 
-    // Add second step
     stepList.add(
       _applyShaderMask(
         secondStepGradient,
@@ -323,31 +280,21 @@ class CustomStepProgressIndicator extends StatelessWidget {
     return stepList;
   }
 
-  /// Build the list of [_ProgressStep],
-  /// based on number of [totalSteps]
   List<Widget> _buildSteps(double stepLength) {
-    // Build list of selected and unselected steps
     List<Widget> selectedStepList = [];
     List<Widget> unselectedStepList = [];
 
-    // Define directions parameters
     final isLtr = progressDirection == TextDirection.ltr;
     final isHorizontal = direction == Axis.horizontal;
 
-    // From 0 to totalStep if TextDirection.ltr, from (totalSteps - 1) to 0 otherwise
     int step = isLtr ? 0 : totalSteps - 1;
 
-    // Add steps to the list, based on the progressDirection attribute
     for (; isLtr ? step < totalSteps : step >= 0; isLtr ? ++step : --step) {
-      // currentStep = 6, then 6 selected and 4 not selected
       final loopStep = isLtr ? step + 1 : totalSteps - step - 1;
       final isSelectedStepColor = _isSelectedColor(loopStep);
 
-      // customColor if not null, otherwise selected or unselected color
       final stepColor = _chooseStepColor(loopStep, step);
 
-      // If defined and applicable, apply customSize or
-      // different sizes for selected and unselected
       final stepSize = customSize != null
           ? customSize!(step, isSelectedStepColor)
           : isSelectedStepColor
@@ -371,7 +318,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
         crossAxisAlignment: stepCrossAxisAlignment,
       );
 
-      // Add to list of selected or unselected steps based on selection state
       if (isSelectedStepColor) {
         selectedStepList.add(progressStep);
       } else {
@@ -379,7 +325,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
       }
     }
 
-    // Apply shader if gradient is not null and build a row or column based on the direction
     return [
       _applyShaderMask(
         isLtr ? selectedGradientColor : unselectedGradientColor,
@@ -405,7 +350,6 @@ class CustomStepProgressIndicator extends StatelessWidget {
   }
 }
 
-/// Single step of the indicator
 class _ProgressStep extends StatelessWidget {
   final Axis direction;
   final double width;
@@ -440,9 +384,7 @@ class _ProgressStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Assign given padding
     return Column(
-      // Single step alignment
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       children: [
@@ -451,13 +393,6 @@ class _ProgressStep extends StatelessWidget {
             horizontal: direction == Axis.horizontal ? padding : 0.0,
             vertical: direction == Axis.vertical ? padding : 0.0,
           ),
-          // If first or last step and rounded edges enabled, apply
-          // rounded edges using ClipRRect
-          // Different corners based on first/last step and indicator's direction
-          // - First step + horizontal: top-left, bottom-left
-          // - First step + vertical: top-left, top-right
-          // - Last step + horizontal: top-right, bottom-right
-          // - Last step + vertical: bottom-left, bottom-right
           child: (isFirstStep || isLastStep || isOnlyOneStep) &&
                   roundedEdges != null
               ? ClipRRect(
@@ -476,30 +411,23 @@ class _ProgressStep extends StatelessWidget {
     );
   }
 
-  /// Check if to apply rounded edges to top left border
   bool get _radiusTopLeft => (isFirstStep || isOnlyOneStep);
 
-  /// Check if to apply rounded edges to bottom right border
   bool get _radiusBottomRight => (isLastStep || isOnlyOneStep);
 
-  /// Check if to apply rounded edges to bottom left border
   bool get _radiusBottomLeft =>
       ((isFirstStep || isOnlyOneStep) && direction == Axis.horizontal) ||
       ((isLastStep || isOnlyOneStep) && direction == Axis.vertical);
 
-  /// Check if to apply rounded edges to top right border
   bool get _radiusTopRight =>
       ((isFirstStep || isOnlyOneStep) && direction == Axis.vertical) ||
       ((isLastStep || isOnlyOneStep) && direction == Axis.horizontal);
 
-  /// Build the actual single step [Widget]
   Widget get _buildStep => onTap != null && customStep == null
       ? Material(
           color: color,
           child: InkWell(
             onTap: onTap,
-            // Container (simple rectangle) when no customStep defined
-            // SizedBox containing the customStep otherwise
             child: _stepContainer(),
           ),
         )
@@ -514,9 +442,6 @@ class _ProgressStep extends StatelessWidget {
             )
           : _buildStepContainer;
 
-  /// Build [_stepContainer] based on input parameters:
-  /// - [Container] with background color when [customStep] is not defined
-  /// - [SizedBox] with [customStep] when defined
   Widget get _buildStepContainer => customStep == null
       ? _stepContainer(color)
       : SizedBox(
@@ -525,7 +450,6 @@ class _ProgressStep extends StatelessWidget {
           child: customStep,
         );
 
-  /// Single step [Container]
   Widget _stepContainer([Color? color]) => Container(
         width: width,
         height: height,

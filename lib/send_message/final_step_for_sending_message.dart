@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/progress_stepper/custom_progress_indicator.dart';
@@ -11,8 +13,10 @@ class SendMessage extends StatefulWidget {
 }
 
 class _SendMessageState extends State<SendMessage> {
+  final db = FirebaseDatabase.instance.ref();
   @override
   Widget build(BuildContext context) {
+    final guestRef = db.child('guest/guest_info/');
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
@@ -33,7 +37,6 @@ class _SendMessageState extends State<SendMessage> {
         child: Column(
           children: [
             Row(
-              // mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
@@ -41,9 +44,10 @@ class _SendMessageState extends State<SendMessage> {
                   child: CustomStepProgressIndicator(
                     totalSteps: 2,
                     currentStep: 2,
-                    size: 30,
+                    size: 40,
                     selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
-                    unselectedColor: Colors.white,
+                    unselectedColor: Colors.grey,
+                    unselectedSize: 30,
                     customStep: (p0, p1, p2) =>
                         p1 == const Color.fromRGBO(0, 77, 120, 1.000)
                             ? Container(
@@ -61,6 +65,20 @@ class _SendMessageState extends State<SendMessage> {
                               ),
                   ),
                 ),
+                FirebaseAnimatedList(
+                  query: guestRef,
+                  itemBuilder: (context, snapshot, animation, index) {
+                    return TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )
               ],
             )
           ],

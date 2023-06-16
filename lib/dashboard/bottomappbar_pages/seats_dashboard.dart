@@ -79,10 +79,72 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
           child: MaterialButton(
             minWidth: double.infinity,
             onPressed: (() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UISendMessage(),
+              showDialog(
+                context: context,
+                builder: (context) => SimpleDialog(
+                  elevation: 5,
+                  alignment: Alignment.center,
+                  title: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Are you sure?',
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'Note: Once submitted can\' undo it',
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  contentPadding: const EdgeInsets.all(10),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.green.shade400,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UISendMessage(),
+                                    ),
+                                    (route) => false);
+                              }),
+                              child: const Text(
+                                'Yes & Continue',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.red,
+                            child: MaterialButton(
+                              onPressed: (() {
+                                Navigator.pop(context);
+                              }),
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               );
             }),

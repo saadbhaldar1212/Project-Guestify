@@ -10,6 +10,7 @@ Update - convert the statically typed template message into variable so it can b
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
+import 'package:guestify/send_message/final_step_for_sending_message.dart';
 import 'package:guestify/utils/utility.dart';
 
 import '../utils/progress_stepper/custom_progress_indicator.dart';
@@ -67,7 +68,6 @@ $yourName
       backgroundColor: const Color.fromARGB(255, 202, 219, 233),
       appBar: AppBar(
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
-        automaticallyImplyLeading: true,
         toolbarHeight: 200,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         elevation: 0,
@@ -89,9 +89,10 @@ $yourName
               child: CustomStepProgressIndicator(
                 totalSteps: 2,
                 currentStep: 1,
-                size: 30,
+                size: 40,
                 selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
                 unselectedColor: Colors.white,
+                unselectedSize: 30,
                 customStep: (p0, p1, p2) =>
                     p1 == const Color.fromRGBO(0, 77, 120, 1.000)
                         ? Container(
@@ -429,91 +430,20 @@ $yourName''',
                     child: ElevatedButton(
                       style: const ButtonStyle(),
                       onPressed: (() {
-                        showDialog(
-                          context: context,
-                          builder: (context) => SimpleDialog(
-                            elevation: 5,
-                            alignment: Alignment.center,
-                            title: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Are you sure?',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.black),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  'Note: Once submitted can\' undo it',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.red),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                            contentPadding: const EdgeInsets.all(10),
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Material(
-                                      color: Colors.green.shade400,
-                                      child: MaterialButton(
-                                        onPressed: (() {
-                                          if (_fKey.currentState!.validate()) {
-                                            for_message.child(template).update({
-                                              'Template': templateMessage.text
-                                            }).then((value) {
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Dashboard(),
-                                                ),
-                                                (route) => false,
-                                              );
-                                              Utils().toastMessage(
-                                                  'Template Set Successfully');
-                                            }).onError((error, stackTrace) {
-                                              Utils().toastMessage(
-                                                  error.toString());
-                                            });
-                                          }
-                                        }),
-                                        child: const Text(
-                                          'Yes & Continue',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Material(
-                                      color: Colors.red,
-                                      child: MaterialButton(
-                                        onPressed: (() {
-                                          Navigator.pop(context);
-                                        }),
-                                        child: const Text(
-                                          'No',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                        if (_fKey.currentState!.validate()) {
+                          for_message.child(template).update(
+                              {'Template': templateMessage.text}).then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SendMessage(),
                               ),
-                            ],
-                          ),
-                        );
+                            );
+                            Utils().toastMessage('Template Set Successfully');
+                          }).onError((error, stackTrace) {
+                            Utils().toastMessage(error.toString());
+                          });
+                        }
                       }),
                       child: const Text(
                         'Submit',

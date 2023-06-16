@@ -9,7 +9,6 @@ Update - convert the statically typed template message into variable so it can b
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/send_message/final_step_for_sending_message.dart';
 import 'package:guestify/utils/utility.dart';
 
@@ -38,7 +37,7 @@ class _UISendMessageState extends State<UISendMessage> {
   Color _text3 = Colors.black;
   Color _text4 = Colors.black;
 
-  String yourName = 'Indira College of Commerce and Science, Wakad';
+  String college_name = 'Indira College of Commerce and Science, Wakad';
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ Your booked seats are [Table Number]-[Chair Number]. Get ready to have an amazin
 We look forward to seeing you there!
 
 Best regards,
-$yourName
+$college_name
 ''';
     _text1 = Colors.white;
   }
@@ -84,32 +83,32 @@ $yourName
         primary: true,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: CustomStepProgressIndicator(
-                totalSteps: 2,
-                currentStep: 1,
-                size: 40,
-                selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
-                unselectedColor: Colors.white,
-                unselectedSize: 30,
-                customStep: (p0, p1, p2) =>
-                    p1 == const Color.fromRGBO(0, 77, 120, 1.000)
-                        ? Container(
-                            color: p1,
-                            child: const Icon(
-                              Icons.check,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Container(
-                            color: p1,
-                            child: const Icon(
-                              Icons.remove,
-                            ),
-                          ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(18.0),
+            //   child: CustomStepProgressIndicator(
+            //     totalSteps: 2,
+            //     currentStep: 1,
+            //     size: 40,
+            //     selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
+            //     unselectedColor: Colors.white,
+            //     unselectedSize: 30,
+            //     customStep: (p0, p1, p2) =>
+            //         p1 == const Color.fromRGBO(0, 77, 120, 1.000)
+            //             ? Container(
+            //                 color: p1,
+            //                 child: const Icon(
+            //                   Icons.check,
+            //                   color: Colors.white,
+            //                 ),
+            //               )
+            //             : Container(
+            //                 color: p1,
+            //                 child: const Icon(
+            //                   Icons.remove,
+            //                 ),
+            //               ),
+            //   ),
+            // ),
             Column(
               children: [
                 const Padding(
@@ -151,7 +150,7 @@ Your booked seats are [Table Number]-[Chair Number]. Get ready to have an amazin
 We look forward to seeing you there!
 
 Best regards,
-$yourName
+$college_name
 ''';
                             });
                           },
@@ -171,7 +170,7 @@ Your booked seats are [Table Number]-[Chair Number]. Get ready to have an amazin
 We look forward to seeing you there!
 
 Best regards,
-$yourName
+$college_name
 ''',
                                   style: TextStyle(
                                     color: _text1,
@@ -212,7 +211,7 @@ Feel free to bring along friends or family members to share in the fun. We promi
 We can't wait to have you join us!
 
 Warm regards,
-$yourName''';
+$college_name''';
                           });
                         },
                         child: Card(
@@ -234,7 +233,7 @@ Feel free to bring along friends or family members to share in the fun. We promi
 We can't wait to have you join us!
 
 Warm regards,
-$yourName''',
+$college_name''',
                                 style: TextStyle(
                                   color: _text2,
                                   fontSize: 13,
@@ -279,7 +278,7 @@ Make sure to mark your calendar and bring your enthusiasm. This event is going t
 Looking forward to seeing you there!
 
 Best regards,
-$yourName''';
+$college_name''';
                       });
                     },
                     child: Card(
@@ -299,7 +298,7 @@ Make sure to mark your calendar and bring your enthusiasm. This event is going t
 Looking forward to seeing you there!
 
 Best regards,
-$yourName''',
+$college_name''',
                             style: TextStyle(
                               color: _text3,
                               fontSize: 13,
@@ -336,7 +335,7 @@ Come prepared to have a great time with friends, indulge in delicious treats, an
 Save the date, and we'll see you soon!
 
 Warmest regards,
-$yourName''';
+$college_name''';
                       });
                     },
                     child: Card(
@@ -356,7 +355,7 @@ Come prepared to have a great time with friends, indulge in delicious treats, an
 Save the date, and we'll see you soon!
 
 Warmest regards,
-$yourName''',
+$college_name''',
                             style: TextStyle(
                               color: _text4,
                               fontSize: 13,
@@ -436,7 +435,8 @@ $yourName''',
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const SendMessage(),
+                                builder: (context) =>
+                                    const SendMessageUsingTwilio(),
                               ),
                             );
                             Utils().toastMessage('Template Set Successfully');

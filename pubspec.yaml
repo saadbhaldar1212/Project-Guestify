@@ -47,6 +47,8 @@ dependencies:
   get: ^4.6.5
   anim_search_bar: ^2.0.3
   step_progress_indicator: ^1.0.2
+  twilio_flutter: ^0.0.9
+  http: ^0.13.6
 
 flutter_native_splash:
   color: "#1196CF"

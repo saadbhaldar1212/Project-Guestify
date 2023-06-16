@@ -46,6 +46,7 @@ dependencies:
   email_validator: ^2.1.17
   get: ^4.6.5
   anim_search_bar: ^2.0.3
+  step_progress_indicator: ^1.0.2
 
 flutter_native_splash:
   color: "#1196CF"

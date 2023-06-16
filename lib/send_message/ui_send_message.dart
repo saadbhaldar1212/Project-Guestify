@@ -1,10 +1,18 @@
 // ignore_for_file: non_constant_identifier_names
 
+/*
+
+Update - convert the statically typed template message into variable so it can be used
+          to edit by suer in fututre update
+
+*/
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/utility.dart';
 
+import '../utils/progress_stepper/custom_progress_indicator.dart';
 import '../utils/signout_button/signout_button.dart';
 
 class UISendMessage extends StatefulWidget {
@@ -76,6 +84,31 @@ $yourName
         primary: true,
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: CustomStepProgressIndicator(
+                totalSteps: 2,
+                currentStep: 1,
+                size: 30,
+                selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
+                unselectedColor: Colors.white,
+                customStep: (p0, p1, p2) =>
+                    p1 == const Color.fromRGBO(0, 77, 120, 1.000)
+                        ? Container(
+                            color: p1,
+                            child: const Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Container(
+                            color: p1,
+                            child: const Icon(
+                              Icons.remove,
+                            ),
+                          ),
+              ),
+            ),
             Column(
               children: [
                 const Padding(

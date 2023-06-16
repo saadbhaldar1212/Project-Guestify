@@ -14,18 +14,19 @@ class TwilioService {
     String eventName,
     String eventDate,
     String eventTime,
+    String eventLocation,
+    // String collegeName,
   ) async {
     for (int i = 0; i < numbers.length; i++) {
       final message = '''
-        Event: $eventName
-        Date: $eventDate
-        Time: $eventTime
-        
-        Dear ${guestName[i]},
-        
-        You have been allocated Table ${tableNumber[i]}, Chair ${chairNumber[i]}.
-        
-        Thank you for attending the event.
+        Hello ${guestName[i]},
+
+You're invited to our event named $eventName, happening at $eventLocation on $eventDate, $eventTime. Your booked seats are ${tableNumber[i]}-${chairNumber[i]}. 
+
+Get ready to have an amazing time! We look forward to seeing you there!
+
+Best regards,
+Indira College of Commerce and Science
       ''';
 
       await _twilio.sendSMS(

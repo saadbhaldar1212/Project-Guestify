@@ -3,7 +3,6 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 import '../models/twilio_service_model.dart';
-import '../utils/progress_stepper/custom_progress_indicator.dart';
 import '../utils/signout_button/signout_button.dart';
 import '../utils/utility.dart';
 
@@ -24,6 +23,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
   String eventName = '';
   String eventDate = '';
   String eventTime = '';
+  String eventLocation = '';
 
   final db = FirebaseDatabase.instance.ref();
   @override
@@ -49,37 +49,6 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.all(18.0),
-            //       child: CustomStepProgressIndicator(
-            //         totalSteps: 2,
-            //         currentStep: 2,
-            //         size: 40,
-            //         selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
-            //         unselectedColor: Colors.grey,
-            //         unselectedSize: 30,
-            //         customStep: (p0, p1, p2) =>
-            //             p1 == const Color.fromRGBO(0, 77, 120, 1.000)
-            //                 ? Container(
-            //                     color: p1,
-            //                     child: const Icon(
-            //                       Icons.check,
-            //                       color: Colors.white,
-            //                     ),
-            //                   )
-            //                 : Container(
-            //                     color: p1,
-            //                     child: const Icon(
-            //                       Icons.remove,
-            //                     ),
-            //                   ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             FirebaseAnimatedList(
               shrinkWrap: true,
               query: seatRef,
@@ -110,6 +79,8 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                 eventName = snapshot.child('Event Name').value.toString();
                 eventDate = snapshot.child('Event Date').value.toString();
                 eventTime = snapshot.child('Event Time').value.toString();
+                eventLocation =
+                    snapshot.child('Event Location').value.toString();
 
                 return Text(
                   snapshot.child('Event Name').value.toString(),
@@ -121,10 +92,9 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
             ),
             ElevatedButton(
               onPressed: (() async {
-                // print(numbers);
                 await twilioService
                     .sendMessages(numbers, guestName, tableNumber, chairNumber,
-                        eventName, eventDate, eventTime)
+                        eventName, eventDate, eventTime, eventLocation)
                     .then((value) {
                   Utils().toastMessage('Message Sent Successfully');
                 }).onError((error, stackTrace) {

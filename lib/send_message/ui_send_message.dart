@@ -83,32 +83,6 @@ $college_name
         primary: true,
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(18.0),
-            //   child: CustomStepProgressIndicator(
-            //     totalSteps: 2,
-            //     currentStep: 1,
-            //     size: 40,
-            //     selectedColor: const Color.fromRGBO(0, 77, 120, 1.000),
-            //     unselectedColor: Colors.white,
-            //     unselectedSize: 30,
-            //     customStep: (p0, p1, p2) =>
-            //         p1 == const Color.fromRGBO(0, 77, 120, 1.000)
-            //             ? Container(
-            //                 color: p1,
-            //                 child: const Icon(
-            //                   Icons.check,
-            //                   color: Colors.white,
-            //                 ),
-            //               )
-            //             : Container(
-            //                 color: p1,
-            //                 child: const Icon(
-            //                   Icons.remove,
-            //                 ),
-            //               ),
-            //   ),
-            // ),
             Column(
               children: [
                 const Padding(

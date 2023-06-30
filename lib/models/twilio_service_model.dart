@@ -21,7 +21,7 @@ class TwilioService {
       final message = '''
         Hello ${guestName[i]},
 
-You're invited to our event named $eventName, happening at $eventLocation on $eventDate, $eventTime. Your booked seats are ${tableNumber[i]}-${chairNumber[i]}. 
+You're invited to our event named $eventName, happening at $eventLocation on $eventDate, $eventTime. Your booked seats are Table:${tableNumber[i]} Chair:${chairNumber[i]}. 
 
 Get ready to have an amazing time! We look forward to seeing you there!
 

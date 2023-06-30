@@ -5,6 +5,8 @@ import 'package:guestify/send_message/ui_send_message.dart';
 import 'package:guestify/welcome/welcome.dart';
 import 'package:guestify/welcome/welcome2.dart';
 
+import 'dashboard/dashboard.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const WelcomeSplash();
+            return Dashboard();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

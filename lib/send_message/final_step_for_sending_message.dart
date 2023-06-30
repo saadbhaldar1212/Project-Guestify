@@ -79,8 +79,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                 eventName = snapshot.child('Event Name').value.toString();
                 eventDate = snapshot.child('Event Date').value.toString();
                 eventTime = snapshot.child('Event Time').value.toString();
-                eventLocation =
-                    snapshot.child('Event Location').value.toString();
+                eventLocation = snapshot.child('Event Venue').value.toString();
 
                 return Text(
                   snapshot.child('Event Name').value.toString(),

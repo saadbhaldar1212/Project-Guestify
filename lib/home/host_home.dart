@@ -41,7 +41,7 @@ class _HostIndexState extends State<HostIndex> {
                   searchBar.clear();
                 });
               },
-              onSubmitted: (value) {},
+              onChanged: (value) {},
             ),
           ),
         ],

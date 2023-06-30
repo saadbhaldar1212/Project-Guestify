@@ -3,9 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/dashboard/dashboard.dart';
-
-import '../../utils/search_bar/search_bar.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 
 class SeatsDashboardForViewData extends StatefulWidget {
   SeatsDashboardForViewData({
@@ -35,7 +33,7 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
       appBar: AppBar(
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         automaticallyImplyLeading: true,
-        toolbarHeight: 200,
+        toolbarHeight: 150,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         elevation: 0,
         title: const Text(
@@ -45,111 +43,211 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
             fontWeight: FontWeight.w300,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AnimSearchBar(
-              width: 400,
-              textController: searchBar,
-              onSuffixTap: () {
-                setState(() {
-                  searchBar.clear();
-                });
-              },
-              onSubmitted: (value) {},
-            ),
-          ),
-        ],
+        centerTitle: true,
       ),
-      body: FirebaseAnimatedList(
-        shrinkWrap: true,
-        query: seatRef,
-        itemBuilder: (context, snapshot, animation, index) {
-          String guestName = snapshot.child('Guest Name').value.toString();
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 16.0),
-                  leading: CircleAvatar(
-                    backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
-                    radius: 30,
-                    child: Center(
-                      child: Text(
-                        guestName[0],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0,
-                          color: Colors.white,
-                        ),
-                      ),
+      body: SingleChildScrollView(
+        primary: true,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: TextFormField(
+                controller: searchBar,
+                onChanged: (value) {
+                  setState(() {});
+                },
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                ),
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                  ),
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                   ),
-                  title: Text(
-                    snapshot.child('Guest Name').value.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                      color: Colors.black,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                   ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        snapshot.child('Guest Email').value.toString(),
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      Text(
-                        snapshot.child('Guest Phone Number').value.toString(),
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                  trailing: Text(
-                    '${snapshot.child('Table Number').value}-${snapshot.child('Chair Number').value}',
-                    style: const TextStyle(
-                      fontSize: 34.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  hintText: 'Type something...',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
                   ),
                 ),
-              ],
+              ),
             ),
-          );
-        },
+            FirebaseAnimatedList(
+              primary: false,
+              shrinkWrap: true,
+              query: seatRef,
+              itemBuilder: (context, snapshot, animation, index) {
+                String guestName =
+                    snapshot.child('Guest Name').value.toString();
+                String guestEmail =
+                    snapshot.child('Guest Email').value.toString();
+                String guestPhoneNumber =
+                    snapshot.child('Guest Phone Number').value.toString();
+                String tableNumber =
+                    snapshot.child('Table Number').value.toString();
+                String chairNumber =
+                    snapshot.child('Chair Number').value.toString();
+
+                if (searchBar.text.isEmpty) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 16.0),
+                          leading: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromRGBO(0, 77, 120, 1.000),
+                            radius: 30,
+                            child: Center(
+                              child: Text(
+                                guestName[0],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            snapshot.child('Guest Name').value.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshot.child('Guest Email').value.toString(),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              Text(
+                                snapshot
+                                    .child('Guest Phone Number')
+                                    .value
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                          trailing: Text(
+                            '${snapshot.child('Table Number').value}-${snapshot.child('Chair Number').value}',
+                            style: const TextStyle(
+                              fontSize: 34.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (guestName
+                        .toLowerCase()
+                        .contains(searchBar.text.toLowerCase().toString()) ||
+                    guestEmail
+                        .toLowerCase()
+                        .contains(searchBar.text.toLowerCase().toString()) ||
+                    guestPhoneNumber
+                        .toLowerCase()
+                        .contains(searchBar.text.toLowerCase().toString()) ||
+                    tableNumber
+                        .toLowerCase()
+                        .contains(searchBar.text.toLowerCase().toString()) ||
+                    chairNumber
+                        .toLowerCase()
+                        .contains(searchBar.text.toLowerCase().toString())) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 16.0),
+                          leading: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromRGBO(0, 77, 120, 1.000),
+                            radius: 30,
+                            child: Center(
+                              child: Text(
+                                guestName[0],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            snapshot.child('Guest Name').value.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshot.child('Guest Email').value.toString(),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              Text(
+                                snapshot
+                                    .child('Guest Phone Number')
+                                    .value
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                          trailing: Text(
+                            '${snapshot.child('Table Number').value}-${snapshot.child('Chair Number').value}',
+                            style: const TextStyle(
+                              fontSize: 34.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+          ],
+        ),
       ),
-      // persistentFooterButtons: [
-      //   Material(
-      //     color: Colors.teal,
-      //     child: MaterialButton(
-      //       minWidth: double.infinity,
-      //       onPressed: (() {
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => const Dashboard(),
-      //           ),
-      //         );
-      //       }),
-      //       child: const Text(
-      //         'Ok',
-      //         style: TextStyle(
-      //           fontSize: 20,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ],
     );
   }
 }

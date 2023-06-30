@@ -40,7 +40,7 @@ class AnimSearchBar extends StatefulWidget {
   final Color? textFieldIconColor;
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
-  final Function(String) onSubmitted;
+  final Function(String) onChanged;
 
   const AnimSearchBar({
     Key? key,
@@ -71,7 +71,7 @@ class AnimSearchBar extends StatefulWidget {
     this.animationDurationInMilli = 200,
 
     /// The onSubmitted cannot be null
-    required this.onSubmitted,
+    required this.onChanged,
 
     /// make the search bar to open from right to left
     this.rtl = false,
@@ -250,7 +250,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                   ),
                   alignment: Alignment.topCenter,
                   width: widget.width / 1.7,
-                  child: TextField(
+                  child: TextFormField(
                     controller: widget.textController,
                     inputFormatters: widget.inputFormatters,
                     focusNode: focusNode,
@@ -258,24 +258,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     cursorWidth: 2.0,
                     onChanged: (value) {
                       textFieldValue = value;
-                    },
-                    onSubmitted: (value) => {
-                      widget.onSubmitted(value),
-                      unfocusKeyboard(),
-                      setState(() {
-                        toggle = 0;
-                      }),
-                      widget.textController.clear(),
-                    },
-                    onEditingComplete: () {
-                      /// on editing complete the keyboard will be closed and the search bar will be closed
                       unfocusKeyboard();
-                      setState(() {
-                        toggle = 0;
-                      });
                     },
-
-                    ///style is of type TextStyle, the default is just a color black
                     style: widget.style ??
                         const TextStyle(
                           color: Colors.black,

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'dashboard/dashboard.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

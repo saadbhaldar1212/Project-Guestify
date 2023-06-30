@@ -53,7 +53,7 @@ class _EmployeeModuleState extends State<EmployeeModule> {
                   searchBar.clear();
                 });
               },
-              onSubmitted: (value) {},
+              onChanged: (value) {},
             ),
           ),
           const SignOutButton()

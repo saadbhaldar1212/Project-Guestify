@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Urbanist',
+        fontFamily: 'Poppins',
         primaryColor: const Color.fromRGBO(19, 159, 219, 10),
       ).copyWith(
         dividerColor: Colors.transparent,

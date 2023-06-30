@@ -127,29 +127,29 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
           );
         },
       ),
-      persistentFooterButtons: [
-        Material(
-          color: Colors.teal,
-          child: MaterialButton(
-            minWidth: double.infinity,
-            onPressed: (() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Dashboard(),
-                ),
-              );
-            }),
-            child: const Text(
-              'Ok',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
+      // persistentFooterButtons: [
+      //   Material(
+      //     color: Colors.teal,
+      //     child: MaterialButton(
+      //       minWidth: double.infinity,
+      //       onPressed: (() {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const Dashboard(),
+      //           ),
+      //         );
+      //       }),
+      //       child: const Text(
+      //         'Ok',
+      //         style: TextStyle(
+      //           fontSize: 20,
+      //           color: Colors.white,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 }

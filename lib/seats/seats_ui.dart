@@ -2,11 +2,10 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
 
 import '../utils/radio_options.dart';
-import '../utils/utility.dart';
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
 import 'package:flutter/material.dart';
@@ -589,7 +588,6 @@ class _SingleCircleState extends State<SingleCircle> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
                             ),
                           ),
                           description: Text(error.toString()),
@@ -612,7 +610,6 @@ class _SingleCircleState extends State<SingleCircle> {
                       //       style: TextStyle(
                       //         fontSize: 20,
                       //         fontWeight: FontWeight.bold,
-                      //         color: Colors.black,
                       //       ),
                       //     ),
                       //     description: Text(error.toString()),

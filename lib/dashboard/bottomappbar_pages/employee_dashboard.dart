@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
 
 import '../../utils/simple_dialog/for_employee_dashboard.dart';
 import '../../utils/signout_button/signout_button.dart';
+import '../../utils/toast/motion_toast.dart';
+import '../../utils/toast/resources/arrays.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key, required this.title});
@@ -225,7 +225,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                                 ),
                                               ),
                                               description: const Text(
-                                                  'Data Inserted SuccessFully'),
+                                                  'Data Inserted SuccessFully',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
                                               iconType: IconType.cupertino,
                                               enableAnimation: false,
                                               animationDuration: const Duration(

@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard_for_view_data.dart';
-import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
-import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
+
+import '../../utils/toast/motion_toast.dart';
+import '../../utils/toast/resources/arrays.dart';
 
 class EventDashboard extends StatefulWidget {
   const EventDashboard({super.key, required this.title});
@@ -966,125 +965,62 @@ class _EventDashboardState extends State<EventDashboard> {
                   floatingActionButton: ElevatedButton(
                     onPressed: (() {
                       if (_eventFormField.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => SimpleDialog(
-                            elevation: 5,
-                            alignment: Alignment.center,
+                        eventRef.child(pk).set({
+                          "Event Name": eventNameController.text.trim(),
+                          "Event Topic": eventTopicController.text.trim(),
+                          "Event Chief Guest":
+                              eventChiefGuestController.text.trim(),
+                          "Event Special Guest":
+                              eventSpecialGuestController.text.trim(),
+                          "Event Host": eventHostController.text.trim(),
+                          "Event Venue": eventVenueController.text.trim(),
+                          "Event Date": eventDateController.text.trim(),
+                          "Event Time": eventTimeController.text.trim(),
+                          "Event Description":
+                              eventDescriptionController.text.trim(),
+                        }).then((value) {
+                          Navigator.pop(context);
+                          MotionToast.success(
                             title: const Text(
-                              'Are you sure?',
-                              style: TextStyle(fontSize: 18, color: Colors.red),
-                              textAlign: TextAlign.center,
-                            ),
-                            contentPadding: const EdgeInsets.all(20),
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Material(
-                                      color: Colors.green.shade400,
-                                      child: MaterialButton(
-                                        onPressed: (() {
-                                          eventRef.child(pk).set({
-                                            "Event Name":
-                                                eventNameController.text,
-                                            "Event Topic":
-                                                eventTopicController.text,
-                                            "Event Chief Guest":
-                                                eventChiefGuestController.text,
-                                            "Event Special Guest":
-                                                eventSpecialGuestController
-                                                    .text,
-                                            "Event Host":
-                                                eventHostController.text,
-                                            "Event Venue":
-                                                eventVenueController.text,
-                                            "Event Date":
-                                                eventDateController.text,
-                                            "Event Time":
-                                                eventTimeController.text,
-                                            "Event Description":
-                                                eventDescriptionController.text,
-                                          }).then((value) {
-                                            MotionToast.success(
-                                              title: const Text(
-                                                'Success',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              description: const Text(
-                                                  'Event Created SuccessFully'),
-                                              iconType: IconType.cupertino,
-                                              enableAnimation: false,
-                                              animationDuration: const Duration(
-                                                  milliseconds: 100),
-                                              animationType:
-                                                  AnimationType.fromBottom,
-                                              dismissable: true,
-                                            ).show(context);
-                                            setState(() {
-                                              hasOngoingEvent = true;
-                                            });
-                                            Navigator.pop(context);
-                                          }).onError((error, stackTrace) {
-                                            MotionToast.error(
-                                              title: const Text(
-                                                'Error',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              description:
-                                                  Text(error.toString()),
-                                              iconType: IconType.cupertino,
-                                              enableAnimation: false,
-                                              animationDuration: const Duration(
-                                                  milliseconds: 100),
-                                              animationType:
-                                                  AnimationType.fromBottom,
-                                              dismissable: true,
-                                            ).show(context);
-                                          });
-                                        }),
-                                        child: const Text(
-                                          'Yes & Continue',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Material(
-                                      color: Colors.red,
-                                      child: MaterialButton(
-                                        onPressed: (() {
-                                          Navigator.pop(context);
-                                        }),
-                                        child: const Text(
-                                          'No',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                              'Success',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
-                        );
+                            ),
+                            description: const Text(
+                                'Event Created SuccessFully',
+                                style: TextStyle(color: Colors.green)),
+                            iconType: IconType.cupertino,
+                            enableAnimation: false,
+                            animationDuration:
+                                const Duration(milliseconds: 100),
+                            animationType: AnimationType.fromBottom,
+                            dismissable: true,
+                          ).show(context);
+                          setState(() {
+                            hasOngoingEvent = true;
+                          });
+                        }).onError((error, stackTrace) {
+                          MotionToast.error(
+                            title: const Text(
+                              'Error',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            description: Text(error.toString()),
+                            iconType: IconType.cupertino,
+                            enableAnimation: false,
+                            animationDuration:
+                                const Duration(milliseconds: 100),
+                            animationType: AnimationType.fromBottom,
+                            dismissable: true,
+                          ).show(context);
+                        });
                       }
                     }),
                     child: const Text('Save data'),

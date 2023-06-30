@@ -2,12 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/home/employee_home.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
 
 import '../utils/employee_login_form/email_field.dart';
 import '../utils/employee_login_form/password_field.dart';
-import '../utils/utility.dart';
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 
 class EmployeeLogin extends StatefulWidget {
   const EmployeeLogin({super.key});
@@ -149,8 +148,9 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                description:
-                                    const Text('Logged In SuccessFully'),
+                                description: const Text(
+                                    'Logged In SuccessFully',
+                                    style: TextStyle(color: Colors.green)),
                                 iconType: IconType.cupertino,
                                 enableAnimation: false,
                                 animationDuration:
@@ -172,7 +172,6 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
                                   ),
                                 ),
                                 description: Text(error.toString()),

@@ -3,9 +3,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
-import '/utils/utility.dart';
+
+import '../toast/motion_toast.dart';
+import '../toast/resources/arrays.dart';
 
 class ForEditEventInfo extends StatefulWidget {
   ForEditEventInfo({super.key, required this.title, this.event});
@@ -51,7 +51,6 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
                 description: Text(error.toString()),
@@ -171,7 +170,6 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
               description: Text(error.toString()),
@@ -291,7 +289,6 @@ class _ForTimeState extends State<ForTime> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
               description: Text(error.toString()),
@@ -436,7 +433,6 @@ class _ForDateState extends State<ForDate> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
               description: Text(error.toString()),

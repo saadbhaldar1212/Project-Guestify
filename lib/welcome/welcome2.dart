@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:guestify/home/host_home.dart';
 import 'package:guestify/login/admin_login.dart';
 import 'package:guestify/login/employee_login.dart';
-import 'package:guestify/utils/utility.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
+
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 
 class Welcome2 extends StatefulWidget {
   const Welcome2({super.key});
@@ -139,7 +139,6 @@ class _Welcome2State extends State<Welcome2> {
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.black,
                                           ),
                                         ),
                                         description: Text(error.toString()),

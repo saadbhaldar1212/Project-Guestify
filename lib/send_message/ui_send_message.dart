@@ -10,12 +10,9 @@ Update - convert the statically typed template message into variable so it can b
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/send_message/final_step_for_sending_message.dart';
-import 'package:guestify/utils/utility.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
-
-import '../utils/progress_stepper/custom_progress_indicator.dart';
 import '../utils/signout_button/signout_button.dart';
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 
 class UISendMessage extends StatefulWidget {
   const UISendMessage({super.key});
@@ -424,8 +421,9 @@ $college_name''',
                                   color: Colors.black,
                                 ),
                               ),
-                              description:
-                                  const Text('Template Set SuccessFully'),
+                              description: const Text(
+                                  'Template Set SuccessFully',
+                                  style: TextStyle(color: Colors.green)),
                               iconType: IconType.cupertino,
                               enableAnimation: false,
                               animationDuration:
@@ -440,7 +438,6 @@ $college_name''',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
                                 ),
                               ),
                               description: Text(error.toString()),

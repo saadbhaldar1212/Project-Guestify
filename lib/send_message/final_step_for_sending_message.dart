@@ -1,12 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
 
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
-import '../utils/utility.dart';
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 
 class SendMessageUsingTwilio extends StatefulWidget {
   const SendMessageUsingTwilio({super.key});
@@ -106,7 +105,8 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                         color: Colors.black,
                       ),
                     ),
-                    description: const Text('Message Sent SuccessFully'),
+                    description: const Text('Message Sent SuccessFully',
+                        style: TextStyle(color: Colors.green)),
                     iconType: IconType.cupertino,
                     enableAnimation: false,
                     animationDuration: const Duration(milliseconds: 100),
@@ -120,7 +120,6 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
                     description: Text(error.toString()),

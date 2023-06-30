@@ -49,7 +49,6 @@ dependencies:
   step_progress_indicator: ^1.0.2
   twilio_flutter: ^0.0.9
   http: ^0.13.6
-  motion_toast: ^2.7.8
 
 flutter_native_splash:
   color: "#1196CF"

@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/utils/simple_dialog/for_adminlogin_info.dart';
 import 'package:guestify/welcome/welcome2.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
 
-import '../utils/utility.dart';
+import '../utils/toast/motion_toast.dart';
+import '../utils/toast/resources/arrays.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -157,8 +156,9 @@ class _AdminLoginState extends State<AdminLogin> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                description:
-                                    const Text('Logged In SuccessFully'),
+                                description: const Text(
+                                    'Logged In SuccessFully',
+                                    style: TextStyle(color: Colors.green)),
                                 iconType: IconType.cupertino,
                                 enableAnimation: false,
                                 animationDuration:
@@ -180,7 +180,6 @@ class _AdminLoginState extends State<AdminLogin> {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
                                   ),
                                 ),
                                 description: Text(error.toString()),

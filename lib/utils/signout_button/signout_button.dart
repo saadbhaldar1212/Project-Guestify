@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/utility.dart';
 import 'package:guestify/welcome/welcome.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
+
+import '../toast/motion_toast.dart';
+import '../toast/resources/arrays.dart';
 
 class SignOutButton extends StatefulWidget {
   const SignOutButton({super.key});
@@ -26,7 +26,8 @@ class _SignOutButtonState extends State<SignOutButton> {
             color: Colors.black,
           ),
         ),
-        description: const Text('Signed Out SuccessFully'),
+        description: const Text('Signed Out SuccessFully',
+            style: TextStyle(color: Colors.green)),
         iconType: IconType.cupertino,
         enableAnimation: false,
         animationDuration: const Duration(milliseconds: 100),
@@ -47,7 +48,6 @@ class _SignOutButtonState extends State<SignOutButton> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
           ),
         ),
         description: Text(error.toString()),

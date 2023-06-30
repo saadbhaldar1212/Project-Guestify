@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
@@ -95,9 +97,39 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                     .sendMessages(numbers, guestName, tableNumber, chairNumber,
                         eventName, eventDate, eventTime, eventLocation)
                     .then((value) {
-                  Utils().toastMessage('Message Sent Successfully');
+                  MotionToast.success(
+                    title: const Text(
+                      'Success',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    description: const Text('Message Sent SuccessFully'),
+                    iconType: IconType.cupertino,
+                    enableAnimation: false,
+                    animationDuration: const Duration(milliseconds: 100),
+                    animationType: AnimationType.fromBottom,
+                    dismissable: true,
+                  ).show(context);
                 }).onError((error, stackTrace) {
-                  Utils().toastMessage(error.toString());
+                  MotionToast.error(
+                    title: const Text(
+                      'Error',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    description: Text(error.toString()),
+                    iconType: IconType.cupertino,
+                    enableAnimation: false,
+                    animationDuration: const Duration(milliseconds: 100),
+                    animationType: AnimationType.fromBottom,
+                    dismissable: true,
+                  ).show(context);
                 });
               }),
               child: const Text('Send Message'),

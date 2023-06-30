@@ -9,6 +9,8 @@ import 'package:guestify/utils/event_info/edit_event_info.dart';
 import 'package:guestify/utils/signout_button/signout_button.dart';
 import 'package:guestify/utils/utility.dart';
 import 'package:intl/intl.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 class EventDashboard extends StatefulWidget {
   const EventDashboard({super.key, required this.title});
@@ -359,8 +361,31 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                           );
                                                                         }).onError((error,
                                                                             stackTrace) {
-                                                                          Utils()
-                                                                              .toastMessage(error.toString());
+                                                                          MotionToast
+                                                                              .error(
+                                                                            title:
+                                                                                const Text(
+                                                                              'Error',
+                                                                              style: TextStyle(
+                                                                                fontSize: 20,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            ),
+                                                                            description:
+                                                                                Text(error.toString()),
+                                                                            iconType:
+                                                                                IconType.cupertino,
+                                                                            enableAnimation:
+                                                                                false,
+                                                                            animationDuration:
+                                                                                const Duration(milliseconds: 100),
+                                                                            animationType:
+                                                                                AnimationType.fromBottom,
+                                                                            dismissable:
+                                                                                true,
+                                                                          ).show(
+                                                                              context);
                                                                         });
                                                                       }),
                                                                       child:
@@ -984,15 +1009,49 @@ class _EventDashboardState extends State<EventDashboard> {
                                             "Event Description":
                                                 eventDescriptionController.text,
                                           }).then((value) {
-                                            Utils().toastMessage(
-                                                'Event Created Successfully');
+                                            MotionToast.success(
+                                              title: const Text(
+                                                'Success',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              description: const Text(
+                                                  'Event Created SuccessFully'),
+                                              iconType: IconType.cupertino,
+                                              enableAnimation: false,
+                                              animationDuration: const Duration(
+                                                  milliseconds: 100),
+                                              animationType:
+                                                  AnimationType.fromBottom,
+                                              dismissable: true,
+                                            ).show(context);
                                             setState(() {
                                               hasOngoingEvent = true;
                                             });
                                             Navigator.pop(context);
                                           }).onError((error, stackTrace) {
-                                            Utils()
-                                                .toastMessage(error.toString());
+                                            MotionToast.error(
+                                              title: const Text(
+                                                'Error',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              description:
+                                                  Text(error.toString()),
+                                              iconType: IconType.cupertino,
+                                              enableAnimation: false,
+                                              animationDuration: const Duration(
+                                                  milliseconds: 100),
+                                              animationType:
+                                                  AnimationType.fromBottom,
+                                              dismissable: true,
+                                            ).show(context);
                                           });
                                         }),
                                         child: const Text(

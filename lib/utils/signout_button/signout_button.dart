@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/utils/utility.dart';
 import 'package:guestify/welcome/welcome.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 class SignOutButton extends StatefulWidget {
   const SignOutButton({super.key});
@@ -15,7 +17,22 @@ class _SignOutButtonState extends State<SignOutButton> {
 
   signOut() async {
     await _auth.signOut().then((value) {
-      Utils().toastMessage('Signed out successfully');
+      MotionToast.success(
+        title: const Text(
+          'Success',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        description: const Text('Signed Out SuccessFully'),
+        iconType: IconType.cupertino,
+        enableAnimation: false,
+        animationDuration: const Duration(milliseconds: 100),
+        animationType: AnimationType.fromBottom,
+        dismissable: true,
+      ).show(context);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -24,7 +41,22 @@ class _SignOutButtonState extends State<SignOutButton> {
         (route) => false,
       );
     }).onError((error, stackTrace) {
-      Utils().toastMessage(error.toString());
+      MotionToast.error(
+        title: const Text(
+          'Error',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        description: Text(error.toString()),
+        iconType: IconType.cupertino,
+        enableAnimation: false,
+        animationDuration: const Duration(milliseconds: 100),
+        animationType: AnimationType.fromBottom,
+        dismissable: true,
+      ).show(context);
     });
   }
 

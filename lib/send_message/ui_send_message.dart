@@ -11,6 +11,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/send_message/final_step_for_sending_message.dart';
 import 'package:guestify/utils/utility.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import '../utils/progress_stepper/custom_progress_indicator.dart';
 import '../utils/signout_button/signout_button.dart';
@@ -413,9 +415,42 @@ $college_name''',
                                     const SendMessageUsingTwilio(),
                               ),
                             );
-                            Utils().toastMessage('Template Set Successfully');
+                            MotionToast.success(
+                              title: const Text(
+                                'Success',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              description:
+                                  const Text('Template Set SuccessFully'),
+                              iconType: IconType.cupertino,
+                              enableAnimation: false,
+                              animationDuration:
+                                  const Duration(milliseconds: 100),
+                              animationType: AnimationType.fromBottom,
+                              dismissable: true,
+                            ).show(context);
                           }).onError((error, stackTrace) {
-                            Utils().toastMessage(error.toString());
+                            MotionToast.error(
+                              title: const Text(
+                                'Error',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              description: Text(error.toString()),
+                              iconType: IconType.cupertino,
+                              enableAnimation: false,
+                              animationDuration:
+                                  const Duration(milliseconds: 100),
+                              animationType: AnimationType.fromBottom,
+                              dismissable: true,
+                            ).show(context);
                           });
                         }
                       }),

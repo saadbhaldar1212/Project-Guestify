@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/utility.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import '../../utils/simple_dialog/for_employee_dashboard.dart';
 import '../../utils/signout_button/signout_button.dart';
@@ -213,15 +214,52 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                                               "Employee Name": empName.text,
                                               "Employee Password": empPass.text
                                             });
-                                            Utils().toastMessage(
-                                                'Data inserted successfully');
+
+                                            MotionToast.success(
+                                              title: const Text(
+                                                'Success',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              description: const Text(
+                                                  'Data Inserted SuccessFully'),
+                                              iconType: IconType.cupertino,
+                                              enableAnimation: false,
+                                              animationDuration: const Duration(
+                                                  milliseconds: 100),
+                                              animationType:
+                                                  AnimationType.fromBottom,
+                                              dismissable: true,
+                                            ).show(context);
+
                                             empName.clear();
                                             empPass.clear();
                                             FocusScope.of(context)
                                                 .requestFocus(FocusNode());
                                           }).onError((error, stackTrace) {
-                                            Utils()
-                                                .toastMessage(error.toString());
+                                            MotionToast.error(
+                                              title: const Text(
+                                                'Error',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              description:
+                                                  Text(error.toString()),
+                                              iconType: IconType.cupertino,
+                                              enableAnimation: false,
+                                              animationDuration: const Duration(
+                                                  milliseconds: 100),
+                                              animationType:
+                                                  AnimationType.fromBottom,
+                                              dismissable: true,
+                                            ).show(context);
+
                                             empName.clear();
                                             empPass.clear();
                                             FocusScope.of(context)

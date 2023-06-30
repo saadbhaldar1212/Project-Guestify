@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:guestify/home/employee_home.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import '../utils/employee_login_form/email_field.dart';
 import '../utils/employee_login_form/password_field.dart';
@@ -138,7 +140,24 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
                             empSignInToHome().then((value) {
-                              Utils().toastMessage('Logged in successfully');
+                              MotionToast.success(
+                                title: const Text(
+                                  'Success',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                description:
+                                    const Text('Logged In SuccessFully'),
+                                iconType: IconType.cupertino,
+                                enableAnimation: false,
+                                animationDuration:
+                                    const Duration(milliseconds: 100),
+                                animationType: AnimationType.fromBottom,
+                                dismissable: true,
+                              ).show(context);
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -147,7 +166,23 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                 (route) => false,
                               );
                             }).onError((error, stackTrace) {
-                              Utils().toastMessage(error.toString());
+                              MotionToast.error(
+                                title: const Text(
+                                  'Error',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                description: Text(error.toString()),
+                                iconType: IconType.cupertino,
+                                enableAnimation: false,
+                                animationDuration:
+                                    const Duration(milliseconds: 100),
+                                animationType: AnimationType.fromBottom,
+                                dismissable: true,
+                              ).show(context);
                             });
                           }
                         }),

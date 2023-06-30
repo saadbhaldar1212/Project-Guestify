@@ -2,6 +2,8 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import '../utils/radio_options.dart';
 import '../utils/utility.dart';
@@ -192,9 +194,23 @@ class _SingleCircleState extends State<SingleCircle> {
         ),
         onTap: () {
           if (widget.color == Colors.red) {
-            Utils().toastMessage(
-              'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}',
-            );
+            MotionToast.info(
+              title: const Text(
+                'Tapped',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              description: Text(
+                  'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}'),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context);
 
             // showModalBottomSheet(
             //   isDismissible: false,
@@ -440,12 +456,8 @@ class _SingleCircleState extends State<SingleCircle> {
                                 ),
                               ),
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'This field cannot be empty';
-                                } else if (!value.isNum) {
+                                if (!value!.isNum) {
                                   return 'Input must be numeric only';
-                                } else if (value.startsWith('0')) {
-                                  return 'Invalid Table Length';
                                 }
                                 return null;
                               },
@@ -571,7 +583,22 @@ class _SingleCircleState extends State<SingleCircle> {
                           Navigator.pop(context);
                         },
                       ).onError((error, stackTrace) {
-                        Utils().toastMessage(stackTrace.toString());
+                        MotionToast.error(
+                          title: const Text(
+                            'Error',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          description: Text(error.toString()),
+                          iconType: IconType.cupertino,
+                          enableAnimation: false,
+                          animationDuration: const Duration(milliseconds: 100),
+                          animationType: AnimationType.fromBottom,
+                          dismissable: true,
+                        ).show(context);
                       });
 
                       // }
@@ -579,7 +606,22 @@ class _SingleCircleState extends State<SingleCircle> {
                       // forAward()
 
                       // forSeats().onError((error, stackTrace) {
-                      //   Utils().toastMessage(error.toString());
+                      //   MotionToast.error(
+                      //     title: const Text(
+                      //       'Error',
+                      //       style: TextStyle(
+                      //         fontSize: 20,
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //     description: Text(error.toString()),
+                      //     iconType: IconType.cupertino,
+                      //     enableAnimation: false,
+                      //     animationDuration: const Duration(milliseconds: 100),
+                      //     animationType: AnimationType.fromBottom,
+                      //     dismissable: true,
+                      //   ).show(context);
                       // });
                     }
                   }),

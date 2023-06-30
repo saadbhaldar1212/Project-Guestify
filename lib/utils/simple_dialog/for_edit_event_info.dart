@@ -3,6 +3,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import '/utils/utility.dart';
 
 class ForEditEventInfo extends StatefulWidget {
@@ -43,8 +45,22 @@ class _ForEditEventInfoState extends State<ForEditEventInfo> {
             widget.title: eventController.text,
           })
           .then((value) => Navigator.pop(context))
-          .onError(
-              (error, stackTrace) => Utils().toastMessage(error.toString()));
+          .onError((error, stackTrace) => MotionToast.error(
+                title: const Text(
+                  'Error',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                description: Text(error.toString()),
+                iconType: IconType.cupertino,
+                enableAnimation: false,
+                animationDuration: const Duration(milliseconds: 100),
+                animationType: AnimationType.fromBottom,
+                dismissable: true,
+              ).show(context));
 
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
@@ -149,7 +165,22 @@ class _EditEventDescriptionState extends State<EditEventDescription> {
           'Event Description': eventController.text,
         })
         .then((value) => Navigator.pop(context))
-        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+        .onError((error, stackTrace) => MotionToast.error(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              description: Text(error.toString()),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context));
 
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
@@ -254,7 +285,22 @@ class _ForTimeState extends State<ForTime> {
           'Event Time': eventTimeController.text,
         })
         .then((value) => Navigator.pop(context))
-        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+        .onError((error, stackTrace) => MotionToast.error(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              description: Text(error.toString()),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context));
 
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
@@ -384,7 +430,22 @@ class _ForDateState extends State<ForDate> {
           'Event Date': eventDateController.text,
         })
         .then((value) => Navigator.pop(context))
-        .onError((error, stackTrace) => Utils().toastMessage(error.toString()));
+        .onError((error, stackTrace) => MotionToast.error(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              description: Text(error.toString()),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context));
 
     // ignore: use_build_context_synchronously
     Navigator.pop(context);

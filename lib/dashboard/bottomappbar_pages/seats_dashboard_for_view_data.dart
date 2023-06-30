@@ -3,7 +3,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
 
 class SeatsDashboardForViewData extends StatefulWidget {
   SeatsDashboardForViewData({
@@ -25,6 +24,8 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
   final seatNumber = TextEditingController();
 
   final searchBar = TextEditingController();
+  bool focus = false;
+  final FocusNode unitCodeCtrlFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +51,11 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20.0),
               child: TextFormField(
                 controller: searchBar,
+                focusNode: unitCodeCtrlFocusNode,
+                autofocus: focus,
                 onChanged: (value) {
                   setState(() {});
                 },
@@ -61,23 +64,35 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
                   fontSize: 20,
                   fontWeight: FontWeight.w300,
                 ),
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(
                     Icons.search,
                   ),
-                  border: OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(
+                  suffixIcon: IconButton(
+                    onPressed: (() {
+                      searchBar.clear();
+                      setState(() {
+                        focus = false;
+                      });
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    }),
+                    icon: const Icon(
+                      Icons.clear,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                   ),
                   hintText: 'Type something...',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.black,
                   ),
                 ),

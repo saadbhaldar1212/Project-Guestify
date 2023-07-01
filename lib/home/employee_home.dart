@@ -104,6 +104,12 @@ class _EmployeeModuleState extends State<EmployeeModule> {
               child: FirebaseAnimatedList(
                 shrinkWrap: true,
                 query: guestReference,
+                defaultChild: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                duration: const Duration(
+                  milliseconds: 100,
+                ),
                 itemBuilder: (context, snapshot, animation, index) {
                   Map guest = snapshot.value as Map;
                   String? guestKey = snapshot.key;

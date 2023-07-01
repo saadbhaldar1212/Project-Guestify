@@ -74,6 +74,12 @@ class _EditEventInfoState extends State<EditEventInfo> {
         key: _eventFormField,
         child: FirebaseAnimatedList(
           query: eventRef,
+          defaultChild: const Center(
+            child: CircularProgressIndicator(),
+          ),
+          duration: const Duration(
+            milliseconds: 100,
+          ),
           itemBuilder: (context, snapshot, animation, index) {
             widget.eventName = snapshot.child('Event Name').value.toString();
             widget.eventTopic = snapshot.child('Event Topic').value.toString();

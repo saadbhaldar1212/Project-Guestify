@@ -52,6 +52,12 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
           children: [
             FirebaseAnimatedList(
               shrinkWrap: true,
+              defaultChild: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              duration: const Duration(
+                milliseconds: 100,
+              ),
               query: seatRef,
               itemBuilder: (context, snapshot, animation, index) {
                 numbers
@@ -76,6 +82,12 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
             FirebaseAnimatedList(
               shrinkWrap: true,
               query: eventRef,
+              defaultChild: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              duration: const Duration(
+                milliseconds: 100,
+              ),
               itemBuilder: (context, snapshot, animation, index) {
                 eventName = snapshot.child('Event Name').value.toString();
                 eventDate = snapshot.child('Event Date').value.toString();

@@ -40,6 +40,7 @@ class _EventDashboardState extends State<EventDashboard> {
   final seatsC = TextEditingController();
 
   bool? hasOngoingEvent;
+  bool _isLoading = true;
 
   final _eventFormField = GlobalKey<FormState>();
 
@@ -88,6 +89,12 @@ class _EventDashboardState extends State<EventDashboard> {
               ),
             )
           : FirebaseAnimatedList(
+              defaultChild: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              duration: const Duration(
+                milliseconds: 100,
+              ),
               query: eventRef,
               itemBuilder: (context, snapshot, animation, index) {
                 return SingleChildScrollView(

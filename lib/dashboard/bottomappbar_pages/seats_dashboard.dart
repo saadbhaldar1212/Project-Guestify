@@ -47,6 +47,12 @@ class _SeatsDashboardState extends State<SeatsDashboard> {
       ),
       body: FirebaseAnimatedList(
         query: tableRef,
+        defaultChild: const Center(
+          child: CircularProgressIndicator(),
+        ),
+        duration: const Duration(
+          milliseconds: 100,
+        ),
         itemBuilder: (context, snapshot, animation, index) {
           String total = snapshot.child('Number of Tables').value.toString();
           int noOfTables = int.parse(total);

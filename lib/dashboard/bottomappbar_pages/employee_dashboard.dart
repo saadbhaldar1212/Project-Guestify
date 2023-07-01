@@ -305,6 +305,12 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                           ),
                           child: FirebaseAnimatedList(
                             shrinkWrap: true,
+                            defaultChild: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            duration: const Duration(
+                              milliseconds: 100,
+                            ),
                             query: empRef,
                             itemBuilder: (context, snapshot, animation, index) {
                               return SingleChildScrollView(

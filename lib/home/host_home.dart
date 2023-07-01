@@ -88,6 +88,12 @@ class _HostIndexState extends State<HostIndex> {
             ),
             FirebaseAnimatedList(
               shrinkWrap: true,
+              defaultChild: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              duration: const Duration(
+                milliseconds: 100,
+              ),
               query: presentEventDay,
               itemBuilder: (context, snapshot, animation, index) {
                 String guestName =

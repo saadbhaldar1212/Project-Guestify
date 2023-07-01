@@ -27,6 +27,8 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
   bool focus = false;
   final FocusNode unitCodeCtrlFocusNode = FocusNode();
 
+  bool hasOngoingEvent = false;
+
   @override
   Widget build(BuildContext context) {
     final seatRef = db.child('guest/guest_info');
@@ -47,7 +49,6 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        primary: true,
         child: Column(
           children: [
             Padding(

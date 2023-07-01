@@ -50,6 +50,7 @@ dependencies:
   twilio_flutter: ^0.0.9
   http: ^0.13.6
   easy_search_bar: ^2.5.0
+  flutter_speed_dial: ^7.0.0
 
 flutter_native_splash:
   color: "#1196CF"

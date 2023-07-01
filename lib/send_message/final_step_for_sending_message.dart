@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:guestify/dashboard/dashboard.dart';
 
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
@@ -48,10 +49,12 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
         ),
       ),
       body: SingleChildScrollView(
+        primary: true,
         child: Column(
           children: [
             FirebaseAnimatedList(
               shrinkWrap: true,
+              primary: false,
               defaultChild: const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -71,10 +74,110 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                 chairNumber
                     .add(snapshot.child('Chair Number').value.toString());
 
-                return Text(
-                  snapshot.child('Guest Phone Number').value.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 05.0),
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    color: const Color.fromARGB(220, 24, 133, 196),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'Guest Name: ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                snapshot.child('Guest Name').value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Guest Email: ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                snapshot.child('Guest Email').value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Table Number: ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                snapshot.child('Table Number').value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Chair Number: ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                snapshot.child('Chair Number').value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Guest Phone Number: ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                snapshot
+                                    .child('Guest Phone Number')
+                                    .value
+                                    .toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 );
               },
@@ -94,60 +197,72 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                 eventTime = snapshot.child('Event Time').value.toString();
                 eventLocation = snapshot.child('Event Venue').value.toString();
 
-                return Text(
-                  snapshot.child('Event Name').value.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                );
+                return Container();
               },
-            ),
-            ElevatedButton(
-              onPressed: (() async {
-                await twilioService
-                    .sendMessages(numbers, guestName, tableNumber, chairNumber,
-                        eventName, eventDate, eventTime, eventLocation)
-                    .then((value) {
-                  MotionToast.success(
-                    title: const Text(
-                      'Success',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    description: const Text('Message Sent SuccessFully',
-                        style: TextStyle(color: Colors.green)),
-                    iconType: IconType.cupertino,
-                    enableAnimation: false,
-                    animationDuration: const Duration(milliseconds: 100),
-                    animationType: AnimationType.fromBottom,
-                    dismissable: true,
-                  ).show(context);
-                }).onError((error, stackTrace) {
-                  MotionToast.error(
-                    title: const Text(
-                      'Error',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    description: Text(error.toString()),
-                    iconType: IconType.cupertino,
-                    enableAnimation: false,
-                    animationDuration: const Duration(milliseconds: 100),
-                    animationType: AnimationType.fromBottom,
-                    dismissable: true,
-                  ).show(context);
-                });
-              }),
-              child: const Text('Send Message'),
             ),
           ],
         ),
       ),
+      floatingActionButton: ElevatedButton(
+        onPressed: (() async {
+          await twilioService
+              .sendMessages(numbers, guestName, tableNumber, chairNumber,
+                  eventName, eventDate, eventTime, eventLocation)
+              .then((value) {
+            MotionToast.success(
+              title: const Text(
+                'Success',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              description: const Text(
+                'Message Sent SuccessFully',
+                style: TextStyle(color: Colors.green),
+              ),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context);
+
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Dashboard(),
+                ),
+                (route) => false);
+          }).onError((error, stackTrace) {
+            MotionToast.error(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              description: Text(error.toString()),
+              iconType: IconType.cupertino,
+              enableAnimation: false,
+              animationDuration: const Duration(milliseconds: 100),
+              animationType: AnimationType.fromBottom,
+              dismissable: true,
+            ).show(context);
+          });
+        }),
+        child: const Text(
+          'Send Message',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 21,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

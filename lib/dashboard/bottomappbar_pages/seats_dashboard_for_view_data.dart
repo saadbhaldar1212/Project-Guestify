@@ -105,9 +105,6 @@ class _SeatsDashboardForViewDataState extends State<SeatsDashboardForViewData> {
               defaultChild: const Center(
                 child: CircularProgressIndicator(),
               ),
-              duration: const Duration(
-                milliseconds: 100,
-              ),
               query: seatRef,
               itemBuilder: (context, snapshot, animation, index) {
                 String guestName =

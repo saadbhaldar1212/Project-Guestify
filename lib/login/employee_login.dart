@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/home/employee_home.dart';
+import 'package:get/get.dart';
 
+import '../home/employee_home.dart';
 import '../utils/employee_login_form/email_field.dart';
 import '../utils/employee_login_form/password_field.dart';
 import '../utils/toast/motion_toast.dart';
 import '../utils/toast/resources/arrays.dart';
+import 'forgot_password_admin.dart';
 
 class EmployeeLogin extends StatefulWidget {
   const EmployeeLogin({super.key});
@@ -199,19 +201,21 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                 ),
               ),
             ),
-            // TextButton(
-            //   onPressed: (() {
-            //     Utils().toastMessage('Pressed');
-            //   }),
-            //   child: const Text(
-            //     'Forgot Password?',
-            //     style: TextStyle(
-            //       fontWeight: FontWeight.w600,
-            //       fontSize: 14,
-            //       color: Color.fromARGB(255, 17, 150, 207),
-            //     ),
-            //   ),
-            // ),
+            TextButton(
+              onPressed: (() {
+                Get.to(
+                  () => const EmployeeForgotPassword(),
+                );
+              }),
+              child: const Text(
+                'Forgot Password?',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 17, 150, 207),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -228,4 +232,10 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   final emailField = EmailField(emailController: emailController);
 
   final passwordField = PasswordField(passwordController: passwordController);
+
+  @override
+  void dispose() {
+    super.dispose();
+    _formField.currentState!.dispose();
+  }
 }

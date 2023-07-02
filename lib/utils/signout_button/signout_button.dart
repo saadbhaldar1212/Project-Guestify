@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/welcome/welcome.dart';
 
+import '../../welcome/welcome.dart';
 import '../toast/motion_toast.dart';
 import '../toast/resources/arrays.dart';
 

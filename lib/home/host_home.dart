@@ -30,7 +30,8 @@ class _HostIndexState extends State<HostIndex> {
           'Present Guests',
           style: TextStyle(
             fontSize: 35,
-            fontWeight: FontWeight.w300,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
           ),
         ),
       ),
@@ -49,8 +50,9 @@ class _HostIndexState extends State<HostIndex> {
                 },
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
+                  fontFamily: 'Poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
                 ),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(
@@ -82,6 +84,7 @@ class _HostIndexState extends State<HostIndex> {
                   hintText: 'Type something...',
                   hintStyle: const TextStyle(
                     color: Colors.black,
+                    fontFamily: 'Poppins',
                   ),
                 ),
               ),
@@ -125,6 +128,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Name: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -132,6 +136,7 @@ class _HostIndexState extends State<HostIndex> {
                                   snapshot.child('Guest Name').value.toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -143,6 +148,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Email: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -153,6 +159,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -164,6 +171,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Table Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -174,6 +182,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -185,6 +194,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Chair Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -195,6 +205,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -206,6 +217,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Phone Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -216,6 +228,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -266,6 +279,7 @@ class _HostIndexState extends State<HostIndex> {
                                   snapshot.child('Guest Name').value.toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -277,6 +291,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Email: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -287,6 +302,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -298,6 +314,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Table Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -308,6 +325,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -319,6 +337,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Chair Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -329,6 +348,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),
@@ -340,6 +360,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Phone Number: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -350,6 +371,7 @@ class _HostIndexState extends State<HostIndex> {
                                       .toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                   ),
                                 ),

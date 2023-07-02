@@ -1,11 +1,12 @@
 library motion_toast;
 
 import 'dart:async';
+import 'package:Guestify/utils/toast/resources/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/toast/resources/arrays.dart';
-import 'package:guestify/utils/toast/resources/extensions.dart';
-import 'package:guestify/utils/toast/widgets/motion_toast_background.dart';
-import 'package:guestify/utils/toast/widgets/motion_toast_content.dart';
+
+import 'resources/arrays.dart';
+import 'widgets/motion_toast_background.dart';
+import 'widgets/motion_toast_content.dart';
 
 /// Render the motion toast widget
 // ignore: must_be_immutable

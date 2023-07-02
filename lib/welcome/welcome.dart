@@ -20,11 +20,6 @@ class TransformHelper {
 }
 
 class _WelcomeSplashState extends State<WelcomeSplash> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   double _customOpacity = 0;
   @override
   Widget build(BuildContext context) {
@@ -33,41 +28,42 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TweenAnimationBuilder(
-              onEnd: () {
-                setState(() {
-                  _customOpacity = 1;
-                });
-              },
-              curve: Curves.easeInOutCirc,
-              tween: Tween<double>(begin: 0, end: 300),
-              duration: const Duration(seconds: 1),
-              builder: (BuildContext context, double value, Widget? child) {
-                return Hero(
-                  tag: 'logoTag',
-                  child: Image.asset(
-                    'assets/images/launch_image.png',
-                    alignment: Alignment.center,
-                    width: value,
-                    height: value,
-                  ),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: TweenAnimationBuilder(
+                onEnd: () {
+                  setState(() {
+                    _customOpacity = 1;
+                  });
+                },
+                curve: Curves.easeInOutCirc,
+                tween: Tween<double>(begin: 0, end: 190),
+                duration: const Duration(seconds: 1),
+                builder: (BuildContext context, double value, Widget? child) {
+                  return Hero(
+                    tag: 'logoTag',
+                    child: Image.asset(
+                      'assets/images/launch_image.png',
+                      alignment: Alignment.center,
+                      width: value,
+                      height: value,
+                    ),
+                  );
+                },
+              ),
             ),
             AnimatedOpacity(
               opacity: _customOpacity,
               duration: const Duration(milliseconds: 500),
-              child: const Column(
-                children: [
-                  Text(
-                    'G U E S T I F Y',
-                    style: TextStyle(
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+              child: const Text(
+                'GUESTIFY',
+                style: TextStyle(
+                  letterSpacing: 13,
+                  fontSize: 38,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
@@ -77,7 +73,7 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
         duration: const Duration(milliseconds: 500),
         opacity: _customOpacity,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 14.0),
+          padding: const EdgeInsets.only(bottom: 24.0),
           child: TransformHelper.translate(
               x: -0.50,
               y: -0.50,
@@ -112,9 +108,9 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
                       child: const Text(
                         'Get Started',
                         style: TextStyle(
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
                           color: Color.fromARGB(255, 17, 150, 207),
                         ),
                       ),
@@ -128,7 +124,13 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
       persistentFooterButtons: const [
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text('Copyright © 2023'),
+          child: Text(
+            'Copyright © 2023',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+            ),
+          ),
         )
       ],
       persistentFooterAlignment: AlignmentDirectional.center,

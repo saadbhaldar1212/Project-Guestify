@@ -1,5 +1,5 @@
+import 'package:Guestify/utils/toast/widgets/seperator.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/utils/toast/widgets/seperator.dart';
 
 import 'motion_toast_icon.dart';
 import 'motion_toast_side_bar.dart';

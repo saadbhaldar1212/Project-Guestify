@@ -4,11 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 // import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/send_message/ui_send_message.dart';
-// import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:guestify/utils/signout_button/signout_button.dart';
-
 import '../../seats/seats_ui.dart';
+import '../../send_message/ui_send_message.dart';
+import '../../utils/signout_button/signout_button.dart';
 
 class SeatsDashboard extends StatefulWidget {
   SeatsDashboard({

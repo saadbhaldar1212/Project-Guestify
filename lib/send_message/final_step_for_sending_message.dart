@@ -1,8 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/dashboard/dashboard.dart';
 
+import '../dashboard/dashboard.dart';
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
 import '../utils/toast/motion_toast.dart';

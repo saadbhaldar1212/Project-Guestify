@@ -1,9 +1,8 @@
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/home/host_home.dart';
-import 'package:guestify/login/admin_login.dart';
-import 'package:guestify/login/employee_login.dart';
-
+import '../home/host_home.dart';
+import '../login/admin_login.dart';
+import '../login/employee_login.dart';
 import '../utils/toast/motion_toast.dart';
 import '../utils/toast/resources/arrays.dart';
 
@@ -71,7 +70,7 @@ class _Welcome2State extends State<Welcome2> {
                     Text(
                       'Event Management',
                       style: TextStyle(
-                          fontFamily: 'Urbanist',
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
                           fontSize: 30,
                           color: Colors.black),
@@ -81,8 +80,8 @@ class _Welcome2State extends State<Welcome2> {
                       child: Text(
                         'made easy',
                         style: TextStyle(
-                          fontFamily: 'Urbanist',
                           fontSize: 20,
+                          fontFamily: 'Poppins',
                           color: Colors.black,
                         ),
                       ),
@@ -90,178 +89,190 @@ class _Welcome2State extends State<Welcome2> {
                   ],
                 ),
               ),
-              AnimatedOpacity(
-                opacity: _customOpacity,
-                duration: const Duration(microseconds: 900),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 25,
-                        bottom: 14.0,
-                      ),
-                      child: TransformHelper.translate(
-                          x: -0.50,
-                          y: -0.50,
-                          z: 0,
-                          child: Container(
-                            width: 250.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                width: 1.3,
-                                color: const Color.fromARGB(255, 17, 150, 207),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
+                child: AnimatedOpacity(
+                  opacity: _customOpacity,
+                  duration: const Duration(microseconds: 900),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 25,
+                          bottom: 14.0,
+                        ),
+                        child: TransformHelper.translate(
+                            x: -0.50,
+                            y: -0.50,
+                            z: 0,
+                            child: Container(
+                              width: 250.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                  width: 1.3,
+                                  color:
+                                      const Color.fromARGB(255, 17, 150, 207),
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.transparent,
+                                  )
+                                ],
                               ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.transparent,
-                                )
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Container(
-                                color: const Color.fromARGB(0, 17, 150, 207),
-                                child: MaterialButton(
-                                  onPressed: (() {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const HostIndex(),
-                                      ),
-                                    ).onError((error, stackTrace) {
-                                      MotionToast.error(
-                                        title: const Text(
-                                          'Error',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Container(
+                                  color: const Color.fromARGB(0, 17, 150, 207),
+                                  child: MaterialButton(
+                                    onPressed: (() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HostIndex(),
                                         ),
-                                        description: Text(error.toString()),
-                                        iconType: IconType.cupertino,
-                                        enableAnimation: false,
-                                        animationDuration:
-                                            const Duration(milliseconds: 100),
-                                        animationType: AnimationType.fromBottom,
-                                        dismissable: true,
-                                      ).show(context);
-                                    });
-                                  }),
-                                  child: const Text(
-                                    'Continue as Host',
-                                    style: TextStyle(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                      color: Color.fromARGB(255, 17, 150, 207),
+                                      ).onError((error, stackTrace) {
+                                        MotionToast.error(
+                                          title: const Text(
+                                            'Error',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                          description: Text(error.toString()),
+                                          iconType: IconType.cupertino,
+                                          enableAnimation: false,
+                                          animationDuration:
+                                              const Duration(milliseconds: 100),
+                                          animationType:
+                                              AnimationType.fromBottom,
+                                          dismissable: true,
+                                        ).show(context);
+                                      });
+                                    }),
+                                    child: const Text(
+                                      'Continue as Host',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 17, 150, 207),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 14.0),
-                      child: TransformHelper.translate(
-                          x: -0.50,
-                          y: -0.50,
-                          z: 0,
-                          child: Container(
-                            width: 250.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                width: 1.3,
-                                color: const Color.fromARGB(255, 17, 150, 207),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14.0),
+                        child: TransformHelper.translate(
+                            x: -0.50,
+                            y: -0.50,
+                            z: 0,
+                            child: Container(
+                              width: 250.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                  width: 1.3,
+                                  color:
+                                      const Color.fromARGB(255, 17, 150, 207),
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.transparent,
+                                  )
+                                ],
                               ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.transparent,
-                                )
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Container(
-                                color: const Color.fromARGB(0, 17, 150, 207),
-                                child: MaterialButton(
-                                  onPressed: (() {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const EmployeeLogin(),
-                                        ));
-                                  }),
-                                  child: const Text(
-                                    'Continue as Employee',
-                                    style: TextStyle(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                      color: Color.fromARGB(255, 17, 150, 207),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Container(
+                                  color: const Color.fromARGB(0, 17, 150, 207),
+                                  child: MaterialButton(
+                                    onPressed: (() {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EmployeeLogin(),
+                                          ));
+                                    }),
+                                    child: const Text(
+                                      'Continue as Employee',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 17, 150, 207),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 14.0),
-                      child: TransformHelper.translate(
-                          x: -0.50,
-                          y: -0.50,
-                          z: 0,
-                          child: Container(
-                            width: 250.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                width: 1.3,
-                                color: const Color.fromARGB(255, 17, 150, 207),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14.0),
+                        child: TransformHelper.translate(
+                            x: -0.50,
+                            y: -0.50,
+                            z: 0,
+                            child: Container(
+                              width: 250.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                  width: 1.3,
+                                  color:
+                                      const Color.fromARGB(255, 17, 150, 207),
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.transparent,
+                                  )
+                                ],
                               ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.transparent,
-                                )
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Container(
-                                color: const Color.fromARGB(0, 17, 150, 207),
-                                child: MaterialButton(
-                                  onPressed: (() {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AdminLogin(),
-                                        ));
-                                  }),
-                                  child: const Text(
-                                    'Continue as Admin',
-                                    style: TextStyle(
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                      color: Color.fromARGB(255, 17, 150, 207),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Container(
+                                  color: const Color.fromARGB(0, 17, 150, 207),
+                                  child: MaterialButton(
+                                    onPressed: (() {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AdminLogin(),
+                                          ));
+                                    }),
+                                    child: const Text(
+                                      'Continue as Admin',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 17, 150, 207),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )),
-                    ),
-                  ],
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -273,6 +284,10 @@ class _Welcome2State extends State<Welcome2> {
           padding: EdgeInsets.all(8.0),
           child: Text(
             'Copyright © 2023',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+            ),
           ),
         )
       ],

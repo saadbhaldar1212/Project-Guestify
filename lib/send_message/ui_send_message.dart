@@ -9,10 +9,10 @@ Update - convert the statically typed template message into variable so it can b
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:guestify/send_message/final_step_for_sending_message.dart';
 import '../utils/signout_button/signout_button.dart';
 import '../utils/toast/motion_toast.dart';
 import '../utils/toast/resources/arrays.dart';
+import 'final_step_for_sending_message.dart';
 
 class UISendMessage extends StatefulWidget {
   const UISendMessage({super.key});

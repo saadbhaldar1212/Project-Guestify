@@ -1,3 +1,4 @@
+import 'package:Guestify/welcome/welcome2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,6 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
         centerTitle: true,
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
@@ -74,6 +74,24 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
             backgroundImage: AssetImage('assets/images/launch_image.png'),
             radius: 80,
             backgroundColor: Colors.transparent,
+          ),
+        ),
+        leading: TextButton(
+          onPressed: (() {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Welcome2(),
+                ),
+                (route) => false);
+          }),
+          child: const Text(
+            '<',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontFamily: 'Poppins',
+            ),
           ),
         ),
         foregroundColor: Colors.white,

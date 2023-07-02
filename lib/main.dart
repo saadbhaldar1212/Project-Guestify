@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
-        primaryColor: const Color.fromRGBO(19, 159, 219, 10),
+        primaryColor: const Color.fromRGBO(0, 77, 120, 1.000),
       ).copyWith(
         dividerColor: Colors.transparent,
         useMaterial3: true,

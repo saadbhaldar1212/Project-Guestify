@@ -15,28 +15,64 @@ class _EmailFieldState extends State<EmailField> {
     return TextFormField(
       style: const TextStyle(
         color: Colors.black,
+        fontFamily: 'Poppins',
+        fontSize: 18,
       ),
       controller: widget.emailController,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      decoration: InputDecoration(
-        errorStyle: const TextStyle(
-          fontSize: 13,
+      decoration: const InputDecoration(
+        prefixIcon: Icon(
+          Icons.person,
         ),
-        enabledBorder: const OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color.fromARGB(255, 17, 150, 207),
+            color: Color.fromRGBO(0, 77, 120, 1.000),
             width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        errorStyle: TextStyle(
+          fontSize: 13,
+          fontFamily: 'Poppins',
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(0, 77, 120, 1.000),
+            width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(0, 77, 120, 1.000),
+            width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              25,
+            ),
           ),
         ),
         helperText: 'e.g: - abc@<>.com',
-        helperStyle: const TextStyle(
+        helperStyle: TextStyle(
+          fontFamily: 'Poppins',
           fontSize: 10,
         ),
         labelText: 'Username',
+        labelStyle: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+        ),
         hintText: 'Enter email address',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+        hintStyle: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
         ),
       ),
       validator: (value) {

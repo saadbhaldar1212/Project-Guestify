@@ -15,24 +15,59 @@ class _PasswordFieldState extends State<PasswordField> {
     return TextFormField(
       style: const TextStyle(
         color: Colors.black,
+        fontFamily: 'Poppins',
+        fontSize: 18,
       ),
       controller: widget.passwordController,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
-      decoration: InputDecoration(
-        errorStyle: const TextStyle(
-          fontSize: 13,
+      decoration: const InputDecoration(
+        prefixIcon: Icon(
+          Icons.lock,
         ),
-        enabledBorder: const OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color.fromARGB(255, 17, 150, 207),
+            color: Color.fromRGBO(0, 77, 120, 1.000),
             width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(0, 77, 120, 1.000),
+            width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        errorStyle: TextStyle(
+          fontSize: 13,
+          fontFamily: 'Poppins',
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(0, 77, 120, 1.000),
+            width: 1.6,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              25,
+            ),
           ),
         ),
         labelText: 'Password',
+        labelStyle: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+        ),
         hintText: 'Enter password',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+        hintStyle: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
         ),
       ),
       validator: (value) {

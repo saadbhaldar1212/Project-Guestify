@@ -67,7 +67,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
         automaticallyImplyLeading: true,
         centerTitle: true,
         elevation: 0,
-        backgroundColor: const Color.fromRGBO(19, 159, 219, 10),
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Hero(
           tag: 'logoTag',
           child: CircleAvatar(
@@ -90,6 +90,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
                   color: Colors.black,
                 ),
               ),
@@ -125,7 +126,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                     borderRadius: BorderRadius.circular(15.0),
                     border: Border.all(
                       width: 1.3,
-                      color: const Color.fromARGB(255, 17, 150, 207),
+                      color: const Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                     boxShadow: const [
                       BoxShadow(
@@ -147,12 +148,16 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Poppins',
                                     color: Colors.black,
                                   ),
                                 ),
-                                description: const Text(
-                                    'Logged In SuccessFully',
-                                    style: TextStyle(color: Colors.green)),
+                                description:
+                                    const Text('Logged In SuccessFully',
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontFamily: 'Poppins',
+                                        )),
                                 iconType: IconType.cupertino,
                                 enableAnimation: false,
                                 animationDuration:
@@ -174,6 +179,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Poppins',
                                   ),
                                 ),
                                 description: Text(error.toString()),
@@ -191,8 +197,9 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                           'Login',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
                             fontSize: 18,
-                            color: Color.fromARGB(255, 17, 150, 207),
+                            color: Color.fromRGBO(0, 77, 120, 1.000),
                           ),
                         ),
                       ),
@@ -211,8 +218,9 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                 'Forgot Password?',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins',
                   fontSize: 14,
-                  color: Color.fromARGB(255, 17, 150, 207),
+                  color: Color.fromRGBO(0, 77, 120, 1.000),
                 ),
               ),
             ),
@@ -230,7 +238,6 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   }
 
   final emailField = EmailField(emailController: emailController);
-
   final passwordField = PasswordField(passwordController: passwordController);
 
   @override

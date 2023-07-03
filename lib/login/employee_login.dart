@@ -45,20 +45,10 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
   }
 
   Future empSignInToHome() async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
     await _auth.signInWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
     );
-
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
   }
 
   @override

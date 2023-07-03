@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:Guestify/home/employee_home.dart';
-import 'package:Guestify/utils/signout_button/signout_button.dart';
+import 'package:Guestify/utils/email_verification/for_email_verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,28 @@ class EmployeeSetting extends StatefulWidget {
 class _EmployeeSettingState extends State<EmployeeSetting> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final formField = GlobalKey<FormState>();
+
+  Future verifyEmail() async {
+    await _auth.currentUser!.sendEmailVerification();
+  }
+
+  void autoRedirectAfterEmailVerification() {
+    Timer? timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      _auth.currentUser!.reload();
+      User? user = _auth.currentUser;
+
+      if (user!.emailVerified) {
+        t.cancel();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    autoRedirectAfterEmailVerification();
+  }
+
   @override
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
@@ -35,6 +59,14 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
             fontWeight: FontWeight.w300,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: (() {
+              _auth.currentUser!.reload();
+            }),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
         toolbarHeight: 150,
         foregroundColor: Colors.black,
         backgroundColor: Colors.amber,
@@ -110,302 +142,16 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                               child: MaterialButton(
                                 minWidth: double.infinity,
                                 onPressed: (() {
-                                  _auth.currentUser!
-                                      .sendEmailVerification()
-                                      .then((value) {
-                                    showCupertinoModalPopup(
-                                      context: context,
-                                      builder: (context) {
-                                        return Scaffold(
-                                          appBar: AppBar(
-                                            backgroundColor: Colors.transparent,
-                                            toolbarHeight: 150,
-                                          ),
-                                          body: SingleChildScrollView(
-                                            child: Column(
-                                              children: [
-                                                const Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.mail_outline,
-                                                      color: Colors.black,
-                                                      size: 140,
-                                                    ),
-                                                  ],
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.all(20.0),
-                                                  child: Text(
-                                                    'Verify your email Address',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 30,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 15,
-                                                  ),
-                                                  child: Text(
-                                                    'We have just sent email verification link on your emial. Please check email and click on that link to verify your Email Address',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 18,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    bottom: 35,
-                                                  ),
-                                                  child: Text(
-                                                    'If not auto redirected after verification, click on the Continue Button',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 18,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 40,
-                                                    vertical: 10,
-                                                  ),
-                                                  child: Card(
-                                                    elevation: 0,
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                15,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          child: InkWell(
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                15,
-                                                              ),
-                                                            ),
-                                                            onTap: () {
-                                                              Navigator
-                                                                  .pushAndRemoveUntil(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                const EmployeeModule(),
-                                                                      ),
-                                                                      (route) =>
-                                                                          false).then(
-                                                                  (value) {
-                                                                if (user.emailVerified ==
-                                                                    true) {
-                                                                  Get.snackbar(
-                                                                    '',
-                                                                    '',
-                                                                    titleText:
-                                                                        const Text(
-                                                                      'Email Verified Successfully',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        fontSize:
-                                                                            22,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                    messageText:
-                                                                        const Text(
-                                                                      '',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight.w300,
-                                                                      ),
-                                                                    ),
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .green,
-                                                                    icon:
-                                                                        const Icon(
-                                                                      Icons
-                                                                          .check_box,
-                                                                    ),
-                                                                  ).show();
-                                                                }
-                                                              });
-                                                            },
-                                                            child:
-                                                                const Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Text(
-                                                                'Continue',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 20,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                    20,
-                                                  ),
-                                                  child: TextButton(
-                                                    onPressed: (() {
-                                                      _auth.currentUser!
-                                                          .sendEmailVerification()
-                                                          .then((value) {
-                                                        Get.snackbar(
-                                                          '',
-                                                          '',
-                                                          titleText: const Text(
-                                                            'Email Verification link sent',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'Poppins',
-                                                              fontSize: 22,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                          messageText:
-                                                              const Text(
-                                                            'Please check email and click on that link to verify your Email Address',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'Poppins',
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                            ),
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                          icon: const Icon(
-                                                            Icons.mail,
-                                                          ),
-                                                        ).show();
-                                                      }).onError((error,
-                                                              stackTrace) {
-                                                        Get.snackbar(
-                                                          '',
-                                                          '',
-                                                          titleText: const Text(
-                                                            'Error',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'Poppins',
-                                                              fontSize: 22,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                          messageText: Text(
-                                                            error.toString(),
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'Poppins',
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                            ),
-                                                          ),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          icon: const Icon(
-                                                            Icons.error,
-                                                          ),
-                                                        ).show();
-                                                      });
-                                                    }),
-                                                    child: const Text(
-                                                      'Resend Email Link',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontFamily: 'Poppins',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }).onError((error, stackTrace) {
+                                  verifyEmail().then((value) {
+                                    // Get.to(
+                                    //   () => const ForEmailVerification(),
+                                    // );
                                     Get.snackbar(
                                       '',
                                       '',
+                                      instantInit: true,
                                       titleText: const Text(
-                                        'Error',
+                                        'Success',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Poppins',
@@ -413,19 +159,41 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      messageText: Text(
-                                        error.toString(),
-                                        style: const TextStyle(
+                                      messageText: const Text(
+                                        'Email Verification Sent',
+                                        style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Poppins',
                                           fontSize: 16,
                                           fontWeight: FontWeight.w300,
                                         ),
                                       ),
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: Colors.green,
                                       icon: const Icon(
-                                        Icons.error,
+                                        Icons.logout,
                                       ),
+                                    ).show();
+                                  }).onError((error, stackTrace) {
+                                    Get.snackbar(
+                                      'Error',
+                                      error.toString(),
+                                      instantInit: true,
+                                      backgroundColor: Colors.red,
+                                      titleText: const Text(
+                                        'Error',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      colorText: Colors.white,
+                                      padding: const EdgeInsets.all(20),
                                     ).show();
                                   });
                                 }),
@@ -485,6 +253,7 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                   Get.snackbar(
                                     '',
                                     '',
+                                    instantInit: true,
                                     backgroundColor: Colors.red,
                                     titleText: const Text(
                                       'User Deleted Successfully',
@@ -509,12 +278,13 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                     snackPosition: SnackPosition.BOTTOM,
                                     colorText: Colors.white,
                                     padding: const EdgeInsets.all(20),
-                                  );
+                                  ).show();
                                 },
                               ).catchError((onError) {
                                 Get.snackbar(
                                   'Error',
                                   '$onError',
+                                  instantInit: true,
                                   backgroundColor: Colors.red,
                                   titleText: const Text(
                                     'Deleted',
@@ -531,7 +301,7 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                   snackPosition: SnackPosition.BOTTOM,
                                   colorText: Colors.white,
                                   padding: const EdgeInsets.all(20),
-                                );
+                                ).show();
                               });
                             },
                       child: Row(
@@ -616,10 +386,69 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                     ),
                   ),
                   onTap: () async {
-                    await _auth
-                        .signOut()
-                        .then((value) {})
-                        .onError((error, stackTrace) {});
+                    await _auth.signOut().then((value) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EmployeeLogin(),
+                          ),
+                          (route) => false);
+                      Get.snackbar(
+                        '',
+                        '',
+                        instantInit: true,
+                        titleText: const Text(
+                          'Success',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        messageText: const Text(
+                          'Logged Out Successfully',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        backgroundColor: Colors.green,
+                        icon: const Icon(
+                          Icons.logout,
+                        ),
+                      ).show();
+                    }).onError((error, stackTrace) {
+                      Get.snackbar(
+                        '',
+                        '',
+                        instantInit: true,
+                        titleText: const Text(
+                          'Error',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        messageText: Text(
+                          error.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                        icon: const Icon(
+                          Icons.error,
+                        ),
+                      ).show();
+                    });
                   },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

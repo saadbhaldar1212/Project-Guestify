@@ -1,4 +1,4 @@
-import 'package:Guestify/welcome/welcome.dart';
+import 'package:Guestify/login/employee_login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,12 +7,17 @@ Future<void> main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
 
   @override
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const WelcomeSplash();
+            return const EmployeeLogin();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

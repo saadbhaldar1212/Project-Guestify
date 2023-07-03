@@ -80,9 +80,11 @@ class _EmailFieldState extends State<EmailField> {
           return 'Enter email';
         } else if (!value.contains('@')) {
           return 'Enter valid email address';
-        } else if (!value.startsWith('employee.')) {
-          return 'Create account using given instructions';
-        } else if (!value.endsWith('.com')) {
+        }
+        // else if (!value.startsWith('employee.')) {
+        //   return 'Create account using given instructions';
+        // }
+        else if (!value.endsWith('.com')) {
           return 'Username should end with .com';
         }
         return null;

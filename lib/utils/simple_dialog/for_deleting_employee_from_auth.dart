@@ -1,8 +1,6 @@
 import 'package:Guestify/login/employee_login.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DeleteEmpFromAuth extends StatefulWidget {
   const DeleteEmpFromAuth({super.key});
@@ -16,7 +14,6 @@ class _DeleteEmpFromAuthState extends State<DeleteEmpFromAuth> {
   final passwordController = TextEditingController();
 
   final db = FirebaseDatabase.instance.ref();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -86,64 +83,7 @@ class _DeleteEmpFromAuthState extends State<DeleteEmpFromAuth> {
                     child: Material(
                       color: Colors.red,
                       child: MaterialButton(
-                        onPressed: (() async {
-                          User? user = _auth.currentUser;
-
-                          await user!.delete().then(
-                            (res) {
-                              Get.offAll(() => const EmployeeLogin());
-                              Get.snackbar(
-                                '',
-                                '',
-                                backgroundColor: Colors.red,
-                                titleText: const Text(
-                                  'User Deleted Successfully',
-                                  style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                                messageText: const Text(
-                                  'You are been redirected to Login Screen',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.check_circle,
-                                  color: Colors.white,
-                                ),
-                                snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white,
-                                padding: const EdgeInsets.all(20),
-                              );
-                            },
-                          ).catchError((onError) {
-                            Get.snackbar(
-                              'Error',
-                              '$onError',
-                              backgroundColor: Colors.red,
-                              titleText: const Text(
-                                'Deleted',
-                                style: TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              snackPosition: SnackPosition.BOTTOM,
-                              colorText: Colors.white,
-                              padding: const EdgeInsets.all(20),
-                            );
-                          });
-                        }),
+                        onPressed: (() async {}),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

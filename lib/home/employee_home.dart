@@ -1,11 +1,11 @@
-import 'package:Guestify/utils/simple_dialog/for_deleting_employee_from_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 
-import '../utils/signout_button/signout_button.dart';
-import '../welcome/welcome.dart';
+import '../settings/employee_setting.dart';
 
 class EmployeeModule extends StatefulWidget {
   const EmployeeModule({super.key});
@@ -51,7 +51,20 @@ class _EmployeeModuleState extends State<EmployeeModule> {
             fontWeight: FontWeight.w400,
           ),
         ),
-        actions: const [SignOutButton()],
+        actions: [
+          IconButton(
+            onPressed: (() {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => const EmployeeSetting(),
+              );
+            }),
+            icon: const Icon(
+              Icons.settings,
+              size: 40,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -422,158 +435,6 @@ class _EmployeeModuleState extends State<EmployeeModule> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ElevatedButton(
-            onPressed: (() {
-              showCupertinoDialog(
-                context: context,
-                builder: (context) => const DeleteEmpFromAuth(),
-              );
-              // Get.defaultDialog(
-              //     backgroundColor: Colors.amber,
-              //     confirm: ElevatedButton(
-              //       onPressed: (() {}),
-              //       child: const Text(
-              //         'Confirm',
-              //         style: TextStyle(
-              //           fontFamily: 'Poppins',
-              //         ),
-              //       ),
-              //     ),
-              //     cancel: ElevatedButton(
-              //       onPressed: (() {}),
-              //       child: const Text(
-              //         'Cancel',
-              //         style: TextStyle(
-              //           fontFamily: 'Poppins',
-              //         ),
-              //       ),
-              //     ),
-              //     onCancel: () {
-              //       Navigator.pop(context);
-              //     });
-
-              // User? user = _auth.currentUser;
-              // AuthCredential credential = EmailAuthProvider.credential(email: , password: password)
-              // await user!
-              //     .reauthenticateWithCredential(credential)
-              //     .then((value) {
-              //   value.user!.delete().then((res) => Get.offAll(const EmployeeLogin()));
-              // });
-              // Get.snackbar(
-              //   'Success',
-              //   'User deleted successfully',
-              //   backgroundColor: Colors.red,
-              //   titleText: const Text(
-              //     'Deleted',
-              //     style: TextStyle(
-              //       fontSize: 35,
-              //       fontWeight: FontWeight.w600,
-              //       fontFamily: 'Poppins',
-              //     ),
-              //   ),
-              //   messageText: const Text(
-              //     'User deleted Successfully',
-              //     style: TextStyle(
-              //       fontSize: 18,
-              //       fontWeight: FontWeight.w300,
-              //       fontFamily: 'Poppins',
-              //     ),
-              //   ),
-              //   icon: const Icon(
-              //     Icons.error,
-              //     color: Colors.white,
-              //   ),
-              //   snackPosition: SnackPosition.BOTTOM,
-              //   colorText: Colors.white,
-              //   padding: const EdgeInsets.all(20),
-              // );
-            }),
-            child: const Text(
-              'Delete Account',
-              style: TextStyle(
-                color: Colors.red,
-                fontFamily: 'Poppins',
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: (() {
-              showDialog(
-                context: context,
-                builder: (context) => SimpleDialog(
-                  title: const Text(
-                    'Are you sure?',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Poppins',
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Material(
-                            color: Colors.green.shade400,
-                            child: MaterialButton(
-                              onPressed: (() {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WelcomeSplash(),
-                                    ),
-                                    (route) => false);
-                              }),
-                              child: const Text(
-                                'Yes & Continue',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Material(
-                            color: Colors.red,
-                            child: MaterialButton(
-                              onPressed: (() {
-                                Navigator.pop(context);
-                              }),
-                              child: const Text(
-                                'No',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }),
-            child: const Text(
-              'Submit Data',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-              ),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

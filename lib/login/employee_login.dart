@@ -257,10 +257,4 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
 
   final emailField = EmailField(emailController: emailController);
   final passwordField = PasswordField(passwordController: passwordController);
-
-  @override
-  void dispose() {
-    super.dispose();
-    _formField.currentState!.dispose();
-  }
 }

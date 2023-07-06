@@ -129,7 +129,10 @@ class _Welcome2State extends State<Welcome2> {
                                   color: const Color.fromARGB(0, 17, 150, 207),
                                   child: MaterialButton(
                                     onPressed: (() {
-                                      HapticFeedback.heavyImpact();
+                                      setState(() {
+                                        HapticFeedback.heavyImpact();
+                                      });
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

@@ -1,5 +1,6 @@
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../home/host_home.dart';
 import '../login/admin_login.dart';
@@ -128,6 +129,7 @@ class _Welcome2State extends State<Welcome2> {
                                   color: const Color.fromARGB(0, 17, 150, 207),
                                   child: MaterialButton(
                                     onPressed: (() {
+                                      HapticFeedback.heavyImpact();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

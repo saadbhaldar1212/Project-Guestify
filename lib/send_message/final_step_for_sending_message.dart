@@ -1,7 +1,12 @@
+import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/dashboard/dashboard.dart';
 
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
@@ -26,6 +31,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
   String eventLocation = '';
 
   final db = FirebaseDatabase.instance.ref();
+
   @override
   Widget build(BuildContext context) {
     final seatRef = db.child('guest/guest_info/');
@@ -203,6 +209,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
       ),
       floatingActionButton: ElevatedButton(
         onPressed: (() async {
+          HapticFeedback.heavyImpact();
           await twilioService
               .sendMessages(numbers, guestName, tableNumber, chairNumber,
                   eventName, eventDate, eventTime, eventLocation)
@@ -210,7 +217,6 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
             Get.snackbar(
               '',
               '',
-              instantInit: true,
               titleText: const Text(
                 'Success',
                 style: TextStyle(
@@ -221,7 +227,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                 ),
               ),
               messageText: const Text(
-                'Message Sent Successfully',
+                'Message Sent',
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Poppins',
@@ -233,19 +239,222 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
               icon: const Icon(
                 Icons.logout,
               ),
+              snackPosition: SnackPosition.BOTTOM,
             ).show();
-
-            // Navigator.pushAndRemoveUntil(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => const Dashboard(),
-            //     ),
-            //     (route) => false);
+            showCupertinoModalPopup(
+              context: context,
+              builder: (context) {
+                return Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    toolbarHeight: 150,
+                  ),
+                  body: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.message_outlined,
+                              color: Colors.black,
+                              size: 140,
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Text(
+                            'Message Sent Successfully',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 15,
+                          ),
+                          child: Text(
+                            'We have just sent messages on all the mobile number enetered.',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: 35,
+                          ),
+                          child: Text(
+                            'Please check that you\'ve recieved the message. If you\'ve recieved the message, click Continue or click on Resend button to resend the message.',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 40,
+                            vertical: 10,
+                          ),
+                          child: Card(
+                            elevation: 0,
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.black,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(
+                                        15,
+                                      ),
+                                    ),
+                                  ),
+                                  child: InkWell(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(
+                                        15,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Dashboard(),
+                                          ),
+                                          (route) => false);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Continue',
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(
+                            20,
+                          ),
+                          child: TextButton(
+                            onPressed: (() async {
+                              await twilioService
+                                  .sendMessages(
+                                numbers,
+                                guestName,
+                                tableNumber,
+                                chairNumber,
+                                eventName,
+                                eventDate,
+                                eventTime,
+                                eventLocation,
+                              )
+                                  .then((value) {
+                                Get.snackbar(
+                                  '',
+                                  '',
+                                  titleText: const Text(
+                                    'Success',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  messageText: const Text(
+                                    'Message Sent',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                  icon: const Icon(
+                                    Icons.logout,
+                                  ),
+                                  snackPosition: SnackPosition.BOTTOM,
+                                ).show();
+                              }).onError((error, stackTrace) {
+                                Get.snackbar(
+                                  '',
+                                  '',
+                                  instantInit: true,
+                                  titleText: const Text(
+                                    'Error',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  messageText: Text(
+                                    error.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  icon: const Icon(
+                                    Icons.error,
+                                  ),
+                                ).show();
+                              });
+                            }),
+                            child: const Text(
+                              'Resend Message',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
           }).onError((error, stackTrace) {
             Get.snackbar(
               '',
               '',
-              instantInit: true,
               titleText: const Text(
                 'Error',
                 style: TextStyle(

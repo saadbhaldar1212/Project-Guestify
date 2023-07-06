@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../utils/employee_login_form/email_field.dart';
@@ -108,7 +110,10 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
                   color: Colors.amber.shade600,
                   child: MaterialButton(
                     minWidth: double.infinity,
-                    onPressed: (() {
+                    onPressed: (() async {
+                      setState(() {
+                        HapticFeedback.vibrate();
+                      });
                       if (_empFormField.currentState!.validate()) {
                         _auth
                             .sendPasswordResetEmail(

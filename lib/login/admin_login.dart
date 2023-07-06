@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../dashboard/dashboard.dart';
@@ -139,6 +140,9 @@ class _AdminLoginState extends State<AdminLogin> {
                       color: const Color.fromARGB(0, 17, 150, 207),
                       child: MaterialButton(
                         onPressed: (() {
+                          setState(() {
+                            HapticFeedback.vibrate();
+                          });
                           if (_formField.currentState!.validate()) {
                             _auth
                                 .signInWithEmailAndPassword(

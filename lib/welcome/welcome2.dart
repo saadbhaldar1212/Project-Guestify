@@ -1,4 +1,5 @@
 // import 'package:firebase_database/firebase_database.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -129,10 +130,15 @@ class _Welcome2State extends State<Welcome2> {
                                   color: const Color.fromARGB(0, 17, 150, 207),
                                   child: MaterialButton(
                                     onPressed: (() {
-                                      setState(() {
-                                        HapticFeedback.heavyImpact();
-                                      });
-
+                                      // final player = AudioPlayer();
+                                      // player.play(
+                                      //   AssetSource(
+                                      //     'sounds/selection.mp3',
+                                      //   ),
+                                      // );
+                                      // setState(() {
+                                      //   HapticFeedback.vibrate();
+                                      // });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

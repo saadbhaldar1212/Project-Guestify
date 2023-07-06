@@ -36,6 +36,7 @@ dependencies:
   twilio_flutter: ^0.0.9
   http: ^0.13.6
   flutter_speed_dial: ^7.0.0
+  audioplayers: ^4.1.0
 
 flutter_native_splash:
   color: "#004D78"
@@ -51,6 +52,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/sounds/
 
   fonts:
     - family: Poppins

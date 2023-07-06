@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../home/employee_home.dart';
@@ -146,6 +147,9 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                       color: const Color.fromARGB(0, 17, 150, 207),
                       child: MaterialButton(
                         onPressed: (() {
+                          setState(() {
+                            HapticFeedback.vibrate();
+                          });
                           if (_formField.currentState!.validate()) {
                             empSignInToHome().then((value) {
                               Get.snackbar(

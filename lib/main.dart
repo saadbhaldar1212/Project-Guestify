@@ -1,7 +1,8 @@
-import 'package:Guestify/login/employee_login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'login/employee_login.dart';
 
 Future<void> main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);

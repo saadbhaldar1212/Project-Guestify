@@ -1,12 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../dashboard/dashboard.dart';
 import '../models/twilio_service_model.dart';
 import '../utils/signout_button/signout_button.dart';
-import '../utils/toast/motion_toast.dart';
-import '../utils/toast/resources/arrays.dart';
 
 class SendMessageUsingTwilio extends StatefulWidget {
   const SendMessageUsingTwilio({super.key});
@@ -209,48 +207,68 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
               .sendMessages(numbers, guestName, tableNumber, chairNumber,
                   eventName, eventDate, eventTime, eventLocation)
               .then((value) {
-            MotionToast.success(
-              title: const Text(
+            Get.snackbar(
+              '',
+              '',
+              instantInit: true,
+              titleText: const Text(
                 'Success',
                 style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.white,
+                  fontFamily: 'Poppins',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              description: const Text(
-                'Message Sent SuccessFully',
-                style: TextStyle(color: Colors.green),
+              messageText: const Text(
+                'Message Sent Successfully',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
-              iconType: IconType.cupertino,
-              enableAnimation: false,
-              animationDuration: const Duration(milliseconds: 100),
-              animationType: AnimationType.fromBottom,
-              dismissable: true,
-            ).show(context);
+              backgroundColor: Colors.green,
+              icon: const Icon(
+                Icons.logout,
+              ),
+            ).show();
 
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Dashboard(),
-                ),
-                (route) => false);
+            // Navigator.pushAndRemoveUntil(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => const Dashboard(),
+            //     ),
+            //     (route) => false);
           }).onError((error, stackTrace) {
-            MotionToast.error(
-              title: const Text(
+            Get.snackbar(
+              '',
+              '',
+              instantInit: true,
+              titleText: const Text(
                 'Error',
                 style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontFamily: 'Poppins',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              description: Text(error.toString()),
-              iconType: IconType.cupertino,
-              enableAnimation: false,
-              animationDuration: const Duration(milliseconds: 100),
-              animationType: AnimationType.fromBottom,
-              dismissable: true,
-            ).show(context);
+              messageText: Text(
+                error.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              backgroundColor: Colors.red,
+              icon: const Icon(
+                Icons.error,
+              ),
+            ).show();
           });
         }),
         child: const Text(

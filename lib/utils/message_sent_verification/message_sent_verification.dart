@@ -6,14 +6,15 @@ import 'package:get/get.dart';
 
 import '../../home/employee_home.dart';
 
-class ForEmailVerification extends StatefulWidget {
-  const ForEmailVerification({super.key});
+class MessageSentVerification extends StatefulWidget {
+  const MessageSentVerification({super.key});
 
   @override
-  State<ForEmailVerification> createState() => _ForEmailVerificationState();
+  State<MessageSentVerification> createState() =>
+      _MessageSentVerificationState();
 }
 
-class _ForEmailVerificationState extends State<ForEmailVerification> {
+class _MessageSentVerificationState extends State<MessageSentVerification> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -123,7 +124,7 @@ class _ForEmailVerificationState extends State<ForEmailVerification> {
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(
-                'Verify your email Address',
+                'Message Sent Successfully',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 30,
@@ -139,7 +140,7 @@ class _ForEmailVerificationState extends State<ForEmailVerification> {
                 top: 15,
               ),
               child: Text(
-                'We have just sent email verification link on your emial. Please check email and click on that link to verify your Email Address',
+                'We have just sent messages on all the mobile number enetered.',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w300,
@@ -158,7 +159,7 @@ class _ForEmailVerificationState extends State<ForEmailVerification> {
                 bottom: 35,
               ),
               child: Text(
-                'If not auto redirected after verification, click on the Continue Button',
+                'Please check that you\'ve recieved the message or click on Resend button to resend the message.',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w300,
@@ -262,7 +263,7 @@ class _ForEmailVerificationState extends State<ForEmailVerification> {
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'Continue',
+                            'Resend',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: Colors.black,

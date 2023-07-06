@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../utils/toast/motion_toast.dart';
-import '../utils/toast/resources/arrays.dart';
+import '../utils/employee_login_form/email_field.dart';
 import 'employee_login.dart';
 
 class EmployeeForgotPassword extends StatefulWidget {
@@ -36,6 +36,24 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
         ),
         foregroundColor: Colors.white,
         toolbarHeight: 200,
+        leading: TextButton(
+          onPressed: (() {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EmployeeLogin(),
+                ),
+                (route) => false);
+          }),
+          child: const Text(
+            '<',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontFamily: 'Poppins',
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -79,91 +97,7 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
               ),
               child: Form(
                 key: _empFormField,
-                child: TextFormField(
-                  controller: emailController,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.person,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(0, 77, 120, 1.000),
-                        width: 1.6,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(0, 77, 120, 1.000),
-                        width: 1.6,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(0, 77, 120, 1.000),
-                        width: 1.6,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                    errorStyle: TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Poppins',
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(0, 77, 120, 1.000),
-                        width: 1.6,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          25,
-                        ),
-                      ),
-                    ),
-                    helperText: 'e.g: - abc@<>.com',
-                    helperStyle: TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Poppins',
-                    ),
-                    labelText: 'Username',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 16,
-                      color: Color.fromRGBO(0, 77, 120, 1.000),
-                    ),
-                    hintText: 'Enter email address',
-                    hintStyle: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 16,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter email';
-                    } else if (!value.contains('@')) {
-                      return 'Enter valid email address';
-                    } else if (!value.startsWith('employee.')) {
-                      return 'Enter email using given instructions';
-                    } else if (!value.endsWith('.com')) {
-                      return 'Username should end with .com';
-                    }
-                    return null;
-                  },
-                ),
+                child: EmailField(emailController: emailController),
               ),
             ),
             Padding(
@@ -181,55 +115,62 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
                           email: emailController.text.toString(),
                         )
                             .then((value) {
-                          MotionToast.success(
-                            title: const Text(
+                          Get.snackbar(
+                            '',
+                            '',
+                            instantInit: true,
+                            titleText: const Text(
                               'Success',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontFamily: 'Poppins',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            description: const Text(
-                              'Reset Password link sent successfully',
+                            messageText: const Text(
+                              'Reset Password sent Successfull',
                               style: TextStyle(
-                                color: Colors.green,
+                                color: Colors.white,
                                 fontFamily: 'Poppins',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
-                            onClose: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const EmployeeLogin(),
-                                ),
-                                (route) => false,
-                              );
-                            },
-                            iconType: IconType.cupertino,
-                            enableAnimation: false,
-                            animationDuration:
-                                const Duration(milliseconds: 100),
-                            animationType: AnimationType.fromBottom,
-                          ).show(context);
+                            backgroundColor: Colors.green,
+                            icon: const Icon(
+                              Icons.logout,
+                            ),
+                          ).show();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EmployeeLogin(),
+                            ),
+                            (route) => false,
+                          );
                         }).onError((error, stackTrace) {
-                          MotionToast.error(
-                            title: const Text(
+                          Get.snackbar(
+                            'Error',
+                            error.toString(),
+                            instantInit: true,
+                            backgroundColor: Colors.red,
+                            titleText: const Text(
                               'Error',
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 35,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins',
                               ),
                             ),
-                            description: Text(error.toString()),
-                            iconType: IconType.cupertino,
-                            enableAnimation: false,
-                            animationDuration:
-                                const Duration(milliseconds: 100),
-                            animationType: AnimationType.fromBottom,
-                          ).show(context);
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: Colors.white,
+                            padding: const EdgeInsets.all(20),
+                          ).show();
                         });
                       }
                     }),

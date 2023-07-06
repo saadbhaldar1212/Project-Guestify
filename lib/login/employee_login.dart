@@ -1,4 +1,3 @@
-import 'package:Guestify/welcome/welcome2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +6,7 @@ import 'package:get/get.dart';
 import '../home/employee_home.dart';
 import '../utils/employee_login_form/email_field.dart';
 import '../utils/employee_login_form/password_field.dart';
-import '../utils/toast/motion_toast.dart';
-import '../utils/toast/resources/arrays.dart';
+import '../welcome/welcome2.dart';
 import 'forgot_password_admin.dart';
 
 class EmployeeLogin extends StatefulWidget {
@@ -150,29 +148,33 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                         onPressed: (() {
                           if (_formField.currentState!.validate()) {
                             empSignInToHome().then((value) {
-                              MotionToast.success(
-                                title: const Text(
+                              Get.snackbar(
+                                '',
+                                '',
+                                instantInit: true,
+                                titleText: const Text(
                                   'Success',
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                     fontFamily: 'Poppins',
-                                    color: Colors.black,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                description:
-                                    const Text('Logged In SuccessFully',
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontFamily: 'Poppins',
-                                        )),
-                                iconType: IconType.cupertino,
-                                enableAnimation: false,
-                                animationDuration:
-                                    const Duration(milliseconds: 100),
-                                animationType: AnimationType.fromBottom,
-                                dismissable: true,
-                              ).show(context);
+                                messageText: const Text(
+                                  'Logged In',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                                backgroundColor: Colors.green,
+                                icon: const Icon(
+                                  Icons.logout,
+                                ),
+                              ).show();
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -181,23 +183,27 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
                                 (route) => false,
                               );
                             }).onError((error, stackTrace) {
-                              MotionToast.error(
-                                title: const Text(
+                              Get.snackbar(
+                                'Error',
+                                error.toString(),
+                                instantInit: true,
+                                backgroundColor: Colors.red,
+                                titleText: const Text(
                                   'Error',
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Poppins',
                                   ),
                                 ),
-                                description: Text(error.toString()),
-                                iconType: IconType.cupertino,
-                                enableAnimation: false,
-                                animationDuration:
-                                    const Duration(milliseconds: 100),
-                                animationType: AnimationType.fromBottom,
-                                dismissable: true,
-                              ).show(context);
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                padding: const EdgeInsets.all(20),
+                              ).show();
                             });
                           }
                         }),
@@ -218,7 +224,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
             ),
             TextButton(
               onPressed: (() {
-                Get.to(
+                Get.off(
                   () => const EmployeeForgotPassword(),
                 );
               }),

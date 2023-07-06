@@ -4,8 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 import '../utils/radio_options.dart';
-import '../utils/toast/motion_toast.dart';
-import '../utils/toast/resources/arrays.dart';
 import 'seats_ui_configuration/circular_widget_config.dart';
 import 'seats_ui_configuration/circular_widgets.dart';
 import 'package:flutter/material.dart';
@@ -193,23 +191,23 @@ class _SingleCircleState extends State<SingleCircle> {
         ),
         onTap: () {
           if (widget.color == Colors.red) {
-            MotionToast.info(
-              title: const Text(
-                'Tapped',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              description: Text(
-                  'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}'),
-              iconType: IconType.cupertino,
-              enableAnimation: false,
-              animationDuration: const Duration(milliseconds: 100),
-              animationType: AnimationType.fromBottom,
-              dismissable: true,
-            ).show(context);
+            // MotionToast.info(
+            //   title: const Text(
+            //     'Tapped',
+            //     style: TextStyle(
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            //   description: Text(
+            //       'Table Number: ${widget.tableLength! + 1}, Seat Number: ${widget.txt.toString()}'),
+            //   iconType: IconType.cupertino,
+            //   enableAnimation: false,
+            //   animationDuration: const Duration(milliseconds: 100),
+            //   animationType: AnimationType.fromBottom,
+            //   dismissable: true,
+            // ).show(context);
 
             // showModalBottomSheet(
             //   isDismissible: false,
@@ -582,21 +580,27 @@ class _SingleCircleState extends State<SingleCircle> {
                           Navigator.pop(context);
                         },
                       ).onError((error, stackTrace) {
-                        MotionToast.error(
-                          title: const Text(
+                        Get.snackbar(
+                          'Error',
+                          error.toString(),
+                          instantInit: true,
+                          backgroundColor: Colors.red,
+                          titleText: const Text(
                             'Error',
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 35,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Poppins',
                             ),
                           ),
-                          description: Text(error.toString()),
-                          iconType: IconType.cupertino,
-                          enableAnimation: false,
-                          animationDuration: const Duration(milliseconds: 100),
-                          animationType: AnimationType.fromBottom,
-                          dismissable: true,
-                        ).show(context);
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: Colors.white,
+                          padding: const EdgeInsets.all(20),
+                        ).show();
                       });
 
                       // }

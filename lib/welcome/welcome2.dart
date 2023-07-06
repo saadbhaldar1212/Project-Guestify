@@ -1,10 +1,9 @@
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../home/host_home.dart';
 import '../login/admin_login.dart';
 import '../login/employee_login.dart';
-import '../utils/toast/motion_toast.dart';
-import '../utils/toast/resources/arrays.dart';
 
 class Welcome2 extends StatefulWidget {
   const Welcome2({super.key});
@@ -136,24 +135,27 @@ class _Welcome2State extends State<Welcome2> {
                                               const HostIndex(),
                                         ),
                                       ).onError((error, stackTrace) {
-                                        MotionToast.error(
-                                          title: const Text(
+                                        Get.snackbar(
+                                          'Error',
+                                          error.toString(),
+                                          instantInit: true,
+                                          backgroundColor: Colors.red,
+                                          titleText: const Text(
                                             'Error',
                                             style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 35,
+                                              fontWeight: FontWeight.w600,
                                               fontFamily: 'Poppins',
                                             ),
                                           ),
-                                          description: Text(error.toString()),
-                                          iconType: IconType.cupertino,
-                                          enableAnimation: false,
-                                          animationDuration:
-                                              const Duration(milliseconds: 100),
-                                          animationType:
-                                              AnimationType.fromBottom,
-                                          dismissable: true,
-                                        ).show(context);
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.white,
+                                          ),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          colorText: Colors.white,
+                                          padding: const EdgeInsets.all(20),
+                                        ).show();
                                       });
                                     }),
                                     child: const Text(

@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:guestify/dashboard/dashboard.dart';
 import 'package:guestify/send_message/final_step_for_sending_message.dart';
-
-import 'login/employee_login.dart';
 
 Future<void> main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);

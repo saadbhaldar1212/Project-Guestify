@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:guestify/send_message/final_step_for_sending_message.dart';
-import 'package:guestify/welcome/welcome2.dart';
+import 'package:guestify/dashboard/dashboard.dart';
 
 Future<void> main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);
@@ -46,7 +45,7 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const Welcome2();
+            return const Dashboard();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

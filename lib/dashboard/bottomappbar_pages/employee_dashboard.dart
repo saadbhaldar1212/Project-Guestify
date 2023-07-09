@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:guestify/utils/employee_login_form/email_field.dart';
+import 'package:guestify/utils/employee_login_form/password_field.dart';
 
+import '../../login/employee_login.dart';
 import '../../utils/simple_dialog/for_employee_dashboard.dart';
 import '../../utils/signout_button/signout_button.dart';
 
@@ -81,7 +84,7 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
         ],
         leading: const SignOutButton(),
         title: const Text(
-          'Manage Employee',
+          'Add an Employee',
           style: TextStyle(
             fontSize: 35,
             fontWeight: FontWeight.w300,
@@ -90,294 +93,153 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40),
-                child: Card(
-                  color: const Color.fromRGBO(0, 77, 120, 1.000),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 28.0, bottom: 38),
-                            child: Text(
-                              'Add an Employee',
-                              style: TextStyle(
-                                fontSize: 26,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 38.0),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    child: TextFormField(
-                                      focusNode: unitCodeCtrlFocusNode,
-                                      cursorColor: Colors.white,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      controller: empName,
-                                      cursorHeight: 20,
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.emailAddress,
-                                      autofocus: false,
-                                      decoration: const InputDecoration(
-                                        errorStyle: TextStyle(
-                                          fontSize: 13,
-                                        ),
-                                        contentPadding: EdgeInsets.all(20),
-                                        prefixIcon: Icon(
-                                          Icons.person,
-                                          color: Colors.white,
-                                        ),
-                                        labelText: 'Employee Name',
-                                        labelStyle: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Enter Employee Name';
-                                        } else if (!value.contains('@')) {
-                                          return 'Enter valid email address';
-                                        } else if (!value
-                                            .startsWith('employee.')) {
-                                          return 'Create account using given instructions';
-                                        } else if (!value.endsWith('.com')) {
-                                          return 'Username should end with ".com"';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    child: TextFormField(
-                                      cursorColor: Colors.white,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      controller: empPass,
-                                      cursorHeight: 20,
-                                      textInputAction: TextInputAction.next,
-                                      obscureText: true,
-                                      keyboardType:
-                                          TextInputType.visiblePassword,
-                                      autofocus: false,
-                                      decoration: const InputDecoration(
-                                        errorStyle: TextStyle(
-                                          fontSize: 13,
-                                        ),
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.white,
-                                        ),
-                                        labelText: 'Employee Password',
-                                        labelStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Employee Password';
-                                        } else if (value.length < 6) {
-                                          return 'Minimum length of password should be 6';
-                                        } else if (!value.contains(
-                                          RegExp(r'[A-Z]'),
-                                        )) {
-                                          return 'Password should contain atleast one Capital letter';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 28.0),
-                                    child: ElevatedButton(
-                                      onPressed: (() {
-                                        if (_formKey.currentState!.validate()) {
-                                          empSignIn().then((value) {
-                                            empRef.push().set({
-                                              "Employee Name": empName.text,
-                                              "Employee Password": empPass.text
-                                            });
-
-                                            Get.snackbar(
-                                              '',
-                                              '',
-                                              instantInit: true,
-                                              titleText: const Text(
-                                                'Success',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 22,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              messageText: const Text(
-                                                'Data Inserted',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                              ),
-                                              backgroundColor: Colors.green,
-                                              icon: const Icon(
-                                                Icons.logout,
-                                              ),
-                                            ).show();
-
-                                            empName.clear();
-                                            empPass.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(FocusNode());
-                                          }).onError((error, stackTrace) {
-                                            Get.snackbar(
-                                              'Error',
-                                              error.toString(),
-                                              instantInit: true,
-                                              backgroundColor: Colors.red,
-                                              titleText: const Text(
-                                                'Error',
-                                                style: TextStyle(
-                                                  fontSize: 35,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontFamily: 'Poppins',
-                                                ),
-                                              ),
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.white,
-                                              ),
-                                              snackPosition:
-                                                  SnackPosition.BOTTOM,
-                                              colorText: Colors.white,
-                                              padding: const EdgeInsets.all(20),
-                                            ).show();
-
-                                            empName.clear();
-                                            empPass.clear();
-                                            FocusScope.of(context)
-                                                .requestFocus(FocusNode());
-                                          });
-                                        }
-                                      }),
-                                      child: const Text(
-                                        'Create',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(28.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color.fromRGBO(0, 77, 120, 1.000),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: Stack(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 30,
+              ),
+              child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Card(
-                      color: const Color.fromRGBO(204, 237, 255, 1),
-                      child: SizedBox(
-                        height: 350,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 15.0,
-                            bottom: 15,
-                            right: 15,
-                            top: 75,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 28.0, right: 28.0, bottom: 12.0),
+                    child: EmailField(
+                      emailController: empName,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 28.0, right: 28.0, top: 8.0),
+                    child: PasswordField(
+                      passwordController: empPass,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 28, bottom: 8.0, left: 8.0, right: 8.0),
+                    child: TransformHelper.translate(
+                      x: -0.50,
+                      y: -0.50,
+                      z: 0,
+                      child: Container(
+                        width: 120.0,
+                        height: 40.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(
+                            width: 1.3,
+                            color: const Color.fromRGBO(0, 77, 120, 1.000),
                           ),
-                          child: FirebaseAnimatedList(
-                            shrinkWrap: true,
-                            defaultChild: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            duration: const Duration(
-                              milliseconds: 100,
-                            ),
-                            query: empRef,
-                            itemBuilder: (context, snapshot, animation, index) {
-                              return SingleChildScrollView(
-                                child: ListTile(
-                                  leading: const CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Color.fromRGBO(0, 77, 120, 1.000),
-                                      size: 50,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    snapshot
-                                        .child('Employee Name')
-                                        .value
-                                        .toString(),
-                                    style: const TextStyle(
-                                      color: Color.fromRGBO(0, 77, 120, 1.000),
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    snapshot
-                                        .child('Employee Password')
-                                        .value
-                                        .toString(),
-                                    style: const TextStyle(
-                                      color: Color.fromRGBO(0, 77, 120, 1.000),
-                                    ),
-                                  ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.transparent,
+                            )
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Container(
+                            color: const Color.fromARGB(0, 17, 150, 207),
+                            child: MaterialButton(
+                              onPressed: (() {
+                                setState(() {
+                                  HapticFeedback.vibrate();
+                                });
+                                if (_formKey.currentState!.validate()) {
+                                  empSignIn().then((value) {
+                                    empRef.push().set({
+                                      "Employee Name": empName.text,
+                                      "Employee Password": empPass.text
+                                    });
+
+                                    Get.snackbar(
+                                      '',
+                                      '',
+                                      instantInit: true,
+                                      titleText: const Text(
+                                        'Success',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins',
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      messageText: const Text(
+                                        'Data Inserted',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.green,
+                                      icon: const Icon(
+                                        Icons.logout,
+                                      ),
+                                    ).show();
+
+                                    empName.clear();
+                                    empPass.clear();
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  }).onError((error, stackTrace) {
+                                    Get.snackbar(
+                                      'Error',
+                                      error.toString(),
+                                      instantInit: true,
+                                      backgroundColor: Colors.red,
+                                      titleText: const Text(
+                                        'Error',
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      colorText: Colors.white,
+                                      padding: const EdgeInsets.all(20),
+                                    ).show();
+
+                                    empName.clear();
+                                    empPass.clear();
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  });
+                                }
+                              }),
+                              child: const Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(0, 77, 120, 1.000),
                                 ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(23.0),
-                        child: Text(
-                          'Employee Data',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Color.fromRGBO(0, 77, 120, 1.000),
-                              fontWeight: FontWeight.w500),
-                        ),
-                      )
-                    ],
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

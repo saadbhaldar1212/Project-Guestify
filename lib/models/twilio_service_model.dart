@@ -25,6 +25,8 @@ You're invited to our event named $eventName, happening at $eventLocation on $ev
 
 Get ready to have an amazing time! We look forward to seeing you there!
 
+The link is 
+
 Best regards,
 Indira College of Commerce and Science
       ''';

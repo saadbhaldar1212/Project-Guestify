@@ -3,7 +3,7 @@ import 'package:twilio_flutter/twilio_flutter.dart';
 class TwilioService {
   final _twilio = TwilioFlutter(
       accountSid: 'AC3bc0718a7e906eb524e630d47ea1a320',
-      authToken: '68d4038d103224bcdcffb52cc446a5fe',
+      authToken: '6f082e65df3e7dffb79e1204789a2dcd',
       twilioNumber: '+13613061193');
 
   Future<void> sendMessages(

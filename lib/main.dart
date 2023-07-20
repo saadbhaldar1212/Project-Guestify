@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/dashboard/bottomappbar_pages/seats_dashboard.dart';
 import 'package:guestify/dashboard/dashboard.dart';
+import 'package:guestify/welcome/welcome2.dart';
 
 Future<void> main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.);
@@ -45,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           if (snapshot.hasError) {
             return const Text('Something went Wrong');
           } else if (snapshot.hasData) {
-            return const Dashboard();
+            return Welcome2();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

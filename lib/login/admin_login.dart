@@ -57,7 +57,7 @@ class _AdminLoginState extends State<AdminLogin> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: const Color.fromRGBO(19, 159, 219, 10),
+        backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         title: const Hero(
           tag: 'logoTag',
           child: CircleAvatar(
@@ -90,6 +90,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 'Welcome, Admin',
                 style: TextStyle(
                   color: Colors.black,
+                  fontFamily: 'Poppins',
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
                 ),
@@ -126,7 +127,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     borderRadius: BorderRadius.circular(15.0),
                     border: Border.all(
                       width: 1.3,
-                      color: const Color.fromARGB(255, 17, 150, 207),
+                      color: const Color.fromRGBO(0, 77, 120, 1.000),
                     ),
                     boxShadow: const [
                       BoxShadow(
@@ -214,7 +215,8 @@ class _AdminLoginState extends State<AdminLogin> {
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
-                            color: Color.fromARGB(255, 17, 150, 207),
+                            fontFamily: 'Poppins',
+                            color: Color.fromRGBO(0, 77, 120, 1.000),
                           ),
                         ),
                       ),
@@ -230,7 +232,7 @@ class _AdminLoginState extends State<AdminLogin> {
             //   child: const Text(
             //     'Forgot Password?',
             //     style: TextStyle(
-            //       fontWeight: FontWeight.w600,
+            //       fontWeight: FontWeight.w600,fontFamily: 'Poppins',
             //       fontSize: 14,
             //       color: Color.fromARGB(255, 17, 150, 207),
             //     ),
@@ -242,7 +244,13 @@ class _AdminLoginState extends State<AdminLogin> {
       persistentFooterButtons: const [
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text('Copyright © 2023'),
+          child: Text(
+            'Copyright © 2023',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+            ),
+          ),
         )
       ],
       persistentFooterAlignment: AlignmentDirectional.center,
@@ -250,29 +258,63 @@ class _AdminLoginState extends State<AdminLogin> {
   }
 
   final emailField = TextFormField(
-    style: const TextStyle(color: Colors.black),
+    style: const TextStyle(
+      color: Colors.black,
+      fontFamily: 'Poppins',
+      fontSize: 18,
+    ),
     controller: emailController,
     keyboardType: TextInputType.emailAddress,
     autofocus: false,
-    decoration: InputDecoration(
-      errorStyle: const TextStyle(
-        fontSize: 13,
+    cursorColor: const Color.fromRGBO(0, 77, 120, 1.000),
+    decoration: const InputDecoration(
+      prefixIcon: Icon(
+        Icons.person,
       ),
-      enabledBorder: const OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Color.fromARGB(255, 17, 150, 207),
+          color: Color.fromRGBO(0, 77, 120, 1.000),
           width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(30),
+        ),
+      ),
+      errorStyle: TextStyle(
+        fontSize: 13,
+        fontFamily: 'Poppins',
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+          width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(30),
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+          width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            25,
+          ),
         ),
       ),
       helperText: 'e.g: - abc@<>.com',
-      helperStyle: const TextStyle(
+      helperStyle: TextStyle(
         fontSize: 10,
+        fontFamily: 'Poppins',
       ),
       labelText: 'Username',
-      hintText: 'Enter email address',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
+      labelStyle: TextStyle(
+        color: Colors.black,
+        fontFamily: 'Poppins',
       ),
+      hintText: 'Enter email address',
     ),
     validator: (value) {
       if (value!.isEmpty) {
@@ -289,25 +331,58 @@ class _AdminLoginState extends State<AdminLogin> {
   );
 
   final passwordField = TextFormField(
-    style: const TextStyle(color: Colors.black),
+    style: const TextStyle(
+      color: Colors.black,
+      fontFamily: 'Poppins',
+      fontSize: 18,
+    ),
     controller: passwordController,
     keyboardType: TextInputType.visiblePassword,
     obscureText: true,
-    decoration: InputDecoration(
-      errorStyle: const TextStyle(
-        fontSize: 13,
+    decoration: const InputDecoration(
+      prefixIcon: Icon(
+        Icons.lock,
       ),
-      enabledBorder: const OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Color.fromARGB(255, 17, 150, 207),
+          color: Color.fromRGBO(0, 77, 120, 1.000),
           width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(30),
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+          width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(30),
+        ),
+      ),
+      errorStyle: TextStyle(
+        fontSize: 13,
+        fontFamily: 'Poppins',
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color.fromRGBO(0, 77, 120, 1.000),
+          width: 1.6,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            25,
+          ),
         ),
       ),
       labelText: 'Password',
-      hintText: 'Enter password',
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
+      labelStyle: TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: 16,
+        color: Colors.black,
       ),
+      hintText: 'Enter password',
     ),
     validator: (value) {
       if (value!.isEmpty) {

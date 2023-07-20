@@ -52,10 +52,12 @@ class _EmployeeModuleState extends State<EmployeeModule> {
         actions: [
           IconButton(
             onPressed: (() {
-              showCupertinoModalPopup(
-                context: context,
-                builder: (context) => const EmployeeSetting(),
-              );
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EmployeeSetting(),
+                  ),
+                  (route) => false);
             }),
             icon: const Icon(
               Icons.settings,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:guestify/home/employee_home.dart';
 
 import '../login/employee_login.dart';
 import '../utils/email_verification/for_email_verification.dart';
@@ -30,7 +31,22 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EmployeeModule(),
+              ),
+              (route) => false,
+            );
+          },
+          icon: const Icon(
+            Icons.chevron_left,
+            color: Colors.black,
+          ),
+        ),
         title: const Text(
           'Settings',
           style: TextStyle(
@@ -153,9 +169,13 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                         ),
                                       ).show();
 
-                                      Get.to(
-                                        () => const ForEmailVerification(),
-                                      );
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ForEmailVerification(),
+                                          ),
+                                          (route) => false);
                                     }).onError((error, stackTrace) {
                                       Get.snackbar(
                                         'Error',
@@ -232,7 +252,6 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
 
                                 await user!.delete().then(
                                   (res) {
-                                    Get.offAll(() => const EmployeeLogin());
                                     Get.snackbar(
                                       '',
                                       '',
@@ -262,6 +281,7 @@ class _EmployeeSettingState extends State<EmployeeSetting> {
                                       colorText: Colors.white,
                                       padding: const EdgeInsets.all(20),
                                     ).show();
+                                    Get.offAll(() => const EmployeeLogin());
                                   },
                                 ).catchError((onError) {
                                   Get.snackbar(

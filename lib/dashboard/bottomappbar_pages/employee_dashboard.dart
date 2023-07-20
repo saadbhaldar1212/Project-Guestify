@@ -52,13 +52,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
     Navigator.of(context).pop();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    empName.dispose();
-    empPass.dispose();
-  }
-
   final FocusNode unitCodeCtrlFocusNode = FocusNode();
 
   @override
@@ -149,15 +142,14 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                             color: const Color.fromARGB(0, 17, 150, 207),
                             child: MaterialButton(
                               onPressed: (() {
-                                setState(() {
-                                  HapticFeedback.vibrate();
-                                });
                                 if (_formKey.currentState!.validate()) {
                                   empSignIn().then((value) {
                                     empRef.push().set({
                                       "Employee Name": empName.text,
                                       "Employee Password": empPass.text
                                     });
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
 
                                     Get.snackbar(
                                       '',
@@ -189,9 +181,9 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
 
                                     empName.clear();
                                     empPass.clear();
+                                  }).onError((error, stackTrace) {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
-                                  }).onError((error, stackTrace) {
                                     Get.snackbar(
                                       'Error',
                                       error.toString(),
@@ -216,13 +208,11 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
 
                                     empName.clear();
                                     empPass.clear();
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
                                   });
                                 }
                               }),
                               child: const Text(
-                                'Login',
+                                'Create',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins',

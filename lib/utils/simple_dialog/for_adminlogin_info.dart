@@ -14,6 +14,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
             'Instructions',
             style: TextStyle(
               color: Colors.black,
+              fontFamily: 'Poppins',
               fontSize: 25,
             ),
           ),
@@ -21,6 +22,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
             '*',
             style: TextStyle(
               color: Colors.red,
+              fontFamily: 'Poppins',
             ),
           )
         ],
@@ -38,6 +40,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
                     '1) Admin login credentials will be provided by Creators of this app',
                     style: TextStyle(
                       color: Colors.black,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -51,6 +54,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
                     "2) Admin can change password by itself if admin forgot's it",
                     style: TextStyle(
                       color: Colors.black,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -64,6 +68,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
                     '3) Length of Password must always be, greater than 6',
                     style: TextStyle(
                       color: Colors.black,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -77,6 +82,7 @@ class SimpleDialogForAdminLoginInfo extends StatelessWidget {
                     '4) Password must have atleast, one capital letter',
                     style: TextStyle(
                       color: Colors.black,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],

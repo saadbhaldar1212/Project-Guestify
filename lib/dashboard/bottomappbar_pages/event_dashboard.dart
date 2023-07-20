@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:guestify/event/add_event.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils/event_info/edit_event_info.dart';
 import '../../utils/signout_button/signout_button.dart';
@@ -102,99 +103,119 @@ class _EventDashboardState extends State<EventDashboard> {
                         child: SizedBox(
                           width: double.infinity,
                           height: 300,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.elliptical(40, 40),
-                            ),
-                            child: Card(
-                              color: const Color.fromRGBO(0, 77, 120, 1.000),
-                              child: IntrinsicHeight(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                          'Event Name:',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300,
-                                            fontFamily: 'Poppins',
-                                          ),
-                                        ),
-                                        Text(
-                                          snapshot
-                                              .child('Event Name')
-                                              .value
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontSize: 26,
-                                            fontFamily: 'Poppins',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const VerticalDivider(
-                                      color: Colors.white,
-                                      width: 2,
-                                      indent: 30,
-                                      endIndent: 30,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            const Text(
-                                              'Event Date: ',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w300,
-                                              ),
+                          child: Card(
+                            color: const Color.fromRGBO(0, 77, 120, 1.000),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Event Starts in:',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: 'Poppins',
                                             ),
-                                            Text(
-                                              snapshot
-                                                  .child('Event Date')
-                                                  .value
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontSize: 22,
-                                                fontFamily: 'Poppins',
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            const Text(
-                                              'Event Time: ',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w300,
-                                              ),
+                                          ),
+                                          // Text(
+                                          //   currentDate.toString(),
+                                          //   style: const TextStyle(
+                                          //     fontSize: 26,
+                                          //     fontFamily: 'Poppins',
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Event Name:',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: 'Poppins',
                                             ),
-                                            Text(
-                                              snapshot
-                                                  .child('Event Time')
-                                                  .value
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontSize: 26,
-                                                fontFamily: 'Poppins',
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                          ),
+                                          Text(
+                                            snapshot
+                                                .child('Event Name')
+                                                .value
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 26,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const VerticalDivider(
+                                    color: Colors.white,
+                                    width: 2,
+                                    indent: 30,
+                                    endIndent: 30,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Event Date: ',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                          Text(
+                                            snapshot
+                                                .child('Event Date')
+                                                .value
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Event Time: ',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                          Text(
+                                            snapshot
+                                                .child('Event Time')
+                                                .value
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 26,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),

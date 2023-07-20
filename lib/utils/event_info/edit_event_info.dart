@@ -3,7 +3,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../dashboard/dashboard.dart';
 import '../simple_dialog/for_edit_event_info.dart';
@@ -17,6 +16,7 @@ class EditEventInfo extends StatefulWidget {
       this.eventSpecialGuest,
       this.eventHost,
       this.eventVenue,
+      this.collegeName,
       this.eventDate,
       this.eventTime,
       this.eventDescription});
@@ -27,6 +27,7 @@ class EditEventInfo extends StatefulWidget {
   String? eventSpecialGuest;
   String? eventHost;
   String? eventVenue;
+  String? collegeName;
   String? eventDate;
   String? eventTime;
   String? eventDescription;
@@ -45,6 +46,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
   final eventSpecialGuestController = TextEditingController();
   final eventHostController = TextEditingController();
   final eventVenueController = TextEditingController();
+  final collegeName = TextEditingController();
   final eventTopicController = TextEditingController();
   final eventDateController = TextEditingController();
   final eventTimeController = TextEditingController();
@@ -60,16 +62,15 @@ class _EditEventInfoState extends State<EditEventInfo> {
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         automaticallyImplyLeading: true,
         elevation: 0,
-        toolbarHeight: 80,
+        toolbarHeight: 150,
         centerTitle: true,
         title: const Text(
           'Edit Event Info',
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: 'Poppins',
+          ),
         ),
-        leading: IconButton(
-            onPressed: (() {
-              Get.back();
-            }),
-            icon: const Icon(Icons.chevron_left_sharp)),
       ),
       body: Form(
         key: _eventFormField,
@@ -90,6 +91,8 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 snapshot.child('Event Special Guest').value.toString();
             widget.eventHost = snapshot.child('Event Host').value.toString();
             widget.eventVenue = snapshot.child('Event Venue').value.toString();
+            widget.collegeName =
+                snapshot.child('College Name').value.toString();
             widget.eventDate = snapshot.child('Event Date').value.toString();
             widget.eventTime = snapshot.child('Event Time').value.toString();
             widget.eventDescription =
@@ -115,12 +118,14 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,
+                            fontFamily: 'Poppins',
                           ),
                         ),
                         subtitle: Text(
                           snapshot.child('Event Name').value.toString(),
                           style: const TextStyle(
                             color: Colors.black,
+                            fontFamily: 'Poppins',
                             fontSize: 18,
                           ),
                         ),
@@ -143,6 +148,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         snapshot.child('Event Topic').value.toString(),
                         style: const TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 18,
                         ),
                       ),
@@ -151,6 +157,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 13,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       trailing: const Icon(
@@ -172,6 +179,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 13,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       subtitle: Text(
@@ -179,6 +187,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       trailing: const Icon(
@@ -200,6 +209,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 13,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       subtitle: Text(
@@ -207,6 +217,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       trailing: const Icon(
@@ -228,6 +239,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 13,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       subtitle: Text(
@@ -235,6 +247,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       trailing: const Icon(
@@ -255,6 +268,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         'Event Venue',
                         style: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 13,
                         ),
                       ),
@@ -262,6 +276,37 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         snapshot.child('Event Venue').value.toString(),
                         style: const TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.edit,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => ForEditEventInfo(
+                        title: 'College Name',
+                        event: widget.collegeName,
+                      ),
+                    ),
+                    child: ListTile(
+                      title: const Text(
+                        'College Name',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 13,
+                        ),
+                      ),
+                      subtitle: Text(
+                        snapshot.child('College Name').value.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 18,
                         ),
                       ),
@@ -283,6 +328,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         'Event Date',
                         style: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 13,
                         ),
                       ),
@@ -290,6 +336,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         snapshot.child('Event Date').value.toString(),
                         style: const TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 18,
                         ),
                       ),
@@ -311,6 +358,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         'Event Time',
                         style: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'Poppins',
                           fontSize: 13,
                         ),
                       ),
@@ -319,6 +367,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       trailing: const Icon(
@@ -341,6 +390,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           'Event Description',
                           style: TextStyle(
                             color: Colors.black,
+                            fontFamily: 'Poppins',
                             fontSize: 13,
                           ),
                         ),
@@ -348,6 +398,7 @@ class _EditEventInfoState extends State<EditEventInfo> {
                           snapshot.child('Event Description').value.toString(),
                           style: const TextStyle(
                             color: Colors.black,
+                            fontFamily: 'Poppins',
                             fontSize: 18,
                           ),
                         ),
@@ -374,7 +425,11 @@ class _EditEventInfoState extends State<EditEventInfo> {
                 alignment: Alignment.center,
                 title: const Text(
                   'Are you sure?',
-                  style: TextStyle(fontSize: 18, color: Colors.red),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.red,
+                    fontFamily: 'Poppins',
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 contentPadding: const EdgeInsets.all(20),
@@ -398,8 +453,11 @@ class _EditEventInfoState extends State<EditEventInfo> {
                             }),
                             child: const Text(
                               'Yes & Continue',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.white),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
                           ),
                         ),
@@ -414,8 +472,11 @@ class _EditEventInfoState extends State<EditEventInfo> {
                             }),
                             child: const Text(
                               'No',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.white),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
                           ),
                         ),

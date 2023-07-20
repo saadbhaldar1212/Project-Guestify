@@ -15,7 +15,7 @@ class TwilioService {
     String eventDate,
     String eventTime,
     String eventLocation,
-    // String collegeName,
+    String collegeName,
   ) async {
     for (int i = 0; i < numbers.length; i++) {
       final message = '''
@@ -28,7 +28,7 @@ Get ready to have an amazing time! We look forward to seeing you there!
 The link is 
 
 Best regards,
-Indira College of Commerce and Science
+$collegeName
       ''';
 
       await _twilio.sendSMS(

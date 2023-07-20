@@ -29,6 +29,7 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
   String eventDate = '';
   String eventTime = '';
   String eventLocation = '';
+  String collegeName = '';
 
   final db = FirebaseDatabase.instance.ref();
 
@@ -211,8 +212,17 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
         onPressed: (() async {
           HapticFeedback.heavyImpact();
           await twilioService
-              .sendMessages(numbers, guestName, tableNumber, chairNumber,
-                  eventName, eventDate, eventTime, eventLocation)
+              .sendMessages(
+            numbers,
+            guestName,
+            tableNumber,
+            chairNumber,
+            eventName,
+            eventDate,
+            eventTime,
+            eventLocation,
+            collegeName,
+          )
               .then((value) {
             Get.snackbar(
               '',
@@ -369,15 +379,15 @@ class _SendMessageUsingTwilioState extends State<SendMessageUsingTwilio> {
                             onPressed: (() async {
                               await twilioService
                                   .sendMessages(
-                                numbers,
-                                guestName,
-                                tableNumber,
-                                chairNumber,
-                                eventName,
-                                eventDate,
-                                eventTime,
-                                eventLocation,
-                              )
+                                      numbers,
+                                      guestName,
+                                      tableNumber,
+                                      chairNumber,
+                                      eventName,
+                                      eventDate,
+                                      eventTime,
+                                      eventLocation,
+                                      collegeName)
                                   .then((value) {
                                 Get.snackbar(
                                   '',

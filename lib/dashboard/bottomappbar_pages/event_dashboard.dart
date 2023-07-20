@@ -1,9 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:guestify/event/add_event.dart';
 
 import '../../utils/event_info/edit_event_info.dart';
 import '../../utils/signout_button/signout_button.dart';
@@ -22,16 +23,6 @@ class EventDashboard extends StatefulWidget {
 class _EventDashboardState extends State<EventDashboard> {
   final db = FirebaseDatabase.instance.ref();
 
-  final eventNameController = TextEditingController();
-  final eventDescriptionController = TextEditingController();
-  final eventChiefGuestController = TextEditingController();
-  final eventSpecialGuestController = TextEditingController();
-  final eventHostController = TextEditingController();
-  final eventVenueController = TextEditingController();
-  final eventTopicController = TextEditingController();
-  final eventDateController = TextEditingController();
-  final eventTimeController = TextEditingController();
-
   final _tKey = GlobalKey<FormState>();
   final tableC = TextEditingController();
 
@@ -41,8 +32,6 @@ class _EventDashboardState extends State<EventDashboard> {
   bool? hasOngoingEvent;
   // ignore: unused_field, prefer_final_fields
   bool _isLoading = true;
-
-  final _eventFormField = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +46,7 @@ class _EventDashboardState extends State<EventDashboard> {
       appBar: AppBar(
         toolbarHeight: 200,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
+        foregroundColor: Colors.white,
         elevation: 0,
         actions: const [SignOutButton()],
         title: const ListTile(
@@ -66,6 +56,8 @@ class _EventDashboardState extends State<EventDashboard> {
             style: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.w300,
+              fontFamily: 'Poppins',
+              color: Colors.white,
             ),
           ),
           subtitle: Text(
@@ -74,6 +66,8 @@ class _EventDashboardState extends State<EventDashboard> {
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              color: Colors.white,
             ),
           ),
         ),
@@ -84,6 +78,7 @@ class _EventDashboardState extends State<EventDashboard> {
                 'No Data',
                 style: TextStyle(
                   color: Colors.black,
+                  fontFamily: 'Poppins',
                   fontSize: 40,
                 ),
               ),
@@ -127,6 +122,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w300,
+                                            fontFamily: 'Poppins',
                                           ),
                                         ),
                                         Text(
@@ -136,6 +132,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                               .toString(),
                                           style: const TextStyle(
                                             fontSize: 26,
+                                            fontFamily: 'Poppins',
                                           ),
                                         ),
                                       ],
@@ -156,6 +153,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                               'Event Date: ',
                                               style: TextStyle(
                                                 fontSize: 16,
+                                                fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.w300,
                                               ),
                                             ),
@@ -166,6 +164,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                   .toString(),
                                               style: const TextStyle(
                                                 fontSize: 22,
+                                                fontFamily: 'Poppins',
                                               ),
                                             )
                                           ],
@@ -176,6 +175,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                               'Event Time: ',
                                               style: TextStyle(
                                                 fontSize: 16,
+                                                fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.w300,
                                               ),
                                             ),
@@ -186,6 +186,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                   .toString(),
                                               style: const TextStyle(
                                                 fontSize: 26,
+                                                fontFamily: 'Poppins',
                                               ),
                                             )
                                           ],
@@ -227,6 +228,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                     'View Seats',
                                     style: TextStyle(
                                       fontSize: 20,
+                                      fontFamily: 'Poppins',
                                       color: Color.fromRGBO(0, 77, 120, 1.000),
                                     ),
                                   ),
@@ -252,6 +254,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                 TextFormField(
                                                   controller: tableC,
                                                   style: const TextStyle(
+                                                    fontFamily: 'Poppins',
                                                     color: Colors.black,
                                                   ),
                                                   keyboardType:
@@ -261,16 +264,19 @@ class _EventDashboardState extends State<EventDashboard> {
                                                     label: Text(
                                                       'Table length',
                                                       style: TextStyle(
+                                                        fontFamily: 'Poppins',
                                                         color: Colors.black,
                                                       ),
                                                     ),
                                                     errorStyle: TextStyle(
+                                                      fontFamily: 'Poppins',
                                                       fontSize: 13,
                                                     ),
                                                     helperText:
                                                         'By defualt all table will have 10 chairs',
                                                     helperStyle: TextStyle(
                                                       fontSize: 13,
+                                                      fontFamily: 'Poppins',
                                                     ),
                                                   ),
                                                   validator: (value) {
@@ -312,6 +318,8 @@ class _EventDashboardState extends State<EventDashboard> {
                                                           title: const Text(
                                                             'Note: Once entered all the previous guest data will be erased',
                                                             style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
                                                                 fontSize: 18,
                                                                 color:
                                                                     Colors.red),
@@ -401,6 +409,8 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                           const Text(
                                                                         'Yes & Continue',
                                                                         style: TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
                                                                             fontSize:
                                                                                 14,
                                                                             color:
@@ -429,6 +439,8 @@ class _EventDashboardState extends State<EventDashboard> {
                                                                           const Text(
                                                                         'No',
                                                                         style: TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
                                                                             fontSize:
                                                                                 14,
                                                                             color:
@@ -457,6 +469,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                 child: const Text(
                                   'Manage Seats Layout',
                                   style: TextStyle(
+                                    fontFamily: 'Poppins',
                                     fontSize: 20,
                                     color: Color.fromRGBO(0, 77, 120, 1.000),
                                   ),
@@ -489,6 +502,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                           child: Text(
                                             'Event Details',
                                             style: TextStyle(
+                                              fontFamily: 'Poppins',
                                               color: Color.fromRGBO(
                                                   0, 77, 120, 1.000),
                                               fontSize: 30,
@@ -509,6 +523,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                             child: Text(
                                               'Event name is ${snapshot.child('Event Name').value.toString()} The event is scheduled to take place on ${snapshot.child('Event Date').value.toString()}, from ${snapshot.child('Event Time').value.toString()} onwards at the esteemed ${snapshot.child('Event Venue').value.toString()}. We are delighted to announce that the event will be graced by our esteemed chief guest, ${snapshot.child('Event Chief Guest').value.toString()} and our special guest, ${snapshot.child('Event Special Guest').value.toString()}',
                                               style: const TextStyle(
+                                                fontFamily: 'Poppins',
                                                 color: Color.fromRGBO(
                                                     0, 77, 120, 1.000),
                                                 fontSize: 18,
@@ -535,6 +550,7 @@ class _EventDashboardState extends State<EventDashboard> {
         animatedIcon: AnimatedIcons.menu_close,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         overlayColor: Colors.black,
+        foregroundColor: Colors.white,
         overlayOpacity: 0.4,
         children: [
           SpeedDialChild(
@@ -544,437 +560,19 @@ class _EventDashboardState extends State<EventDashboard> {
             ),
             label: 'Add Event',
             labelStyle: const TextStyle(
+              fontFamily: 'Poppins',
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
             labelBackgroundColor: Colors.green,
             backgroundColor: Colors.green,
             onTap: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        automaticallyImplyLeading: false,
-                        backgroundColor:
-                            const Color.fromRGBO(0, 77, 120, 1.000),
-                        centerTitle: true,
-                        title: const Text('Add Event'),
-                        actions: [
-                          IconButton(
-                            onPressed: (() {
-                              Navigator.pop(context);
-                            }),
-                            icon: const Icon(
-                              Icons.close,
-                            ),
-                          ),
-                        ],
-                      ),
-                      body: SingleChildScrollView(
-                        child: Form(
-                          key: _eventFormField,
-                          child: Card(
-                            elevation: 40,
-                            margin: const EdgeInsets.all(40),
-                            child: Container(
-                              padding: const EdgeInsets.all(35),
-                              child: Column(children: [
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventNameController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Name',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter Name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventTopicController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  autofocus: false,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Topic',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter Event Topic';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventChiefGuestController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Chief Guest',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                    helperText: "add 'none' if not applicable",
-                                    helperStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter email';
-                                    } else if (value
-                                            .contains(RegExp(r'[0-9]')) &&
-                                        !value
-                                            .contains(RegExp(r'[a-z][A-Z]'))) {
-                                      return 'Enter valid Name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventSpecialGuestController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  autofocus: false,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Special Guest',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                    helperText: "add 'none' if not applicable",
-                                    helperStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter email';
-                                    } else if (value
-                                            .contains(RegExp(r'[0-9]')) &&
-                                        !value
-                                            .contains(RegExp(r'[a-z][A-Z]'))) {
-                                      return 'Enter valid Name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventHostController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  autofocus: false,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Host',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter Host name';
-                                    } else if (value
-                                            .contains(RegExp(r'[0-9]')) &&
-                                        !value
-                                            .contains(RegExp(r'[a-z][A-Z]'))) {
-                                      return 'Enter valid Name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(color: Colors.black),
-                                  controller: eventVenueController,
-                                  cursorHeight: 20,
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.text,
-                                  autofocus: false,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Event Venue',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter Venue';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                Row(
-                                  children: [
-                                    TextFormField(
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                      controller: eventDateController,
-                                      cursorHeight: 20,
-                                      textInputAction: TextInputAction.done,
-                                      keyboardType: TextInputType.datetime,
-                                      autofocus: false,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Event Date',
-                                        labelStyle: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        errorStyle: TextStyle(
-                                          fontSize: 13,
-                                        ),
-                                        constraints: BoxConstraints(
-                                          maxWidth: 200,
-                                        ),
-                                        suffixIcon: Icon(
-                                            Icons.calendar_month_outlined,
-                                            color: Colors.black),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Enter Date';
-                                        }
-                                        return null;
-                                      },
-                                      onTap: () async {
-                                        // ignore: use_build_context_synchronously
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        DateTime? datePicked =
-                                            await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime.now(),
-                                                lastDate: DateTime(3000));
-
-                                        if (datePicked != null) {
-                                          setState(() {
-                                            eventDateController.text =
-                                                DateFormat()
-                                                    .add_yMMMMd()
-                                                    .format(datePicked);
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    TextFormField(
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                      controller: eventTimeController,
-                                      cursorHeight: 20,
-                                      textInputAction: TextInputAction.done,
-                                      keyboardType: TextInputType.datetime,
-                                      autofocus: false,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Event Time',
-                                        labelStyle: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        errorStyle: TextStyle(
-                                          fontSize: 13,
-                                        ),
-                                        constraints: BoxConstraints(
-                                          maxWidth: 200,
-                                        ),
-                                        suffixIcon: Icon(
-                                            Icons.access_time_sharp,
-                                            color: Colors.black),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Enter Time';
-                                        }
-                                        return null;
-                                      },
-                                      onTap: () async {
-                                        // ignore: use_build_context_synchronously
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        TimeOfDay? pickedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now(),
-                                          initialEntryMode:
-                                              TimePickerEntryMode.dial,
-                                        );
-                                        if (pickedTime != null) {
-                                          setState(() {
-                                            eventTimeController.text =
-                                                pickedTime.format(context);
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 18.0),
-                                  child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    style: const TextStyle(color: Colors.black),
-                                    controller: eventDescriptionController,
-                                    cursorHeight: 20,
-                                    textInputAction: TextInputAction.newline,
-                                    keyboardType: TextInputType.multiline,
-                                    minLines: 3,
-                                    maxLines: 5,
-                                    autofocus: false,
-                                    decoration: const InputDecoration(
-                                      labelStyle: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      labelText: 'Event Description',
-                                      errorStyle: TextStyle(
-                                        fontSize: 13,
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Enter email';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ]),
-                            ),
-                          ),
-                        ),
-                      ),
-                      floatingActionButtonLocation:
-                          FloatingActionButtonLocation.centerFloat,
-                      floatingActionButton: ElevatedButton(
-                        onPressed: (() {
-                          if (_eventFormField.currentState!.validate()) {
-                            eventRef.child(pk).set({
-                              "Event Name": eventNameController.text.trim(),
-                              "Event Topic": eventTopicController.text.trim(),
-                              "Event Chief Guest":
-                                  eventChiefGuestController.text.trim(),
-                              "Event Special Guest":
-                                  eventSpecialGuestController.text.trim(),
-                              "Event Host": eventHostController.text.trim(),
-                              "Event Venue": eventVenueController.text.trim(),
-                              "Event Date": eventDateController.text.trim(),
-                              "Event Time": eventTimeController.text.trim(),
-                              "Event Description":
-                                  eventDescriptionController.text.trim(),
-                            }).then((value) {
-                              Navigator.pop(context);
-                              Get.snackbar(
-                                '',
-                                '',
-                                instantInit: true,
-                                titleText: const Text(
-                                  'Success',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                messageText: const Text(
-                                  'Event Created',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                backgroundColor: Colors.green,
-                                icon: const Icon(
-                                  Icons.logout,
-                                ),
-                              ).show();
-                              setState(() {
-                                hasOngoingEvent = true;
-                              });
-                            }).onError((error, stackTrace) {
-                              Get.snackbar(
-                                'Error',
-                                error.toString(),
-                                instantInit: true,
-                                backgroundColor: Colors.red,
-                                titleText: const Text(
-                                  'Error',
-                                  style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                ),
-                                snackPosition: SnackPosition.BOTTOM,
-                                colorText: Colors.white,
-                                padding: const EdgeInsets.all(20),
-                              ).show();
-                            });
-                          }
-                        }),
-                        child: const Text('Save data'),
-                      ),
-                    );
-                  });
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) {
+                  return const AddEventInfo();
+                },
+              );
             },
           ),
           SpeedDialChild(
@@ -984,14 +582,18 @@ class _EventDashboardState extends State<EventDashboard> {
             ),
             label: 'Edit Event',
             labelStyle: const TextStyle(
+              fontFamily: 'Poppins',
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
             labelBackgroundColor: Colors.blue.shade900,
             backgroundColor: Colors.blue.shade900,
             onTap: () {
-              Get.to(
-                () => EditEventInfo(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditEventInfo(),
+                ),
               );
             },
           ),
@@ -1002,6 +604,7 @@ class _EventDashboardState extends State<EventDashboard> {
             ),
             label: 'Delete Event',
             labelStyle: const TextStyle(
+              fontFamily: 'Poppins',
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
@@ -1015,7 +618,8 @@ class _EventDashboardState extends State<EventDashboard> {
                   alignment: Alignment.center,
                   title: const Text(
                     'Are you sure?',
-                    style: TextStyle(fontSize: 18, color: Colors.red),
+                    style: TextStyle(
+                        fontFamily: 'Poppins', fontSize: 18, color: Colors.red),
                     textAlign: TextAlign.center,
                   ),
                   contentPadding: const EdgeInsets.all(20),
@@ -1038,7 +642,9 @@ class _EventDashboardState extends State<EventDashboard> {
                               child: const Text(
                                 'Yes & Continue',
                                 style: TextStyle(
-                                    fontSize: 14, color: Colors.white),
+                                    fontFamily: 'Poppins',
+                                    fontSize: 14,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
@@ -1054,7 +660,9 @@ class _EventDashboardState extends State<EventDashboard> {
                               child: const Text(
                                 'No',
                                 style: TextStyle(
-                                    fontSize: 14, color: Colors.white),
+                                    fontFamily: 'Poppins',
+                                    fontSize: 14,
+                                    color: Colors.white),
                               ),
                             ),
                           ),

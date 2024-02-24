@@ -125,7 +125,7 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'Copyright © 2023',
+            'Copyright © 2024',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',

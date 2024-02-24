@@ -248,7 +248,13 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
       persistentFooterButtons: const [
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text('Copyright © 2023'),
+          child: Text(
+            'Copyright © 2024',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+            ),
+          ),
         )
       ],
       persistentFooterAlignment: AlignmentDirectional.center,

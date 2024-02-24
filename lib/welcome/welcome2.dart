@@ -294,7 +294,7 @@ class _Welcome2State extends State<Welcome2> {
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'Copyright © 2023',
+            'Copyright © 2024',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',

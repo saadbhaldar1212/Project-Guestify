@@ -245,7 +245,7 @@ class _AdminLoginState extends State<AdminLogin> {
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            'Copyright © 2023',
+            'Copyright © 2024',
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',

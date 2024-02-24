@@ -114,9 +114,9 @@ class _EventDashboardState extends State<EventDashboard> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      Column(
+                                      const Column(
                                         children: [
-                                          const Text(
+                                          Text(
                                             'Event Starts in:',
                                             style: TextStyle(
                                               fontSize: 18,

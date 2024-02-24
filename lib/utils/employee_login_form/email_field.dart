@@ -13,6 +13,7 @@ class _EmailFieldState extends State<EmailField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       style: const TextStyle(
         color: Colors.black,
         fontFamily: 'Poppins',

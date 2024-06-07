@@ -2,6 +2,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HostIndex extends StatefulWidget {
@@ -137,7 +138,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -160,7 +161,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -183,7 +184,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -206,7 +207,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -229,7 +230,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -272,6 +273,7 @@ class _HostIndexState extends State<HostIndex> {
                                   'Guest Name: ',
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontFamily: 'Poppins',
                                     fontSize: 15,
                                   ),
                                 ),
@@ -280,7 +282,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -303,7 +305,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -326,7 +328,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -349,7 +351,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
@@ -372,7 +374,7 @@ class _HostIndexState extends State<HostIndex> {
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],

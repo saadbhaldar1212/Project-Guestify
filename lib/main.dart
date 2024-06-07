@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: const Color.fromRGBO(0, 77, 120, 1.000),
       ).copyWith(
         dividerColor: Colors.transparent,
-        // useMaterial3: true,
+        useMaterial3: true,
         appBarTheme: const AppBarTheme(
           foregroundColor: Colors.white,
         ),

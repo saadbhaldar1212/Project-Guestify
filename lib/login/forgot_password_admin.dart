@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:guestify/utils/simple_dialog/for_emoloyee_reset_password.dart';
 
 import '../utils/employee_login_form/email_field.dart';
 import 'employee_login.dart';
@@ -146,13 +147,7 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
                               Icons.logout,
                             ),
                           ).show();
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EmployeeLogin(),
-                            ),
-                            (route) => false,
-                          );
+                          showResetPasswordDialog(context);
                         }).onError((error, stackTrace) {
                           Get.snackbar(
                             'Error',
@@ -194,8 +189,16 @@ class _EmployeeForgotPasswordState extends State<EmployeeForgotPassword> {
           ],
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton:
+    );
+  }
+
+  void showResetPasswordDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const ResetPasswordDialog();
+      },
     );
   }
 }

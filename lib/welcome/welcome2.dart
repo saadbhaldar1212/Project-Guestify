@@ -33,31 +33,28 @@ class _Welcome2State extends State<Welcome2> {
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 38.0),
-                child: TweenAnimationBuilder(
-                  onEnd: () {
-                    setState(() {
-                      _customOpacity = 1;
-                    });
-                  },
-                  duration: const Duration(milliseconds: 800),
-                  tween: Tween<double>(begin: 0, end: 400),
-                  curve: Curves.ease,
-                  builder: (BuildContext context, double value, Widget? child) {
-                    return Hero(
-                      tag: 'logoTag',
-                      child: Image.asset(
-                        'assets/images/splashscreen.png',
-                        width: value,
-                        height: value,
-                        alignment: Alignment.bottomCenter,
-                      ),
-                    );
-                  },
-                ),
+              TweenAnimationBuilder(
+                onEnd: () {
+                  setState(() {
+                    _customOpacity = 1;
+                  });
+                },
+                duration: const Duration(milliseconds: 800),
+                tween: Tween<double>(begin: 0, end: 350),
+                curve: Curves.ease,
+                builder: (BuildContext context, double value, Widget? child) {
+                  return Hero(
+                    tag: 'logoTag',
+                    child: Image.asset(
+                      'assets/images/splashscreen.png',
+                      width: value,
+                      height: value,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  );
+                },
               ),
               AnimatedOpacity(
                 opacity: _customOpacity,

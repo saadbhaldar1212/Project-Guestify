@@ -37,6 +37,8 @@ dependencies:
   http: any
   flutter_speed_dial: any
   audioplayers: any
+  provider: any
+  flutter_dotenv: any
 
 flutter_native_splash:
   color: "#004D78"
@@ -53,6 +55,7 @@ flutter:
   assets:
     - assets/images/
     - assets/sounds/
+    - lib/.guestify_env
 
   fonts:
     - family: Poppins

@@ -339,7 +339,7 @@ class _ForTimeState extends State<ForTime> {
                   TimeOfDay? pickedTime = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay.fromDateTime(DateTime.now()),
-                    initialEntryMode: TimePickerEntryMode.dial,
+                    initialEntryMode: TimePickerEntryMode.inputOnly,
                   );
                   if (pickedTime != null) {
                     setState(() {

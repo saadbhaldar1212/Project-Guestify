@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:guestify/event/add_event.dart';
-import 'package:intl/intl.dart';
 
-import '../../utils/event_info/edit_event_info.dart';
+import '../../event/edit_event_info.dart';
 import '../../utils/signout_button/signout_button.dart';
 import 'seats_dashboard.dart';
 import 'seats_dashboard_for_view_data.dart';
@@ -45,13 +44,13 @@ class _EventDashboardState extends State<EventDashboard> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 200,
+        toolbarHeight: 150,
         backgroundColor: const Color.fromRGBO(0, 77, 120, 1.000),
         foregroundColor: Colors.white,
         elevation: 0,
         actions: const [SignOutButton()],
         title: const ListTile(
-          contentPadding: EdgeInsets.all(30),
+          contentPadding: EdgeInsets.all(15),
           title: Text(
             'Welcome,',
             style: TextStyle(
@@ -93,6 +92,21 @@ class _EventDashboardState extends State<EventDashboard> {
               ),
               query: eventRef,
               itemBuilder: (context, snapshot, animation, index) {
+                var currentDate = DateTime.now();
+                var difference = currentDate
+                    .difference(
+                      DateTime.parse(
+                        snapshot.child('Event Date').value.toString(),
+                      ),
+                    )
+                    .inDays
+                    .toString();
+
+                if (difference.startsWith('-')) {
+                  difference = 'Event Ended';
+                } else {
+                  difference = '$difference days';
+                }
                 return SingleChildScrollView(
                   child: Column(
                     children: [
@@ -101,122 +115,123 @@ class _EventDashboardState extends State<EventDashboard> {
                           top: 15,
                         ),
                         child: SizedBox(
-                          width: double.infinity,
-                          height: 300,
+                          width: MediaQuery.of(context).size.width,
+                          height: 250,
                           child: Card(
                             color: const Color.fromRGBO(0, 77, 120, 1.000),
-                            child: IntrinsicHeight(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      const Column(
-                                        children: [
-                                          Text(
-                                            'Event Starts in:',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w300,
-                                              fontFamily: 'Poppins',
-                                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        const Text(
+                                          'Event Starts in:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300,
+                                            fontFamily: 'Poppins',
                                           ),
-                                          // Text(
-                                          //   currentDate.toString(),
-                                          //   style: const TextStyle(
-                                          //     fontSize: 26,
-                                          //     fontFamily: 'Poppins',
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'Event Name:',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w300,
-                                              fontFamily: 'Poppins',
-                                            ),
+                                        ),
+                                        Text(
+                                          difference.toString(),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
                                           ),
-                                          Text(
-                                            snapshot
-                                                .child('Event Name')
-                                                .value
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: 'Poppins',
-                                            ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Event Name:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300,
+                                            fontFamily: 'Poppins',
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const VerticalDivider(
-                                    color: Colors.white,
-                                    width: 2,
-                                    indent: 30,
-                                    endIndent: 30,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          const Text(
-                                            'Event Date: ',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w300,
-                                            ),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .child('Event Name')
+                                              .value
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
                                           ),
-                                          Text(
-                                            snapshot
-                                                .child('Event Date')
-                                                .value
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 22,
-                                              fontFamily: 'Poppins',
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          const Text(
-                                            'Event Time: ',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w300,
-                                            ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const VerticalDivider(
+                                  color: Colors.white,
+                                  width: 2,
+                                  indent: 30,
+                                  endIndent: 30,
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        const Text(
+                                          'Event Date: ',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w300,
                                           ),
-                                          Text(
-                                            snapshot
-                                                .child('Event Time')
-                                                .value
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: 'Poppins',
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .child('Event Date')
+                                              .value
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        const Text(
+                                          'Event Time: ',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .child('Event Time')
+                                              .value
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -233,6 +248,8 @@ class _EventDashboardState extends State<EventDashboard> {
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Material(
                                 color: const Color.fromRGBO(204, 237, 255, 1),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
                                 child: MaterialButton(
                                   onPressed: (() {
                                     Navigator.push(
@@ -248,7 +265,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                   child: const Text(
                                     'View Seats',
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontFamily: 'Poppins',
                                       color: Color.fromRGBO(0, 77, 120, 1.000),
                                     ),
@@ -258,6 +275,8 @@ class _EventDashboardState extends State<EventDashboard> {
                             ),
                             Material(
                               color: const Color.fromRGBO(204, 237, 255, 1),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
                               child: MaterialButton(
                                 onPressed: (() {
                                   showDialog(
@@ -491,7 +510,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                   'Manage Seats Layout',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     color: Color.fromRGBO(0, 77, 120, 1.000),
                                   ),
                                 ),
@@ -506,7 +525,7 @@ class _EventDashboardState extends State<EventDashboard> {
                           height: 250,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.all(
-                              Radius.circular(40),
+                              Radius.circular(10),
                             ),
                             child: Card(
                               color: const Color.fromRGBO(204, 237, 255, 1),
@@ -526,8 +545,8 @@ class _EventDashboardState extends State<EventDashboard> {
                                               fontFamily: 'Poppins',
                                               color: Color.fromRGBO(
                                                   0, 77, 120, 1.000),
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.w400,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
@@ -547,7 +566,7 @@ class _EventDashboardState extends State<EventDashboard> {
                                                 fontFamily: 'Poppins',
                                                 color: Color.fromRGBO(
                                                     0, 77, 120, 1.000),
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w300,
                                               ),
                                             ),

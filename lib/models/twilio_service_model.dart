@@ -1,10 +1,12 @@
 import 'package:twilio_flutter/twilio_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class TwilioService {
   final _twilio = TwilioFlutter(
-      accountSid: 'AC3bc0718a7e906eb524e630d47ea1a320',
-      authToken: '6f082e65df3e7dffb79e1204789a2dcd',
-      twilioNumber: '+13613061193');
+    accountSid: dotenv.env['accountSid']!,
+    authToken: dotenv.env['authToken']!,
+    twilioNumber: dotenv.env['twilioNumber']!,
+  );
 
   Future<void> sendMessages(
     List numbers,

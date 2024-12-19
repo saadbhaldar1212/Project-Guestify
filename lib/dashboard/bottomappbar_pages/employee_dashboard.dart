@@ -48,7 +48,6 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
       password: empPass.text.trim(),
     );
 
-    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 
@@ -98,126 +97,160 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
               padding: const EdgeInsets.symmetric(
                 vertical: 30,
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 28.0, right: 28.0, bottom: 12.0),
-                    child: EmailField(
-                      emailController: empName,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 28.0, right: 28.0, bottom: 12.0),
+                      child: EmailField(
+                        emailController: empName,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 28.0, right: 28.0, top: 8.0),
-                    child: PasswordField(
-                      passwordController: empPass,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 28.0, right: 28.0, top: 8.0),
+                      child: PasswordField(
+                        passwordController: empPass,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 28, bottom: 8.0, left: 8.0, right: 8.0),
-                    child: TransformHelper.translate(
-                      x: -0.50,
-                      y: -0.50,
-                      z: 0,
-                      child: Container(
-                        width: 120.0,
-                        height: 40.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(
-                            width: 1.3,
-                            color: const Color.fromRGBO(0, 77, 120, 1.000),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 28, bottom: 8.0, left: 8.0, right: 8.0),
+                      child: TransformHelper.translate(
+                        x: -0.50,
+                        y: -0.50,
+                        z: 0,
+                        child: Container(
+                          width: 120.0,
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(
+                              width: 1.3,
+                              color: const Color.fromRGBO(0, 77, 120, 1.000),
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.transparent,
+                              )
+                            ],
                           ),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.transparent,
-                            )
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Container(
-                            color: const Color.fromARGB(0, 17, 150, 207),
-                            child: MaterialButton(
-                              onPressed: (() {
-                                if (_formKey.currentState!.validate()) {
-                                  empSignIn().then((value) {
-                                    empRef.push().set({
-                                      "Employee Name": empName.text,
-                                      "Employee Password": empPass.text
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Container(
+                              color: const Color.fromARGB(0, 17, 150, 207),
+                              child: MaterialButton(
+                                onPressed: (() {
+                                  if (_formKey.currentState!.validate()) {
+                                    _auth
+                                        .fetchSignInMethodsForEmail(
+                                            empName.text.trim())
+                                        .then((methods) {
+                                      if (methods.isNotEmpty) {
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        Get.snackbar(
+                                          'Error',
+                                          'Email already exists',
+                                          instantInit: true,
+                                          backgroundColor: Colors.red,
+                                          titleText: const Text(
+                                            'Error',
+                                            style: TextStyle(
+                                              fontSize: 35,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),
+                                          icon: const Icon(
+                                            Icons.error,
+                                            color: Colors.white,
+                                          ),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          colorText: Colors.white,
+                                          padding: const EdgeInsets.all(20),
+                                        ).show();
+                                      } else {
+                                        empSignIn().then((value) {
+                                          empRef.push().set({
+                                            "Employee Name": empName.text,
+                                            "Employee Password": empPass.text
+                                          });
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+
+                                          Get.snackbar(
+                                            '',
+                                            '',
+                                            instantInit: true,
+                                            titleText: const Text(
+                                              'Success',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Poppins',
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            messageText: const Text(
+                                              'Data Inserted',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Poppins',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                            ),
+                                            backgroundColor: Colors.green,
+                                            icon: const Icon(
+                                              Icons.logout,
+                                            ),
+                                          ).show();
+
+                                          empName.clear();
+                                          empPass.clear();
+                                        }).onError((error, stackTrace) {
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          Get.snackbar(
+                                            'Error',
+                                            error.toString(),
+                                            instantInit: true,
+                                            backgroundColor: Colors.red,
+                                            titleText: const Text(
+                                              'Error',
+                                              style: TextStyle(
+                                                fontSize: 35,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'Poppins',
+                                              ),
+                                            ),
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: Colors.white,
+                                            ),
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            colorText: Colors.white,
+                                            padding: const EdgeInsets.all(20),
+                                          ).show();
+
+                                          empName.clear();
+                                          empPass.clear();
+                                        });
+                                      }
                                     });
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-
-                                    Get.snackbar(
-                                      '',
-                                      '',
-                                      instantInit: true,
-                                      titleText: const Text(
-                                        'Success',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Poppins',
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      messageText: const Text(
-                                        'Data Inserted',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Poppins',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.green,
-                                      icon: const Icon(
-                                        Icons.logout,
-                                      ),
-                                    ).show();
-
-                                    empName.clear();
-                                    empPass.clear();
-                                  }).onError((error, stackTrace) {
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    Get.snackbar(
-                                      'Error',
-                                      error.toString(),
-                                      instantInit: true,
-                                      backgroundColor: Colors.red,
-                                      titleText: const Text(
-                                        'Error',
-                                        style: TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Poppins',
-                                        ),
-                                      ),
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.white,
-                                      ),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      colorText: Colors.white,
-                                      padding: const EdgeInsets.all(20),
-                                    ).show();
-
-                                    empName.clear();
-                                    empPass.clear();
-                                  });
-                                }
-                              }),
-                              child: const Text(
-                                'Create',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 18,
-                                  color: Color.fromRGBO(0, 77, 120, 1.000),
+                                  }
+                                }),
+                                child: const Text(
+                                  'Create',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(0, 77, 120, 1.000),
+                                  ),
                                 ),
                               ),
                             ),
@@ -225,8 +258,8 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

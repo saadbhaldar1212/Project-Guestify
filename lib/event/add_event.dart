@@ -43,7 +43,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
           ),
         ),
         automaticallyImplyLeading: false,
-        toolbarHeight: 150,
+        toolbarHeight: 100,
         actions: [
           IconButton(
             onPressed: (() {
@@ -59,7 +59,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
         child: Form(
           key: _eventFormField,
           child: Container(
-            padding: const EdgeInsets.all(35),
+            padding: const EdgeInsets.all(20),
             child: Column(children: [
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -72,14 +72,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
-                  labelText: 'Event Name',
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Name',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -89,6 +117,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -99,14 +128,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 decoration: const InputDecoration(
-                  labelText: 'Event Topic',
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Topic',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -116,6 +173,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -125,19 +183,47 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
-                  labelText: 'Event Chief Guest',
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  helperText: "add 'none' if not applicable",
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Chief Guest',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
+                  ),
+                  helperText: 'add none if not applicable',
                   helperStyle: TextStyle(
-                    fontSize: 13,
                     fontFamily: 'Poppins',
+                    fontSize: 10,
                   ),
                 ),
                 validator: (value) {
@@ -150,6 +236,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -160,19 +247,47 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 decoration: const InputDecoration(
-                  labelText: 'Event Special Guest',
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  helperText: "add 'none' if not applicable",
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Special Guest',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
+                  ),
+                  helperText: 'add none if not applicable',
                   helperStyle: TextStyle(
-                    fontSize: 13,
                     fontFamily: 'Poppins',
+                    fontSize: 10,
                   ),
                 ),
                 validator: (value) {
@@ -185,6 +300,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -195,14 +311,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 decoration: const InputDecoration(
-                  labelText: 'Event Host',
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Host',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -215,6 +359,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -225,14 +370,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 decoration: const InputDecoration(
-                  labelText: 'Event Venue',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.black,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 13,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'Event Venue',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -242,6 +415,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style:
@@ -252,14 +426,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                 keyboardType: TextInputType.text,
                 autofocus: false,
                 decoration: const InputDecoration(
-                  labelText: 'College Name',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.black,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
-                  errorStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 13,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(0, 77, 120, 1.000),
+                      width: 1.6,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        25,
+                      ),
+                    ),
+                  ),
+                  label: Text(
+                    'College Name',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -269,6 +471,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   TextFormField(
@@ -281,20 +484,48 @@ class _AddEventInfoState extends State<AddEventInfo> {
                     keyboardType: TextInputType.datetime,
                     autofocus: false,
                     decoration: const InputDecoration(
-                      labelText: 'Event Date',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(0, 77, 120, 1.000),
+                          width: 1.6,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
-                      errorStyle: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(0, 77, 120, 1.000),
+                          width: 1.6,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(0, 77, 120, 1.000),
+                          width: 1.6,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            25,
+                          ),
+                        ),
+                      ),
+                      label: Text(
+                        'Event Date',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
+                        ),
+                      ),
+                      suffixIcon: Icon(Icons.calendar_today_outlined,
+                          color: Colors.black),
                       constraints: BoxConstraints(
                         maxWidth: 200,
                       ),
-                      suffixIcon: Icon(Icons.calendar_month_outlined,
-                          color: Colors.black),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -314,13 +545,14 @@ class _AddEventInfoState extends State<AddEventInfo> {
                       if (datePicked != null) {
                         setState(() {
                           eventDateController.text =
-                              DateFormat().add_yMMMMd().format(datePicked);
+                              DateFormat('yyyy-MM-dd').format(datePicked);
                         });
                       }
                     },
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   TextFormField(
@@ -335,21 +567,48 @@ class _AddEventInfoState extends State<AddEventInfo> {
                     keyboardType: TextInputType.datetime,
                     autofocus: false,
                     decoration: const InputDecoration(
-                      labelText: 'Event Time',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
-                      ),
-                      errorStyle: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                      ),
-                      constraints: BoxConstraints(
-                        maxWidth: 200,
-                      ),
-                      suffixIcon:
-                          Icon(Icons.access_time_sharp, color: Colors.black),
-                    ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(0, 77, 120, 1.000),
+                            width: 1.6,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(0, 77, 120, 1.000),
+                            width: 1.6,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(0, 77, 120, 1.000),
+                            width: 1.6,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              25,
+                            ),
+                          ),
+                        ),
+                        label: Text(
+                          'Event Time',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Poppins',
+                            fontSize: 17,
+                          ),
+                        ),
+                        suffixIcon: Icon(Icons.access_time_outlined,
+                            color: Colors.black),
+                        constraints: BoxConstraints(
+                          maxWidth: 200,
+                        )),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Enter Time';
@@ -376,6 +635,7 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: TextFormField(
@@ -390,14 +650,42 @@ class _AddEventInfoState extends State<AddEventInfo> {
                   maxLines: 5,
                   autofocus: false,
                   decoration: const InputDecoration(
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Poppins',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 77, 120, 1.000),
+                        width: 1.6,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
                     ),
-                    labelText: 'Event Description',
-                    errorStyle: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 13,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 77, 120, 1.000),
+                        width: 1.6,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(0, 77, 120, 1.000),
+                        width: 1.6,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          25,
+                        ),
+                      ),
+                    ),
+                    label: Text(
+                      'Event Description',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Poppins',
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   validator: (value) {

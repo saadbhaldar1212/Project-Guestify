@@ -58,7 +58,7 @@ class _EmployeeLoginState extends State<EmployeeLogin> {
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
         title: const Hero(
-          tag: 'logoTag',
+          tag: 'logoTag1',
           child: CircleAvatar(
             backgroundImage: AssetImage('assets/images/launch_image.png'),
             radius: 80,

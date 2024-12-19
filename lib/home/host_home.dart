@@ -29,7 +29,7 @@ class _HostIndexState extends State<HostIndex> {
         title: const Text(
           'Present Guests',
           style: TextStyle(
-            fontSize: 35,
+            fontSize: 30,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w400,
           ),
@@ -119,122 +119,135 @@ class _HostIndexState extends State<HostIndex> {
                       color: Colors.red.shade100,
                       child: Padding(
                         padding: const EdgeInsets.all(18.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  'Guest Name: ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Guest Name: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  snapshot.child('Guest Name').value.toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                  Text(
+                                    snapshot
+                                        .child('Guest Name')
+                                        .value
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Guest Email: ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15,
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Guest Email: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  snapshot
-                                      .child('Guest Email')
-                                      .value
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                  Text(
+                                    snapshot
+                                        .child('Guest Email')
+                                        .value
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Table Number: ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15,
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Table Number: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  snapshot
-                                      .child('Table Number')
-                                      .value
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                  Text(
+                                    snapshot
+                                        .child('Table Number')
+                                        .value
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Chair Number: ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15,
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Chair Number: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  snapshot
-                                      .child('Chair Number')
-                                      .value
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                  Text(
+                                    snapshot
+                                        .child('Chair Number')
+                                        .value
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Guest Phone Number: ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15,
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Guest Phone Number: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  snapshot
-                                      .child('Guest Phone Number')
-                                      .value
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20,
+                                  Text(
+                                    snapshot
+                                        .child('Guest Phone Number')
+                                        .value
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

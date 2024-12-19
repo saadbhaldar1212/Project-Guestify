@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-import '../../dashboard/dashboard.dart';
-import '../simple_dialog/for_edit_event_info.dart';
+import '../dashboard/dashboard.dart';
+import '../utils/simple_dialog/for_edit_event_info.dart';
 
 class EditEventInfo extends StatefulWidget {
   EditEventInfo(
